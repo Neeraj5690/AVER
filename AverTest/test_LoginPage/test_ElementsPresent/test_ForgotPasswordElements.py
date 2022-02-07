@@ -29,13 +29,13 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_LoginPageElements"
-  description = "This test scenario is to verify all the Elements present in Login Page"
+  TestName = "test_ForgotPasswordElements"
+  description = "This test scenario is to verify all the Elements present at Forgot Password page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
   FailStatus="Pass"
-  TestDirectoryName = "test_LoginPage"
+  TestDirectoryName = "test_ElementsPresent"
   global Exe
   Exe="Yes"
   Directory = 'test_LoginPage/'
@@ -174,11 +174,19 @@ def test_VerifyAllClickables(test_setup):
         LONG_TIMEOUT = 400
         LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
         try:
-            #---------------------------Verify Login page elements-----------------------------
-            PageName="Logo"
-            Ptitle1="https://averreplica.1wayit.com/global_assets/images/logo.png"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//img").get_attribute('src')
+               driver.find_element_by_xpath("//div[@class='card-body']/div[5]/a").click()
+               TestResult.append("Forgot Password clicked")
+               TestResultStatus.append("Pass")
+            except Exception:
+               TestResult.append("Forgot Password not able to click")
+               TestResultStatus.append("Fail")
+               driver.close()
+            #---------------------------Verify Username Field-----------------------------
+            PageName="Username Field"
+            Ptitle1="email"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[2]/input").get_attribute('type')
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 TestResult.append(PageName + "  is present")
@@ -189,11 +197,11 @@ def test_VerifyAllClickables(test_setup):
             print()
             #---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Username Field-----------------------------
-            PageName = "Username Field"
-            Ptitle1 = "email"
+            # ---------------------------Verify Submit Button-----------------------------
+            PageName = "Submit Button"
+            Ptitle1 = "submit"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[2]/input").get_attribute('type')
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[3]/button").get_attribute('type')
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 TestResult.append(PageName + "  is present")
@@ -204,11 +212,11 @@ def test_VerifyAllClickables(test_setup):
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Password Field-----------------------------
-            PageName = "Password Field"
-            Ptitle1 = "password"
+            # ---------------------------Verify Back to login link-----------------------------
+            PageName = "Back to login link"
+            Ptitle1 = "Back to login"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[3]/input").get_attribute('type')
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[4]/a").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 TestResult.append(PageName + "  is present")
@@ -219,35 +227,6 @@ def test_VerifyAllClickables(test_setup):
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify SignIn Button-----------------------------
-            PageName = "SignIn Button"
-            Ptitle1 = "Sign In"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[4]/button").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Lost Password Link-----------------------------
-            PageName = "Lost Password Link"
-            Ptitle1 = "Lost Your Password?"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[5]/a").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
 
 
         except Exception:

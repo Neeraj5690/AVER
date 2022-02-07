@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-driver=webdriver.Chrome(executable_path="C:/AVER/Chrome/chromedriver.exe")
+driver=webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
 driver.implicitly_wait(10)
 driver.maximize_window()
 driver.get("https://averreplica.1wayit.com/login")

@@ -29,7 +29,7 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_Elements"
+  TestName = "test_LoginPageElements"
   description = "This test scenario is to verify all the Elements present in Login Page"
   TestResult = []
   TestResultStatus = []
@@ -61,9 +61,9 @@ def test_setup():
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
-      enter_username("admin@averplanning.com")
-      enter_password("admin786")
-      driver.find_element_by_xpath("//button[@type='submit']").click()
+      # enter_username("admin@averplanning.com")
+      # enter_password("admin786")
+      #driver.find_element_by_xpath("//button[@type='submit']").click()
 
   yield
   if Exe == "Yes":
@@ -174,79 +174,82 @@ def test_VerifyAllClickables(test_setup):
         LONG_TIMEOUT = 400
         LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
         try:
-            print()
-            #---------------------------Verify Liquid Trusts page-----------------------------
-            PageName="Login Page"
-            Ptitle1="Dashboard"
-            # driver.find_element_by_xpath("//*[@title='"+PageName+"']").click()
-            # start = time.time()
-            # try:
-            #     WebDriverWait(driver, SHORT_TIMEOUT
-            #                   ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #
-            #     WebDriverWait(driver, LONG_TIMEOUT
-            #                   ).until_not(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            # except TimeoutException:
-            #     pass
-            # try:
-            #     time.sleep(2)
-            #     bool1 = driver.find_element_by_xpath(
-            #         "//div[@class='appian-context-ux-responsive']/div[4]/div/div/div[1]").is_displayed()
-            #     if bool1 == True:
-            #         ErrorFound1 = driver.find_element_by_xpath(
-            #             "//div[@class='appian-context-ux-responsive']/div[4]/div/div/div[1]").text
-            #         print(ErrorFound1)
-            #         driver.find_element_by_xpath(
-            #             "//div[@class='appian-context-ux-responsive']/div[4]/div/div/div[2]/div/button").click()
-            #         TestResult.append(PageName + " not able to open\n" + ErrorFound1)
-            #         TestResultStatus.append("Fail")
-            #         driver.close()
-            #         bool1 = False
-            # except Exception:
-            #     try:
-            #         time.sleep(2)
-            #         bool2 = driver.find_element_by_xpath(
-            #             "//div[@class='MessageLayout---message MessageLayout---error']").is_displayed()
-            #         if bool2 == True:
-            #             ErrorFound2 = driver.find_element_by_xpath(
-            #                 "//div[@class='MessageLayout---message MessageLayout---error']/div/p").text
-            #             print(ErrorFound2)
-            #             TestResult.append(PageName + " not able to open\n" + ErrorFound2)
-            #             TestResultStatus.append("Fail")
-            #             driver.close()
-            #             bool2 = False
-            #     except Exception:
-            #         pass
-            #     pass
-            # time.sleep(1)
+            #---------------------------Verify Login page elements-----------------------------
+            PageName="Logo"
+            Ptitle1="https://averreplica.1wayit.com/global_assets/images/logo.png"
             try:
-                PageTitle1 = driver.title
+                PageTitle1 = driver.find_element_by_xpath("//img").get_attribute('src')
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + " page Opened successfully")
+                TestResult.append(PageName + "  is present")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName +     " page not able to open")
+                TestResult.append(PageName +" is not present")
                 TestResultStatus.append("Fail")
             print()
             #---------------------------------------------------------------------------------
 
-            # #--------------------Checking NAV Concentration--------------
-            # Text1 = "NAV Concentration"
-            # try:
-            #     Element1 = driver.find_element_by_xpath(
-            #         "//div[@class='ContentLayout---content_layout']/div[2]/div/div/div/div/div[1]/div/div[1]/div/div/div").text
-            #     assert Text1 in Element1, Text1 + " section is not present"
-            #     TestResult.append(
-            #         Text1 + " section is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception as e1:
-            #     print(e1)
-            #     TestResult.append(
-            #         Text1 + " section is not present")
-            #     TestResultStatus.append("Fail")
-            #
-            # inside="NAV Concentration"
+            # ---------------------------Verify Username Field-----------------------------
+            PageName = "Username Field"
+            Ptitle1 = "email"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[2]/input").get_attribute('type')
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not able to open"
+                TestResult.append(PageName + "  is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Password Field-----------------------------
+            PageName = "Password Field"
+            Ptitle1 = "password"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[3]/input").get_attribute('type')
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not able to open"
+                TestResult.append(PageName + "  is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify SignIn Button-----------------------------
+            PageName = "SignIn Button"
+            Ptitle1 = "Sign In"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[4]/button").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not able to open"
+                TestResult.append(PageName + "  is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Lost Password Link-----------------------------
+            PageName = "Lost Password Link"
+            Ptitle1 = "Lost Your Password?"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[5]/a").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not able to open"
+                TestResult.append(PageName + "  is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+
         except Exception:
             pass
 

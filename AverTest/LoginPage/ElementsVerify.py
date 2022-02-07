@@ -6,5 +6,5 @@ driver.maximize_window()
 driver.get("https://averreplica.1wayit.com/login")
 check=driver.find_element_by_xpath("//img[@src='https://averreplica.1wayit.com/global_assets/images/logo.png']").is_displayed()
 print(check)
-driver.quit()
+
 #driver.find_element_by_xpath("//input[@type='submit']").click()

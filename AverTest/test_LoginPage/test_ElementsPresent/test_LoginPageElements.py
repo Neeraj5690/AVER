@@ -220,7 +220,7 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify SignIn Button-----------------------------
-            PageName = "SignIn Button"
+            PageName = "Sign In Button"
             Ptitle1 = "Sign In"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[4]/button").text

@@ -1,10 +1,13 @@
 import datetime
+import math
+import re
 import time
 import openpyxl
 from fpdf import FPDF
 import pytest
 from selenium import webdriver
 import allure
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -165,7 +168,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      driver.quit()
+      #driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -188,7 +191,7 @@ def test_VerifyAllClickables(test_setup):
             print()
             #---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Hamburger icon-----------------------------
+            #---------------------------Verify Hamburger icon-----------------------------
             PageName = "Hamburger menu icon"
             Ptitle1 = ""
             try:
@@ -201,9 +204,9 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
-            # ---------------------------------------------------------------------------------
+            #---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Top Search box-----------------------------
+            #---------------------------Verify Top Search box-----------------------------
             PageName = "Top Search box"
             Ptitle1 = "searchAll"
             try:
@@ -216,9 +219,9 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
-            # ---------------------------------------------------------------------------------
+            #---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Calendar icon-----------------------------
+            #---------------------------Verify Calendar icon-----------------------------
             time.sleep(2)
             PageName = "Calendar icon"
             Ptitle1 = ""
@@ -239,9 +242,9 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
-            # ---------------------------------------------------------------------------------
+            #---------------------------------------------------------------------------------
 
-            # ---------------------------Verify My profile drop down-----------------------------
+            #---------------------------Verify My profile drop down-----------------------------
             time.sleep(2)
             PageName = "My profile drop down"
             Ptitle1 = ""
@@ -264,21 +267,74 @@ def test_VerifyAllClickables(test_setup):
                 print(aq)
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
+            time.sleep(2)
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
             # ---------------------------------------------------------------------------------
-            # # ---------------------------Verify Lost Password Link-----------------------------
-            # PageName = "Lost Password Link"
-            # Ptitle1 = "Lost Your Password?"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[5]/a").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
-            #     TestResult.append(PageName + "  is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
+            # ---------------------------Verify Pagination clicks-----------------------------
+            try:
+                for i1 in range(4):
+                    try:
+                        select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
+                        select.select_by_index(i1)
+                        time.sleep(1)
+                        RecordsPerPage = driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
+                        RecordsPerPage = int(RecordsPerPage)
+                        TestResult.append(
+                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is successfully clicked")
+                        TestResultStatus.append("Pass")
+                    except Exception:
+                        TestResult.append(
+                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not able to click")
+                        TestResultStatus.append("Fail")
+
+                    TotalItem = driver.find_element_by_xpath("//div[@class='table_data']/div/div[4]").text
+                    substr = "of"
+                    x = TotalItem.split(substr)
+                    string_name = x[0]
+                    TotalItemAfterOf = x[1]
+                    abc = ""
+                    countspace = 0
+                    for element in range(0, len(string_name)):
+                        if string_name[(len(string_name) - 1) - element] == " ":
+                            countspace = countspace + 1
+                            if countspace == 2:
+                                break
+                        else:
+                            abc = abc + string_name[(len(string_name) - 1) - element]
+                    abc = abc[::-1]
+                    TotalItemBeforeOf = abc
+                    TotalItemAfterOf = TotalItemAfterOf.split(" ")
+                    TotalItemAfterOf=TotalItemAfterOf[1]
+                    TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+
+                    TotalItemAfterOf = int(TotalItemAfterOf)
+                    TotalPages = TotalItemAfterOf/RecordsPerPage
+                    NumberOfPages = math.ceil(float(TotalPages))
+
+                    for i in range(NumberOfPages):
+                        if i==NumberOfPages-1:
+                            TestResult.append("Pagination for [ "+str(RecordsPerPage)+" ] no. of records is successfully verified")
+                            TestResultStatus.append("Pass")
+                            break
+                        driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+                        time.sleep(1)
+                    if i != NumberOfPages - 1:
+                        TestResult.append(
+                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
+                        TestResultStatus.append("Fail")
+                    driver.refresh()
+                    try:
+                        WebDriverWait(driver, SHORT_TIMEOUT
+                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                        WebDriverWait(driver, LONG_TIMEOUT
+                                      ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    except TimeoutException:
+                        pass
+            except Exception as aq:
+                print(aq)
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
             # # ---------------------------------------------------------------------------------
 
 

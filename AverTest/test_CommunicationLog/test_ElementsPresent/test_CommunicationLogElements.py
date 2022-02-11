@@ -183,7 +183,7 @@ def test_VerifyAllClickables(test_setup):
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
                 time.sleep(2)
-                TestResult.append(PageName + "  is present and able to click")
+                TestResult.append(PageName + "  is present in left menu and able to click")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -191,22 +191,22 @@ def test_VerifyAllClickables(test_setup):
             print()
             #---------------------------------------------------------------------------------
 
-            #---------------------------Verify Title of Select entry dropdown-----------------------------
-            PageName = "Title of Select entry dropdown"
+            #---------------------------Verify Page title-----------------------------
+            PageName = "Page title"
             Ptitle1 = "Add new communication log"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='content yellow_color']/div[1]/div/form/div/div/div/label").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + "(Add new communication log)  is present")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + "(Add new communication log)  is not present")
                 TestResultStatus.append("Fail")
             print()
             #---------------------------------------------------------------------------------
 
-            #---------------------------Verify select entry dropdown working-----------------------------
+            #---------------------------Verify Presence of select entry dropdown-----------------------------
             PageName = "Select entry dropdown"
             Ptitle1 = "Select New Entry"
             try:
@@ -214,7 +214,7 @@ def test_VerifyAllClickables(test_setup):
                 print(PageTitle1)
 
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present and clickable")
+                TestResult.append(PageName + "  is present")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -224,91 +224,123 @@ def test_VerifyAllClickables(test_setup):
                 "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select").click()
             #---------------------------------------------------------------------------------
             #
-            # ---------------------------Verify select entry dropdown label-----------------------------
-            PageName = "Select entry dropdown Label General"
+            # ---------------------------Verify General dropdown Label-----------------------------
+            PageName = "General dropdown Label"
             Ptitle1 = "General"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]").get_attribute('label')
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + "  is present in select entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not present in select entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
-            # ---------------------------Verify select entry dropdown value Phone Call-----------------------------
-            PageName = "Select entry dropdown value Phone Call"
+            # ---------------------------Verify Phone Call dropdown value-----------------------------
+            PageName = "Phone Call dropdown value"
             Ptitle1 = "Phone Call"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[1]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + "  is present in select entry dropdown ")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not present in select entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify select entry dropdown value Email-----------------------------
-            PageName = "Select entry dropdown value Email"
+            # ---------------------------Verify Email dropdown value-----------------------------
+            PageName = "Email dropdown value"
             Ptitle1 = "Email"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[2]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + "  is present in select entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not present in select entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify select entry dropdown value Letter-----------------------------
-            PageName = "Select entry dropdown value Letter"
+            # ---------------------------Verify Letter dropdown value-----------------------------
+            PageName = "Letter dropdown value"
             Ptitle1 = "Letter"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[3]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + "  is present in select entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not present in select entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Select entry dropdown value SMS-----------------------------
-            PageName = "Select entry dropdown value SMS"
+            # ---------------------------Verify SMS dropdown value-----------------------------
+            PageName = "SMS dropdown value"
             Ptitle1 = "SMS"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[4]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + "  is present in select entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not present in select entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Select entry dropdown label-----------------------------
-            PageName = "Select entry dropdown label New Plan Form"
+            # ---------------------------Verify New Plan Form dropdown label-----------------------------
+            PageName = "New Plan Form dropdown label"
             Ptitle1 = "New Plan Form"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[2]/option").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify New Plan Form dropdown value-----------------------------
+            PageName = "New Plan Form dropdown value"
+            Ptitle1 = "New Plan Form"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[2]/option").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Header of Choose Template dropdown-----------------------------
+            PageName = "Header of Choose Template dropdown"
+            Ptitle1 = "Choose Template"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/label").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
                 TestResult.append(PageName + "  is present")
@@ -319,12 +351,124 @@ def test_VerifyAllClickables(test_setup):
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Select entry dropdown value New Plan Form-----------------------------
-            PageName = "Select entry dropdown value New Plan Form"
+            # ---------------------------Verify Presence of Choose Template dropdown-----------------------------
+            PageName = "Choose Template dropdown"
+            Ptitle1 = "selectTemplate"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select").get_attribute('id')
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            PageTitle1 = driver.find_element_by_xpath(
+                "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select").click()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify General dropdown value-----------------------------
+            PageName = "General dropdown value"
+            Ptitle1 = "General"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select/option[1]").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is present in Choose Template dropdown")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present in Choose Template dropdown")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify New Plan Form dropdown value-----------------------------
+            PageName = "New Plan Form dropdown value"
             Ptitle1 = "New Plan Form"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[2]/option").text
+                    "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select/option[2]").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is present in Choose Template dropdown")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present in Choose Template dropdown")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Communication Log Listing-General table header-----------------------------
+            PageName = "Communication Log Listing-General table header"
+            Ptitle1 = "Communication Log Listing - General"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div[2]/div[1]/div/div/h2").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+            #
+            # ---------------------------Verify Filter search for Communication Log Listing-General table-----------------------------
+            PageName = "Filter search for Communication Log Listing-General table"
+            Ptitle1 = "search"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//div[@id='comm-log-blank_filter']/label/input").get_attribute('type')
+                assert PageTitle1 in Ptitle1, PageName + " not able to open"
+                driver.find_element_by_xpath("//div[@id='comm-log-blank_filter']/label/input").send_keys("testing")
+                TestResult.append(PageName + "  is present and user is able to send inputs")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # # ---------------------------Verify Presence of elements in Communication Log Listing-General table-----------------------------
+            inside = "Communication Log Listing - General"
+            # ---------------loop for Columns in table for Funds View----------
+            ItemList = ["#", "Date & Time", "Incoming / Outgoing", "Communication Type", "Main Contact Name", "Other Contacts", "Staff Name", "View Note"]
+            ItemPresent = []
+            ItemNotPresent = []
+            for ii in range(len(ItemList)):
+                Text1 = ItemList[ii]
+                try:
+                    Element1 = driver.find_element_by_xpath(
+                        "//table[@id='comm-log-blank']/thead/tr/th[" + str(
+                            ii + 1) + "]").text
+                except Exception:
+                    pass
+                try:
+                    assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
+                    ItemPresent.append(Text1)
+                except Exception as e1:
+                    ItemNotPresent.append(Text1)
+            if ItemPresent:
+                print("ItemPresent list is not empty")
+                ListC = ', '.join(ItemPresent)
+                TestResult.append("Below columns are present under " + inside + " table\n" + ListC)
+                TestResultStatus.append("Pass")
+            if ItemNotPresent:
+                print("ItemNotPresent list is not empty")
+                ListD = ', '.join(ItemNotPresent)
+                TestResult.append("Below columns are not present under " + inside + " table\n" + ListD)
+                TestResultStatus.append("Fail")
+            # # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Communication Log Listing - Draft General table header-----------------------------
+            PageName = "Communication Log Listing - Draft General table header"
+            Ptitle1 = "Communication Log Listing - Draft General"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div[2]/div[3]/div/div/h2").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
                 TestResult.append(PageName + "  is present")
@@ -335,122 +479,69 @@ def test_VerifyAllClickables(test_setup):
             print()
             # ---------------------------------------------------------------------------------
 
-            # #---------------------------Verify Calendar icon-----------------------------
-            # time.sleep(2)
-            # PageName = "Calendar icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//a[@title='Calendar']").click()
-            #     try:
-            #         WebDriverWait(driver, SHORT_TIMEOUT
-            #                       ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #
-            #         WebDriverWait(driver, LONG_TIMEOUT
-            #                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #     except TimeoutException:
-            #         pass
-            #     TestResult.append(PageName + "  is present and user is able to click")
-            #     TestResultStatus.append("Pass")
-            # except Exception as qq:
-            #     print(qq)
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
-            # #---------------------------------------------------------------------------------
-            #
-            # #---------------------------Verify My profile drop down-----------------------------
-            # time.sleep(2)
-            # PageName = "My profile drop down"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
-            #     driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//a[@href='https://averreplica.1wayit.com/admin-profile']").click()
-            #     try:
-            #         WebDriverWait(driver, SHORT_TIMEOUT
-            #                       ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #
-            #         WebDriverWait(driver, LONG_TIMEOUT
-            #                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #     except TimeoutException:
-            #         pass
-            #     TestResult.append(PageName + "  is present and user is able to click")
-            #     TestResultStatus.append("Pass")
-            # except Exception as aq:
-            #     print(aq)
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # time.sleep(2)
-            # driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
-            # # ---------------------------------------------------------------------------------
-            # # ---------------------------Verify Pagination clicks-----------------------------
-            # try:
-            #     for i1 in range(4):
-            #         try:
-            #             select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
-            #             select.select_by_index(i1)
-            #             time.sleep(1)
-            #             RecordsPerPage = driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
-            #             RecordsPerPage = int(RecordsPerPage)
-            #             TestResult.append(
-            #                 "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is successfully clicked")
-            #             TestResultStatus.append("Pass")
-            #         except Exception:
-            #             TestResult.append(
-            #                 "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not able to click")
-            #             TestResultStatus.append("Fail")
-            #
-            #         TotalItem = driver.find_element_by_xpath("//div[@class='table_data']/div/div[4]").text
-            #         substr = "of"
-            #         x = TotalItem.split(substr)
-            #         string_name = x[0]
-            #         TotalItemAfterOf = x[1]
-            #         abc = ""
-            #         countspace = 0
-            #         for element in range(0, len(string_name)):
-            #             if string_name[(len(string_name) - 1) - element] == " ":
-            #                 countspace = countspace + 1
-            #                 if countspace == 2:
-            #                     break
-            #             else:
-            #                 abc = abc + string_name[(len(string_name) - 1) - element]
-            #         abc = abc[::-1]
-            #         TotalItemBeforeOf = abc
-            #         TotalItemAfterOf = TotalItemAfterOf.split(" ")
-            #         TotalItemAfterOf=TotalItemAfterOf[1]
-            #         TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-            #
-            #         TotalItemAfterOf = int(TotalItemAfterOf)
-            #         TotalPages = TotalItemAfterOf/RecordsPerPage
-            #         NumberOfPages = math.ceil(float(TotalPages))
-            #
-            #         for i in range(NumberOfPages):
-            #             if i==NumberOfPages-1:
-            #                 TestResult.append("Pagination for [ "+str(RecordsPerPage)+" ] no. of records is successfully verified")
-            #                 TestResultStatus.append("Pass")
-            #                 break
-            #             driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-            #             time.sleep(1)
-            #         if i != NumberOfPages - 1:
-            #             TestResult.append(
-            #                 "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
-            #             TestResultStatus.append("Fail")
-            #         driver.refresh()
-            #         try:
-            #             WebDriverWait(driver, SHORT_TIMEOUT
-            #                           ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #
-            #             WebDriverWait(driver, LONG_TIMEOUT
-            #                           ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #         except TimeoutException:
-            #             pass
-            # except Exception as aq:
-            #     print(aq)
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # # ---------------------------------------------------------------------------------
+            # ---------------------------Verify Filter search for Communication Log Listing - Draft General table-----------------------------
+            PageName = "Filter search for Communication Log Listing - Draft General table"
+            Ptitle1 = "search"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='content yellow_color']/div[2]/div[4]/div/div/div/label/input").get_attribute('type')
+                assert PageTitle1 in Ptitle1, PageName + " not able to open"
+                driver.find_element_by_xpath("//div[@class='content yellow_color']/div[2]/div[4]/div/div/div/label/input").send_keys("testabc")
+                TestResult.append(PageName + "  is present and user is able to send inputs")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
 
+            # # ---------------------------Verify Presence of elements in Communication Log Listing - Draft General-----------------------------
+            inside = "Communication Log Listing - Draft General"
+            # ---------------loop for Columns in table for Funds View----------
+            ItemList = ["#", "Date & Time", "Incoming / Outgoing", "Communication Type", "Main Contact Name",
+                        "Other Contacts", "Staff Name"]
+            ItemPresent = []
+            ItemNotPresent = []
+            for ii1 in range(len(ItemList)):
+                Text1 = ItemList[ii1]
+                try:
+                    Element1 = driver.find_element_by_xpath(
+                        "//table[@id='comm-log-draft-blank']/thead/tr/th[" + str(
+                            ii1 + 1) + "]").text
+                except Exception:
+                    pass
+                try:
+                    assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
+                    ItemPresent.append(Text1)
+                except Exception as e1:
+                    ItemNotPresent.append(Text1)
+            if ItemPresent:
+                print("ItemPresent list is not empty")
+                ListC = ', '.join(ItemPresent)
+                TestResult.append("Below columns are present under " + inside + " table\n" + ListC)
+                TestResultStatus.append("Pass")
+            if ItemNotPresent:
+                print("ItemNotPresent list is not empty")
+                ListD = ', '.join(ItemNotPresent)
+                TestResult.append("Below columns are not present under " + inside + " table\n" + ListD)
+                TestResultStatus.append("Fail")
+            # # ---------------------------------------------------------------------------------
+            # ---------------------------Verify Presence of back button on communication log page-----------------------------
+            PageName = "Back button"
+            Ptitle1 = "Back"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div/div[2]/div/a").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is present on communication log page")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present on communication log page")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # # ---------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)

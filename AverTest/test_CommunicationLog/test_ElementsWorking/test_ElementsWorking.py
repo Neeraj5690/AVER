@@ -271,7 +271,7 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------Verify Choose template dropdown working-----------------------------
             for dct in range(2):
                 DropdownCT = {"General": "//div[@class='content yellow_color']/div[2]/div[1]/div/div/h2/small",
-                                  "New Plan Form": "//div[@class='content yellow_color']/div[2]/div[1]/div/div/h2/small"}
+                                  "New Plan Form": "//div[@class='content-wrapper']/div[2]/div[3]/div[1]/div/div/h2/small"}
                 select = Select(driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[2]/div/div/div/form/div/div/select"))
                 Selector = ['General', 'New Plan Form']

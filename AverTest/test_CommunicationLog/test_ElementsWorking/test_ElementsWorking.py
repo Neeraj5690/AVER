@@ -7,6 +7,8 @@ from fpdf import FPDF
 import pytest
 from selenium import webdriver
 import allure
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -33,7 +35,7 @@ def test_setup():
   global path
 
   TestName = "test_ElementsWorking"
-  description = "This test scenario is to verify all the Working of Elements at Communication log of application"
+  description = "This test scenario is to verify all the Working of Elements at Communication log page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -173,7 +175,7 @@ def test_setup():
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
-        SHORT_TIMEOUT = 2
+        SHORT_TIMEOUT = 3
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
         try:
@@ -207,7 +209,7 @@ def test_VerifyAllClickables(test_setup):
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Communication Log icon click after verifying back-----------------------------
+            # ----------------Verify Communication Log icon click after verifying back--------
             PageName = "Communication log icon"
             Ptitle1 = ""
             try:
@@ -220,53 +222,53 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
-            # # ---------------------------Verify Select entry dropdown working-----------------------------
-            # for cv in range (5):
-            #     DropdownValues = {"Email": "//select[@name='communication_type']/option","Letter": "//select[@name='communication_type']/option","SMS": "//select[@name='communication_type']/option    ","Phone Call": "//select[@name='communication_type']/option","New Plan Form": "//ul[@class='GeneralClientDetails']/li[1]"}
-            #     select = Select(driver.find_element_by_xpath(
-            #         "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
-            #     Selector=['Email','Letter','SMS','Phone Call','New Plan Form']
-            #     if cv==0:
-            #         select.select_by_visible_text(Selector[3])
-            #         TextCheck=Selector[3]
-            #         path=DropdownValues[Selector[3]]
-            #     elif cv==1:
-            #         select.select_by_visible_text(Selector[0])
-            #         TextCheck = Selector[0]
-            #         path =DropdownValues[Selector[0]]
-            #     elif cv==2:
-            #         select.select_by_visible_text(Selector[1])
-            #         TextCheck = Selector[1]
-            #         path =DropdownValues[Selector[1]]
-            #     elif cv==3:
-            #         select.select_by_visible_text(Selector[2])
-            #         TextCheck = Selector[2]
-            #         path =DropdownValues[Selector[2]]
-            #     elif cv==4:
-            #         select.select_by_visible_text(Selector[4])
-            #         TextCheck = Selector[4]
-            #         path =DropdownValues[Selector[4]]
-            #
-            #
-            #     textFound=driver.find_element_by_xpath(path).text
-            #     if ":" in textFound:
-            #         textFound=textFound.split(":")
-            #         textFound=textFound[1]
-            #
-            #     textFound=textFound.strip()
-            #     print(textFound)
-            #     if textFound==TextCheck:
-            #         print("aaaaa")
-            #         TestResult.append(TextCheck + " dropdown value inside select entry dropdown is able to click")
-            #         TestResultStatus.append("Pass")
-            #     else:
-            #         print("ccccc")
-            #         TestResult.append(TextCheck + " dropdown value inside select entry dropdown is not able to click and open")
-            #         TestResultStatus.append("Fail")
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-            #     time.sleep(2)
-            # print()
-            # # ---------------------------------------------------------------------------------
+            # ---------------------------Verify Select entry dropdown working-----------------------------
+            for cv in range (5):
+                DropdownValues = {"Email": "//select[@name='communication_type']/option","Letter": "//select[@name='communication_type']/option","SMS": "//select[@name='communication_type']/option    ","Phone Call": "//select[@name='communication_type']/option","New Plan Form": "//ul[@class='GeneralClientDetails']/li[1]"}
+                select = Select(driver.find_element_by_xpath(
+                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
+                Selector=['Email','Letter','SMS','Phone Call','New Plan Form']
+                if cv==0:
+                    select.select_by_visible_text(Selector[3])
+                    TextCheck=Selector[3]
+                    path1=DropdownValues[Selector[3]]
+                elif cv==1:
+                    select.select_by_visible_text(Selector[0])
+                    TextCheck = Selector[0]
+                    path1 =DropdownValues[Selector[0]]
+                elif cv==2:
+                    select.select_by_visible_text(Selector[1])
+                    TextCheck = Selector[1]
+                    path1 =DropdownValues[Selector[1]]
+                elif cv==3:
+                    select.select_by_visible_text(Selector[2])
+                    TextCheck = Selector[2]
+                    path1 =DropdownValues[Selector[2]]
+                elif cv==4:
+                    select.select_by_visible_text(Selector[4])
+                    TextCheck = Selector[4]
+                    path1 =DropdownValues[Selector[4]]
+
+
+                textFound=driver.find_element_by_xpath(path1).text
+                if ":" in textFound:
+                    textFound=textFound.split(":")
+                    textFound=textFound[1]
+
+                textFound=textFound.strip()
+                print(textFound)
+                if textFound==TextCheck:
+                    print("aaaaa")
+                    TestResult.append(TextCheck + " dropdown value inside select entry dropdown is able to click")
+                    TestResultStatus.append("Pass")
+                else:
+                    print("ccccc")
+                    TestResult.append(TextCheck + " dropdown value inside select entry dropdown is not able to click and open")
+                    TestResultStatus.append("Fail")
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
+                time.sleep(2)
+            print()
+            # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Choose template dropdown working-----------------------------
             for dct in range(2):
@@ -278,12 +280,12 @@ def test_VerifyAllClickables(test_setup):
                 if dct == 0:
                     select.select_by_index(1)
                     TextCheck = Selector[1]
-                    path = DropdownCT[Selector[1]]
+                    path1 = DropdownCT[Selector[1]]
                 elif dct == 1:
                     select.select_by_index(0)
                     TextCheck = Selector[0]
-                    path = DropdownCT[Selector[0]]
-                textFound = driver.find_element_by_xpath(path).text
+                    path1 = DropdownCT[Selector[0]]
+                textFound = driver.find_element_by_xpath(path1).text
 
                 print(textFound)
                 if textFound == TextCheck:
@@ -298,9 +300,75 @@ def test_VerifyAllClickables(test_setup):
                 time.sleep(2)
             print()
             # ---------------------------------------------------------------------------------
+            # ---------------------------Verify Add new process by all Select entry dropdowns-----
+            DropdownValues = {"Email": "","Letter": "","SMS": "","Phone Call": "","New Plan Form": ""}
+            Selector=['Email','Letter','SMS','Phone Call','New Plan Form']
 
+            #-------Verifying add new Email process
+            select = Select(driver.find_element_by_xpath(
+                "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
+            select.select_by_visible_text(Selector[0])
+            driver.find_element_by_xpath("//input[@id='autocompleteSystemContactSearch']").send_keys("a")
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+            driver.find_element_by_xpath("//div[@id='communication-log-form']/form/div[3]/div/div[2]/div/div[3]/div[1]/div[2]/div/input").send_keys("Test Subject")
+            select = Select(driver.find_element_by_xpath("//div[@id='communication-log-form']/form/div[3]/div/div[5]/div/div[2]/div/div[1]/div/select"))
+            select.select_by_index(1)
+            driver.find_element_by_xpath("//button[text()='Save']").click()
+            try:
+                WebDriverWait(driver, SHORT_TIMEOUT
+                              ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
+                WebDriverWait(driver, LONG_TIMEOUT
+                              ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+            except TimeoutException:
+                pass
+            #driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
+            time.sleep(2)
 
+            # -------Verifying add new Letter process
+            select = Select(driver.find_element_by_xpath(
+                "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
+            select.select_by_visible_text(Selector[1])
+            driver.find_element_by_xpath("//input[@id='autocompleteSystemContactSearch']").send_keys("a")
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+            driver.find_element_by_xpath(
+                "//div[@id='communication-log-form']/form/div[3]/div/div[2]/div/div[3]/div[1]/div[2]/div/input").send_keys(
+                "Test Subject")
+
+            # driver.find_element_by_xpath("//div[@id='cke_1_contents']").send_keys("Test Content")
+            # time.sleep(1)
+            # select = Select(driver.find_element_by_xpath(
+            #     "//div[@id='communication-log-form']/form/div[3]/div/div[5]/div/div[2]/div/div[1]/div/select"))
+            # select.select_by_index(1)
+            # driver.find_element_by_xpath("//button[text()='Save']").click()
+            # try:
+            #     WebDriverWait(driver, SHORT_TIMEOUT
+            #                   ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+            #
+            #     WebDriverWait(driver, LONG_TIMEOUT
+            #                   ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+            # except TimeoutException:
+            #     pass
+            # driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
+            # time.sleep(2)
 
 
         except Exception as err:

@@ -5,6 +5,7 @@ from fpdf import FPDF
 import pytest
 from selenium import webdriver
 import allure
+import imaplib
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -29,13 +30,13 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_LoginPageElements"
-  description = "This test scenario is to verify all the Elements present at Login Page"
+  TestName = "test_ForgotPasswordWorking"
+  description = "This test scenario is to verify working of Forgot Password"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
   FailStatus="Pass"
-  TestDirectoryName = "test_ElementsPresent"
+  TestDirectoryName = "test_Working"
   global Exe
   Exe="Yes"
   Directory = 'test_LoginPage/'
@@ -170,82 +171,115 @@ def test_VerifyAllClickables(test_setup):
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 400
         LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
+        host = 'imap.gmail.com'
+        username = 'teamqa59@gmail.com'
+        password = 'Gagan@0309'
+        ForgotPasswordEmail = username
         try:
-            #---------------------------Verify Login page elements-----------------------------
-            PageName="Logo"
-            Ptitle1="https://averreplica.1wayit.com/global_assets/images/logo.png"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//img").get_attribute('src')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present")
+               driver.find_element_by_xpath("//div[@class='card-body']/div[5]/a").click()
+               TestResult.append("Forgot Password link text clicked")
+               TestResultStatus.append("Pass")
+            except Exception:
+               TestResult.append("Forgot Password link text not able to click")
+               TestResultStatus.append("Fail")
+               driver.close()
+            #---------------------------Enter Username Data-----------------------------
+            PageName=ForgotPasswordEmail
+            try:
+                driver.find_element_by_xpath("//div[@class='card-body']/div[2]/input").send_keys(PageName)
+                TestResult.append("Email address [ "+PageName + " ] entered successfully")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName +" is not present")
+                TestResult.append("Email address [ "+PageName + " ] not able to enter")
                 TestResultStatus.append("Fail")
             print()
             #---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Username Field-----------------------------
-            PageName = "Username Field"
-            Ptitle1 = "email"
+            # ---------------------------Verify Submit Button-----------------------------
+            PageName = "Submit Button"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[2]/input").get_attribute('type')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present")
+                driver.find_element_by_xpath("//div[@class='card-body']/div[3]/button").click()
+                TestResult.append(PageName + " clicked successfully")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not click")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Password Field-----------------------------
-            PageName = "Password Field"
-            Ptitle1 = "password"
+            # -------------------Receiving forgot password email from Aver Planning--------------
+            PageName="Forgot password email"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[3]/input").get_attribute('type')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present")
+                # ------------------------Get verification code from Gmail---------------------------------
+                # -------------Function to get email content part i.e its body part
+                def get_body(msg):
+                    if msg.is_multipart():
+                        return get_body(msg.get_payload(0))
+                    else:
+                        return msg.get_payload(None, True)
+
+                # -----------Function to search for a key value pair
+                def search(key, value, con):
+                    result, data = con.search(None, key, '"{}"'.format(value))
+                    return data
+
+                # ---------------Function to get the list of emails under this label
+                def get_emails(result_bytes):
+                    msgs = []  # all the email data are pushed inside an array
+                    for num in result_bytes[0].split():
+                        typ, data = con.fetch(num, '(RFC822)')
+                        msgs.append(data)
+                    return msgs
+
+                con = imaplib.IMAP4_SSL(host)
+                con.login(username, password)
+                con.select('Inbox')
+
+                # --------------fetching emails from a user
+                msgs = get_emails(search('FROM', 'sohia.1wayit@gmail.com', con))
+                Code = ""
+                for msg in msgs[::-1]:
+                    for sent in msg:
+                        if Code != "":
+                            break
+                        else:
+                            if type(sent) is tuple:
+                                content = str(sent[1], 'utf-8')
+                                data = str(content)
+                                try:
+                                    indexstart = data.find("ltr")
+                                    data2 = data[indexstart + 5: len(data)]
+                                    indexend = data2.find("</div>")
+                                    indx = data2.find('AverPlanning')
+                                    #print(data2)
+                                    Code = data2[indx] +data2[indx + 1] + data2[indx + 2]+data2[indx + 3] + data2[indx + 4]+data2[indx + 5] + data2[indx + 6]+data2[indx + 7] + data2[indx + 8]+ data2[indx + 9]+ data2[indx + 10] + data2[indx + 11]
+                                    print(Code)
+                                    break
+                                except UnicodeEncodeError as e:
+                                    pass
+
+                TestResult.append(PageName + " is received")
                 TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
+            except Exception as ww:
+                print(ww)
+                TestResult.append(PageName + " is not able to receive. Below error found\n"+ww)
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify SignIn Button-----------------------------
-            PageName = "Sign In Button"
-            Ptitle1 = "Sign In"
+            # -------------------Reading forgot password email from Aver Planning--------------
+            PageName = "Forgot password email"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[4]/button").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present")
-                TestResultStatus.append("Pass")
+
+                if "AverPlanning" in Code:
+                    TestResult.append(PageName + " is able to read")
+                    TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not able to read")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Lost Password Link-----------------------------
-            PageName = "Lost Password Link"
-            Ptitle1 = "Lost Your Password?"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='card-body']/div[5]/a").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
 
         except Exception:
             pass

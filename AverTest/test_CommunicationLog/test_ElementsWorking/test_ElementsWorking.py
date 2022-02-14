@@ -190,36 +190,36 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
-            # # ---------------------------Verify Working of Back button on Communication log page-----------------------------
-            # PageName = "Back button on Communication log page"
-            # Ptitle1 = "Rae"
-            # try:
-            #     driver.find_element_by_xpath("//div[@class='content yellow_color']/div/div[2]/div/a").click()
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not "
-            #     TestResult.append(PageName + "  is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ---------------------------Verify Communication Log icon click after verifying back-----------------------------
-            # PageName = "Communication log icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-            #     time.sleep(2)
-            #     TestResult.append(PageName + "  is opened again after verifying back button")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not opened again after verifying back button")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
+            # ---------------------------Verify Working of Back button on Communication log page-----------------------------
+            PageName = "Back button on Communication log page"
+            Ptitle1 = "Rae"
+            try:
+                driver.find_element_by_xpath("//div[@class='content yellow_color']/div/div[2]/div/a").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + "  is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Communication Log icon click after verifying back-----------------------------
+            PageName = "Communication log icon"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
+                time.sleep(2)
+                TestResult.append(PageName + "  is opened again after verifying back button")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not opened again after verifying back button")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
             # # ---------------------------Verify Select entry dropdown working-----------------------------
             # for cv in range (5):
             #     DropdownValues = {"Email": "//select[@name='communication_type']/option","Letter": "//select[@name='communication_type']/option","SMS": "//select[@name='communication_type']/option    ","Phone Call": "//select[@name='communication_type']/option","New Plan Form": "//ul[@class='GeneralClientDetails']/li[1]"}
@@ -257,16 +257,17 @@ def test_VerifyAllClickables(test_setup):
             #     print(textFound)
             #     if textFound==TextCheck:
             #         print("aaaaa")
-            #         TestResult.append(TextCheck + " dropdown value inside --- is able to click")
+            #         TestResult.append(TextCheck + " dropdown value inside select entry dropdown is able to click")
             #         TestResultStatus.append("Pass")
             #     else:
             #         print("ccccc")
-            #         TestResult.append(TextCheck + " dropdown value inside --- is not able to click and open")
+            #         TestResult.append(TextCheck + " dropdown value inside select entry dropdown is not able to click and open")
             #         TestResultStatus.append("Fail")
             #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
             #     time.sleep(2)
             # print()
             # # ---------------------------------------------------------------------------------
+
             # ---------------------------Verify Choose template dropdown working-----------------------------
             for dct in range(2):
                 DropdownCT = {"General": "//div[@class='content yellow_color']/div[2]/div[1]/div/div/h2/small",
@@ -275,11 +276,11 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[2]/div/div/div/form/div/div/select"))
                 Selector = ['General', 'New Plan Form']
                 if dct == 0:
-                    select.select_by_visible_text(Selector[1])
+                    select.select_by_index(1)
                     TextCheck = Selector[1]
                     path = DropdownCT[Selector[1]]
                 elif dct == 1:
-                    select.select_by_visible_text(Selector[0])
+                    select.select_by_index(0)
                     TextCheck = Selector[0]
                     path = DropdownCT[Selector[0]]
                 textFound = driver.find_element_by_xpath(path).text
@@ -287,16 +288,18 @@ def test_VerifyAllClickables(test_setup):
                 print(textFound)
                 if textFound == TextCheck:
                     print("aaaaa")
-                    TestResult.append(TextCheck + " dropdown value inside --- is able to click")
+                    TestResult.append(TextCheck + " dropdown value inside Choose Template dropdown is able to click")
                     TestResultStatus.append("Pass")
                 else:
                     print("ccccc")
-                    TestResult.append(TextCheck + " dropdown value inside --- is not able to click and open")
+                    TestResult.append(TextCheck + " dropdown value inside Choose Template dropdown is not able to click and open")
                     TestResultStatus.append("Fail")
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
                 time.sleep(2)
             print()
             # ---------------------------------------------------------------------------------
+
+
 
 
 

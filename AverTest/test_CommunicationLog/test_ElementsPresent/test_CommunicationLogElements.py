@@ -176,11 +176,12 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      #driver.quit()
+      driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
+        TimeSpeed = 2
         SHORT_TIMEOUT = 2
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
@@ -191,12 +192,13 @@ def test_VerifyAllClickables(test_setup):
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
                 time.sleep(2)
-                TestResult.append(PageName + "  is present in left menu and able to click")
+                TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             #---------------------------------------------------------------------------------
 
             #---------------------------Verify Page title-----------------------------
@@ -206,23 +208,23 @@ def test_VerifyAllClickables(test_setup):
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='content yellow_color']/div[1]/div/form/div/div/div/label").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + "(Add new communication log)  is present")
+                TestResult.append(PageName + " (Add new communication log) is present")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + "(Add new communication log)  is not present")
+                TestResult.append(PageName + " (Add new communication log) is not present")
                 TestResultStatus.append("Fail")
             print()
             #---------------------------------------------------------------------------------
 
             #---------------------------Verify Presence of select entry dropdown-----------------------------
-            PageName = "Select entry dropdown"
+            PageName = "Select New Entry dropdown"
             Ptitle1 = "Select New Entry"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/option").text
                 print(PageTitle1)
 
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + " is present")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -230,6 +232,7 @@ def test_VerifyAllClickables(test_setup):
             print()
             PageTitle1 = driver.find_element_by_xpath(
                 "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select").click()
+            time.sleep(TimeSpeed)
             #---------------------------------------------------------------------------------
             #
             # ---------------------------Verify General dropdown Label-----------------------------
@@ -240,10 +243,10 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]").get_attribute('label')
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResult.append(PageName + " is present in select new entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResult.append(PageName + " is not present in select new entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
@@ -255,10 +258,10 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[1]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in select entry dropdown ")
+                TestResult.append(PageName + " is present in select new entry dropdown ")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResult.append(PageName + " is not present in select new entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
@@ -271,10 +274,10 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[2]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResult.append(PageName + " is present in select new entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResult.append(PageName + " is not present in select new entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
@@ -287,10 +290,10 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[3]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResult.append(PageName + " is present in select new entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResult.append(PageName + " is not present in select new entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
@@ -303,10 +306,10 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[1]/option[4]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResult.append(PageName + " is present in select new entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResult.append(PageName + " is not present in select new entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
@@ -319,10 +322,10 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[2]/option").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResult.append(PageName + " is present in select new entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResult.append(PageName + " is not present in select new entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
@@ -335,23 +338,23 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select/optgroup[2]/option").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in select entry dropdown")
+                TestResult.append(PageName + " is present in select new entry dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present in select entry dropdown")
+                TestResult.append(PageName + " is not present in select new entry dropdown")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Header of Choose Template dropdown-----------------------------
-            PageName = "Header of Choose Template dropdown"
+            PageName = "Choose Template dropdown title"
             Ptitle1 = "Choose Template"
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/label").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + " is present")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -367,7 +370,7 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select").get_attribute('id')
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + " is present")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -375,6 +378,7 @@ def test_VerifyAllClickables(test_setup):
             print()
             PageTitle1 = driver.find_element_by_xpath(
                 "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select").click()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify General dropdown value-----------------------------
@@ -385,7 +389,7 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select/option[1]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in Choose Template dropdown")
+                TestResult.append(PageName + " is present in Choose Template dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present in Choose Template dropdown")
@@ -401,7 +405,7 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select/option[2]").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present in Choose Template dropdown")
+                TestResult.append(PageName + " is present in Choose Template dropdown")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present in Choose Template dropdown")
@@ -417,7 +421,7 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[2]/div[1]/div/div/h2").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + " is present")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -426,18 +430,19 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------------------------------------------------------------
             #
             # ---------------------------Verify Filter search for Communication Log Listing-General table-----------------------------
-            PageName = "Filter search for Communication Log Listing-General table"
+            PageName = "Search box for Communication Log Listing-General table"
             Ptitle1 = "search"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//div[@id='comm-log-blank_filter']/label/input").get_attribute('type')
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 driver.find_element_by_xpath("//div[@id='comm-log-blank_filter']/label/input").send_keys("testing")
-                TestResult.append(PageName + "  is present and user is able to send inputs")
+                TestResult.append(PageName + " is present and user is able to send inputs")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # # ---------------------------Verify Presence of elements in Communication Log Listing-General table-----------------------------
@@ -462,12 +467,12 @@ def test_VerifyAllClickables(test_setup):
             if ItemPresent:
                 print("ItemPresent list is not empty")
                 ListC = ', '.join(ItemPresent)
-                TestResult.append("Below columns are present under " + inside + " table\n" + ListC)
+                TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
                 TestResultStatus.append("Pass")
             if ItemNotPresent:
                 print("ItemNotPresent list is not empty")
                 ListD = ', '.join(ItemNotPresent)
-                TestResult.append("Below columns are not present under " + inside + " table\n" + ListD)
+                TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
                 TestResultStatus.append("Fail")
             # # ---------------------------------------------------------------------------------
 
@@ -479,7 +484,7 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div[2]/div[3]/div/div/h2").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present")
+                TestResult.append(PageName + " is present")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -488,18 +493,19 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Filter search for Communication Log Listing - Draft General table-----------------------------
-            PageName = "Filter search for Communication Log Listing - Draft General table"
+            PageName = "Search box for Communication Log Listing - Draft General table"
             Ptitle1 = "search"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='content yellow_color']/div[2]/div[4]/div/div/div/label/input").get_attribute('type')
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 driver.find_element_by_xpath("//div[@class='content yellow_color']/div[2]/div[4]/div/div/div/label/input").send_keys("testabc")
-                TestResult.append(PageName + "  is present and user is able to send inputs")
+                TestResult.append(PageName + " is present and user is able to send inputs")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # # ---------------------------Verify Presence of elements in Communication Log Listing - Draft General-----------------------------
@@ -525,12 +531,12 @@ def test_VerifyAllClickables(test_setup):
             if ItemPresent:
                 print("ItemPresent list is not empty")
                 ListC = ', '.join(ItemPresent)
-                TestResult.append("Below columns are present under " + inside + " table\n" + ListC)
+                TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
                 TestResultStatus.append("Pass")
             if ItemNotPresent:
                 print("ItemNotPresent list is not empty")
                 ListD = ', '.join(ItemNotPresent)
-                TestResult.append("Below columns are not present under " + inside + " table\n" + ListD)
+                TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
                 TestResultStatus.append("Fail")
             # # ---------------------------------------------------------------------------------
             # ---------------------------Verify Presence of back button on communication log page-----------------------------
@@ -541,16 +547,15 @@ def test_VerifyAllClickables(test_setup):
                     "//div[@class='content yellow_color']/div/div[2]/div/a").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is present on communication log page")
+                TestResult.append(PageName + " is present")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present on communication log page")
+                TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
             # ---------------------------------------------------------------------------------
 
             # # ---------------------------------------------------------------------------------
-
         except Exception as err:
             print(err)
             pass

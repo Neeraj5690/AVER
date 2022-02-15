@@ -68,7 +68,7 @@ def test_setup():
 
   if Exe=="Yes":
       if platform == "linux" or platform == "linux2":
-          driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
+          driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
       elif platform == "win32" or platform == "win64":
           driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
 
@@ -526,20 +526,35 @@ def test_VerifyAllClickables(test_setup):
                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
                 time.sleep(TimeSpeed)
 
-                # -------Participant information table-------------------------------------------------
-                ParticipantInfo = driver.find_elements_by_xpath("//div[@id='client-div']/div[2]/div/table/tbody/tr")
-                RowsLength = len(ParticipantInfo)
-                for a in range(1,RowsLength, 2):
-                    driver.find_element_by_xpath(
-                        "//div[@id='client-div']/div[2]/div/table/tbody/tr["+str(a)+"]/td[3]/div/div/label[1]/input").click()
-                    time.sleep(TimeSpeed)
+                # # -------Participant information table-------------------------------------------------
+                # ParticipantInfo = driver.find_elements_by_xpath("//div[@id='client-div']/div[2]/div/table/tbody/tr")
+                # RowsLength = len(ParticipantInfo)
+                # for a in range(1,RowsLength, 2):
+                #     driver.find_element_by_xpath(
+                #         "//div[@id='client-div']/div[2]/div/table/tbody/tr["+str(a)+"]/td[3]/div/div/label[1]/input").click()
+                #     time.sleep(TimeSpeed)
 
                 # -------Additional contacts table-------------------------------------------------
+
+                print()
+                for scrolldown in range(1, 10):
+                    time.sleep(2)
+                    try:
+                        driver.find_element_by_xpath(
+                            "//div[@id='add-cont-div']/div/div/table/tbody/tr[1]/td")
+                        break
+                    except Exception:
+                        # ActionChains(driver).key_down(Keys.).perform()
+                        print("Inside Excep")
+                        ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
+                        print("Page Down")
+                        pass
+                AdditionalText = driver.find_elements_by_xpath(
+                    "//div[@id='add-cont-div']/div/div/table/tbody/tr[1]/td").text
+                print(AdditionalText)
                 AdditionalCont = driver.find_elements_by_xpath("//div[@id='add-cont-div']/div/div/table/tbody/tr")
-                AdditionalText = driver.find_elements_by_xpath("//div[@id='add-cont-div']/div/div/table/tbody/tr[1]/td").text
                 AddConLength = len(AdditionalCont)
                 print(AddConLength)
-                print(AdditionalText)
                 for i in range(1,AddConLength):
                     if "No Contacts Available" not in AdditionalText:
                         driver.find_element_by_xpath(
@@ -585,9 +600,7 @@ def test_VerifyAllClickables(test_setup):
                 print(AppText)
                 for ac in range(1,AppAccLength):
                     if "No Contacts Available" not in AppText:
-                        driver.find_element_by_xpath(
-                            "//div[@id='add-access-div']/div/div/table/tbody//tr[" + str(
-                                i) + "]/td[8]/div/div/label[1]/input").click()
+                        driver.find_element_by_xpath("//div[@id='add-access-div']/div/div/table/tbody//tr[" + str(i) + "]/td[8]/div/div/label[1]/input").click()
                         time.sleep(TimeSpeed)
                     if "No Contacts Available" in AppText:
                         driver.find_element_by_xpath(

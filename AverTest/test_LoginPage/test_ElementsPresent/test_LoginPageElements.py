@@ -169,6 +169,7 @@ def test_setup():
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
+        TimeSpeed = 1
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 400
         LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
@@ -186,6 +187,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName +" is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             #---------------------------------------------------------------------------------
 
             # ---------------------------Verify Username Field-----------------------------
@@ -201,6 +203,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Password Field-----------------------------
@@ -216,6 +219,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify SignIn Button-----------------------------
@@ -231,6 +235,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Lost Password Link-----------------------------
@@ -246,8 +251,8 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
-
 
         except Exception:
             pass

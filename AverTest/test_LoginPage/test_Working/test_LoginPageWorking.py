@@ -170,6 +170,7 @@ def test_setup():
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
+        TimeSpeed = 2
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 400
         LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
@@ -187,6 +188,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not able to enter")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Password Field-----------------------------
@@ -199,6 +201,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not able to enter")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify SignIn Button-----------------------------
@@ -211,6 +214,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not click")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Lost Password Link-----------------------------
@@ -226,6 +230,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not perform")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
 

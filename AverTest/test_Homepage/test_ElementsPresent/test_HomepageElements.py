@@ -34,7 +34,7 @@ def test_setup():
   global path
 
   TestName = "test_HomePageElements"
-  description = "This test scenario is to verify all the Elements present at Homepage of application"
+  description = "This test scenario is to verify all the Elements present and their working at Homepage"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -175,11 +175,12 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      #driver.quit()
+      driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
+        TimeSpeed = 2
         SHORT_TIMEOUT = 2
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
@@ -196,6 +197,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName +" is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             #---------------------------------------------------------------------------------
 
             #---------------------------Verify Hamburger icon-----------------------------
@@ -211,6 +213,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             #---------------------------------------------------------------------------------
 
             #---------------------------Verify Top Search box-----------------------------
@@ -226,6 +229,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             #---------------------------------------------------------------------------------
 
             #---------------------------Verify Calendar icon-----------------------------
@@ -249,6 +253,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
+            time.sleep(TimeSpeed)
             #---------------------------------------------------------------------------------
 
             #---------------------------Verify My profile drop down-----------------------------
@@ -275,7 +280,9 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             time.sleep(2)
+            time.sleep(TimeSpeed)
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
             # ---------------------------Verify Pagination clicks-----------------------------
             try:
@@ -287,7 +294,7 @@ def test_VerifyAllClickables(test_setup):
                         RecordsPerPage = driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
                         RecordsPerPage = int(RecordsPerPage)
                         TestResult.append(
-                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is successfully clicked")
+                            "Selected [ " + str(RecordsPerPage) + " ] no. of records per page")
                         TestResultStatus.append("Pass")
                     except Exception:
                         TestResult.append(
@@ -324,7 +331,7 @@ def test_VerifyAllClickables(test_setup):
                             TestResultStatus.append("Pass")
                             break
                         driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                        time.sleep(1)
+                        time.sleep(0.5)
                     if i != NumberOfPages - 1:
                         TestResult.append(
                             "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
@@ -343,7 +350,6 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             # # ---------------------------------------------------------------------------------
-
 
         except Exception as err:
             print(err)

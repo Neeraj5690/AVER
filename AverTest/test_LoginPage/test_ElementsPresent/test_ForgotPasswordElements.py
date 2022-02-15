@@ -28,6 +28,7 @@ def test_setup():
   global TestResultStatus
   global TestDirectoryName
   global path
+  from sys import platform
 
   TestName = "test_ForgotPasswordElements"
   description = "This test scenario is to verify all the Elements present at Forgot Password page"
@@ -39,8 +40,10 @@ def test_setup():
   global Exe
   Exe="Yes"
   Directory = 'test_LoginPage/'
-  path = 'C:/AVER/AverTest/' + Directory
-
+  if platform == "linux" or platform == "linux2":
+      path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
+  elif platform == "win32" or platform == "win64":
+      path = 'C:/AVER/AverTest/' + Directory
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
   wbx = openpyxl.load_workbook(locx)
@@ -57,7 +60,10 @@ def test_setup():
                   Exe="Yes"
 
   if Exe=="Yes":
-      driver=webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+      if platform == "linux" or platform == "linux2":
+          driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
+      elif platform == "win32" or platform == "win64":
+          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")

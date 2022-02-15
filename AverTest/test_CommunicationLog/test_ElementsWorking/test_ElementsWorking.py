@@ -10,6 +10,7 @@ import allure
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
+from sys import platform
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -45,7 +46,10 @@ def test_setup():
   global Exe
   Exe="Yes"
   Directory = 'test_CommunicationLog/'
-  path = 'C:/AVER/AverTest/' + Directory
+  if platform == "linux" or platform == "linux2":
+      path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
+  elif platform == "win32" or platform == "win64":
+      path = 'C:/AVER/AverTest/' + Directory
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -63,7 +67,11 @@ def test_setup():
                   Exe="Yes"
 
   if Exe=="Yes":
-      driver=webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+      if platform == "linux" or platform == "linux2":
+          driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
+      elif platform == "win32" or platform == "win64":
+          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
@@ -533,11 +541,11 @@ def test_VerifyAllClickables(test_setup):
                 print(AddConLength)
                 print(AdditionalText)
                 for i in range(1,AddConLength):
-                    if AdditionalText !="No Contacts Available":
+                    if "No Contacts Available" not in AdditionalText:
                         driver.find_element_by_xpath(
                             "//div[@id='add-cont-div']/div/div/table/tbody/tr["+str(i)+"]/td[8]/div/div/label[1]/input").click()
                         time.sleep(TimeSpeed)
-                    if AdditionalText == "No Contacts Available":
+                    if "No Contacts Available" in AdditionalText:
                         driver.find_element_by_xpath(
                             "//div[@id='add-cont-div']/div/div/table/tbody/tr[last()]/td/a").click()
                         time.sleep(TimeSpeed)
@@ -576,12 +584,12 @@ def test_VerifyAllClickables(test_setup):
                 print(AppAccLength)
                 print(AppText)
                 for ac in range(1,AppAccLength):
-                    if AppText != "No Contacts Available":
+                    if "No Contacts Available" not in AppText:
                         driver.find_element_by_xpath(
                             "//div[@id='add-access-div']/div/div/table/tbody//tr[" + str(
                                 i) + "]/td[8]/div/div/label[1]/input").click()
                         time.sleep(TimeSpeed)
-                    if AppAccLength == 1:
+                    if "No Contacts Available" in AppText:
                         driver.find_element_by_xpath(
                             "//div[@id='add-access-div']/div/div/table/tbody/tr[2]/td/a").click()
                         time.sleep(TimeSpeed)
@@ -612,8 +620,6 @@ def test_VerifyAllClickables(test_setup):
                             "//div[@id='AddClientAccess']/div/div/div[2]/form/div[last()]/button").click()
                         time.sleep(TimeSpeed)
                         print("App access added successfully")
-
-
 
                 # # -------Add Additional Contacts-------------------------------------------------
                 # driver.find_element_by_xpath(
@@ -647,34 +653,34 @@ def test_VerifyAllClickables(test_setup):
                 #     "//div[@id='add-access-div']/div/div/table/tbody/tr[1]/td[8]/div/div/label[1]/input").click()
                 # time.sleep(TimeSpeed)
                 #
-                # -------Add App Access-------------------------------------------------
-                driver.find_element_by_xpath(
-                        "//div[@id='add-access-div']/div/div/table/tbody/tr[2]/td/a").click()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//div[@id='AddClientAccess']/div/div/div[2]/form/div[1]/div/input").send_keys("Test First Name")
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//div[@id='AddClientAccess']/div/div/div[2]/form/div[2]/div/input").send_keys("Test Last Name")
-                time.sleep(TimeSpeed)
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@id='AddClientAccess']/div/div/div[2]/form/div[3]/div/select"))
-                select.select_by_visible_text("Grandma")
-                time.sleep(TimeSpeed)
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@id='AddClientAccess']/div/div/div[2]/form/div[4]/div/select"))
-                select.select_by_visible_text("sumreet SP")
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//div[@id='AddClientAccess']/div/div/div[2]/form/div[5]/div/input").send_keys("abc@test.com")
-                time.sleep(TimeSpeed)
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@id='AddClientAccess']/div/div/div[2]/form/div[6]/div/select"))
-                select.select_by_visible_text("Account Nominee")
-                driver.find_element_by_xpath(
-                    "//div[@id='AddClientAccess']/div/div/div[2]/form/div[last()]/button").click()
-                time.sleep(TimeSpeed)
-                print("App access added successfully")
+                # # -------Add App Access-------------------------------------------------
+                # driver.find_element_by_xpath(
+                #         "//div[@id='add-access-div']/div/div/table/tbody/tr[2]/td/a").click()
+                # time.sleep(TimeSpeed)
+                # driver.find_element_by_xpath(
+                #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[1]/div/input").send_keys("Test First Name")
+                # time.sleep(TimeSpeed)
+                # driver.find_element_by_xpath(
+                #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[2]/div/input").send_keys("Test Last Name")
+                # time.sleep(TimeSpeed)
+                # select = Select(driver.find_element_by_xpath(
+                #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[3]/div/select"))
+                # select.select_by_visible_text("Grandma")
+                # time.sleep(TimeSpeed)
+                # select = Select(driver.find_element_by_xpath(
+                #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[4]/div/select"))
+                # select.select_by_visible_text("sumreet SP")
+                # time.sleep(TimeSpeed)
+                # driver.find_element_by_xpath(
+                #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[5]/div/input").send_keys("abc@test.com")
+                # time.sleep(TimeSpeed)
+                # select = Select(driver.find_element_by_xpath(
+                #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[6]/div/select"))
+                # select.select_by_visible_text("Account Nominee")
+                # driver.find_element_by_xpath(
+                #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[last()]/button").click()
+                # time.sleep(TimeSpeed)
+                # print("App access added successfully")
 
                 # -------Communication log New plan form-------------------------------------------------
                 driver.find_element_by_xpath(

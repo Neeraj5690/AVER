@@ -6,11 +6,7 @@ import pytest
 from selenium import webdriver
 import allure
 import imaplib
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-
+from sys import platform
 
 @allure.step("Entering username ")
 def enter_username(username):
@@ -40,7 +36,10 @@ def test_setup():
   global Exe
   Exe="Yes"
   Directory = 'test_LoginPage/'
-  path = 'C:/AVER/AverTest/' + Directory
+  if platform == "linux" or platform == "linux2":
+      path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
+  elif platform == "win32" or platform == "win64":
+      path = 'C:/AVER/AverTest/' + Directory
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -58,7 +57,11 @@ def test_setup():
                   Exe="Yes"
 
   if Exe=="Yes":
-      driver=webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+      if platform == "linux" or platform == "linux2":
+          driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
+      elif platform == "win32" or platform == "win64":
+          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")

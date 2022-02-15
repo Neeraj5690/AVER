@@ -7,6 +7,7 @@ from email.mime.text import MIMEText
 import openpyxl
 import pandas as pd
 import pytest
+from sys import platform
 
 @pytest.mark.smoke
 def test_ReportSendSmokeAll():
@@ -19,7 +20,10 @@ def test_ReportSendSmokeAll():
     SendStatus = []
     AttachmntAdded= []
     Directory= 'test_LoginPage/'
-    PDFpath = 'C:/AVER/AverTest/'+Directory
+    if platform == "linux" or platform == "linux2":
+        PDFpath = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
+    elif platform == "win32" or platform == "win64":
+        PDFpath = 'C:/AVER/AverTest/' + Directory
 
     #-------------------To read content to send in e-Mail--------------------
     ExcelFileName = "FileName"

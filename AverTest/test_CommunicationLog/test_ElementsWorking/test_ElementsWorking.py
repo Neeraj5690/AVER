@@ -528,14 +528,16 @@ def test_VerifyAllClickables(test_setup):
 
                 # -------Additional contacts table-------------------------------------------------
                 AdditionalCont = driver.find_elements_by_xpath("//div[@id='add-cont-div']/div/div/table/tbody/tr")
+                AdditionalText = driver.find_elements_by_xpath("//div[@id='add-cont-div']/div/div/table/tbody/tr[1]/td").text
                 AddConLength = len(AdditionalCont)
                 print(AddConLength)
+                print(AdditionalText)
                 for i in range(1,AddConLength):
-                    if AddConLength >1:
+                    if AdditionalText !="No Contacts Available":
                         driver.find_element_by_xpath(
                             "//div[@id='add-cont-div']/div/div/table/tbody/tr["+str(i)+"]/td[8]/div/div/label[1]/input").click()
                         time.sleep(TimeSpeed)
-                    if RowsLength == 1:
+                    if AdditionalText == "No Contacts Available":
                         driver.find_element_by_xpath(
                             "//div[@id='add-cont-div']/div/div/table/tbody/tr[last()]/td/a").click()
                         time.sleep(TimeSpeed)
@@ -569,10 +571,12 @@ def test_VerifyAllClickables(test_setup):
 
                 # -------App access table-------------------------------------------------
                 AppAccess = driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr")
+                AppText =  driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr[1]/td").text
                 AppAccLength = len(AppAccess)
                 print(AppAccLength)
+                print(AppText)
                 for ac in range(1,AppAccLength):
-                    if AppAccLength >1:
+                    if AppText != "No Contacts Available":
                         driver.find_element_by_xpath(
                             "//div[@id='add-access-div']/div/div/table/tbody//tr[" + str(
                                 i) + "]/td[8]/div/div/label[1]/input").click()

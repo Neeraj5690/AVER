@@ -184,7 +184,7 @@ def test_setup():
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
-        TimeSpeed = 1
+        TimeSpeed = 2
         SHORT_TIMEOUT = 3
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
@@ -274,7 +274,6 @@ def test_VerifyAllClickables(test_setup):
                     textFound=textFound[1]
 
                 textFound=textFound.strip()
-                print(textFound)
                 if textFound==TextCheck:
                     TestResult.append(TextCheck + " dropdown value inside select new entry dropdown is able to click and open")
                     TestResultStatus.append("Pass")
@@ -305,7 +304,6 @@ def test_VerifyAllClickables(test_setup):
                     path1 = DropdownCT[Selector[0]]
                 textFound = driver.find_element_by_xpath(path1).text
 
-                print(textFound)
                 if textFound == TextCheck:
                     TestResult.append(TextCheck + " dropdown value inside Choose Template dropdown is able to click")
                     TestResultStatus.append("Pass")
@@ -324,11 +322,8 @@ def test_VerifyAllClickables(test_setup):
                 substr = "of"
                 x = TotalItem.split(substr)
                 string_name = x[0]
-                print(string_name)
                 TotalItemAfterOf = x[1]
-                print(TotalItemAfterOf)
                 abc = ""
-                print(abc)
                 countspace = 0
                 for element in range(0, len(string_name)):
                     if string_name[(len(string_name) - 1) - element] == " ":
@@ -342,21 +337,29 @@ def test_VerifyAllClickables(test_setup):
                 TotalItemAfterOf = TotalItemAfterOf.split(" ")
                 TotalItemAfterOf=TotalItemAfterOf[1]
                 TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-                print(TotalItemAfterOf)
 
                 TotalItemAfterOf = int(TotalItemAfterOf)
                 RecordsPerPage=50
                 TotalPages = TotalItemAfterOf/RecordsPerPage
                 NumberOfPages = math.ceil(float(TotalPages))
-
+                ClickCounter=0
                 for i in range(NumberOfPages):
-                    if i==NumberOfPages-1:
-                        TestResult.append("Pagination for [ "+str(RecordsPerPage)+" ] no. of records is successfully verified")
+                    if i<1:
+                        if i==NumberOfPages-1:
+                            TestResult.append("No Pagination found for [ "+str(RecordsPerPage)+" ] no. of records under Communication Log Listing - General table")
+                            TestResultStatus.append("Pass")
+                            break
+                    try:
+                        time.sleep(TimeSpeed)
+                        driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+                        time.sleep(1)
+                        ClickCounter=ClickCounter+1
+                        TestResult.append("Pagination verified for [ " + str(
+                            TotalItemAfterOf) + " ] no. of records under Communication Log Listing - General table")
                         TestResultStatus.append("Pass")
-                        break
-                    driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                    time.sleep(1)
-                if i != NumberOfPages - 1:
+                    except Exception as cc:
+                        pass
+                if i != ClickCounter:
                     TestResult.append(
                         "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
                     TestResultStatus.append("Fail")
@@ -370,8 +373,7 @@ def test_VerifyAllClickables(test_setup):
                 except TimeoutException:
                     pass
             except Exception as aq:
-                print(aq)
-                TestResult.append(PageName + " is not present")
+                TestResult.append("Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
                 TestResultStatus.append("Fail")
 
             # ---------------------------Verify Add new process by all Select entry dropdowns-----
@@ -759,7 +761,7 @@ def test_VerifyAllClickables(test_setup):
 
         except Exception as err:
             print(err)
-            TestResult.append("Communication Log is not working correctly. Below error found\n"+err)
+            TestResult.append("Communication Log is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

@@ -205,7 +205,37 @@ def test_VerifyAllClickables(test_setup):
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
+            Lista=[]
+            Listb=[]
+            elem = driver.find_elements_by_xpath("//a[@href]")
+            for elema in elem:
+                Lista.append(elema.get_attribute("href"))
+            for qw in range(len(elem)):
+                try:
+                    check=Lista[qw]
+                    if "logout" in Lista[qw]:
+                        print("logout found")
+                    elif "Logout" in Lista[qw]:
+                        print("logout found")
+                    elif "storage" in Lista[qw]:
+                        print("storage found")
+                    elif check in Listb:
+                        print(check+ " already exist")
+                    else:
+                        driver.get(Lista[qw])
+                        try:
+                            WebDriverWait(driver, SHORT_TIMEOUT
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
+                            WebDriverWait(driver, LONG_TIMEOUT
+                                          ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        except TimeoutException:
+                            pass
+                except Exception as aa:
+                    print(aa)
+                    pass
+                Listb.append(check)
+            driver.close()
             # # ---------------------------Verify Page title-----------------------------
             # PageName = "Page title"
             # Ptitle1 = "Invoice Entry "
@@ -477,98 +507,146 @@ def test_VerifyAllClickables(test_setup):
             # print()
             # # --------------------------------------------------------------------------------------------------------
             #
-            # # ---------------------------Verify Presence of Exclude Paid Invoices check box-----------------------------
-            # PageName = "Exclude Paid Invoices check box"
-            # Ptitle1 = "form-check-label"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//div[@class='row invce_dta']/div[1]/div[1]/div[3]/label").get_attribute('class')
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not "
-            #     TestResult.append(PageName + " is present for Invoice entry table")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present for Invoice entry table")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ----------------------------------------------------------------------------------------------------------
-
-            # ---------------------------Verify Pagination clicks for Invoice entry table-----------------------------
-            PageName = "Invoice entry table"
-            NumberOfPages = "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[14]/a"
-            LimitDropdown = "//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select"
+            # ---------------------------Verify Presence of Exclude Paid Invoices check box-----------------------------
+            PageName = "Exclude Paid Invoices check box"
+            Ptitle1 = "True"
             try:
-                for i1 in range(4):
-                    try:
-                        select = Select(driver.find_element_by_xpath("//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select"))
-                        select.select_by_index(i1)
-                        time.sleep(1)
-                        RecordsPerPage = driver.find_element_by_xpath("//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select/option").text
-                        RecordsPerPage = int(RecordsPerPage)
-                        TestResult.append(
-                            "Selected [ " + str(RecordsPerPage) + " ] no. of records per page")
-                        TestResultStatus.append("Pass")
-                    except Exception:
-                        TestResult.append(
-                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not able to click")
-                        TestResultStatus.append("Fail")
-                for scrolldown in range(1, 10):
-                    time.sleep(2)
-                    try:
-                        driver.execute_script("arguments[0].scrollIntoView();", NumberOfPages)
-                        # driver.find_element_by_xpath(
-                        #     "").click()
-                        break
-                    except Exception:
-                        # ActionChains(driver).key_down(Keys.).perform()
-                        print("Inside Excep")
-                        ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
-                        print("Page Down")
-                        pass
-                NumberOfPages = driver.find_element_by_xpath(
-                    "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[14]/a").text
-                NumberOfPages = int(NumberOfPages)
-                print(NumberOfPages)
-                for sl in range(NumberOfPages):
-                    if sl == NumberOfPages - 1:
-                        TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
-                        TestResultStatus.append("Pass")
-                        break
-                    driver.find_element_by_xpath(
-                        "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[last()]/a").click()
-                    time.sleep(1)
-                if sl != NumberOfPages - 1:
-                    TestResult.append(
-                        (
-                                "Pagination for " + str(PageName) + " is not working correctly"))
-                    TestResultStatus.append("Fail")
-                driver.refresh()
-                for scrolldown in range(1, 10):
-                    time.sleep(2)
-                    try:
-                        driver.execute_script("arguments[0].scrollIntoView();", LimitDropdown)
-                        # driver.find_element_by_xpath(
-                        #     "").click()
-                        break
-                    except Exception:
-                        # ActionChains(driver).key_down(Keys.).perform()
-                        print("Inside Excep")
-                        ActionChains(driver).key_down(Keys.PAGE_UP).perform()
-                        print("Page Down")
-                        pass
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-            except Exception as aq:
-                print(aq)
-                TestResult.append("Pagination for " + str(PageName) + " is not present")
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//div[@class='row invce_dta']/div[1]/div[1]/div[3]/label/input").is_displayed()
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + " is present for Invoice entry table")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present for Invoice entry table")
                 TestResultStatus.append("Fail")
+            print()
             # ----------------------------------------------------------------------------------------------------------
+
+            # ---------------------------Verify Presence of Reference number check box-----------------------------
+            PageName = "Reference number check box"
+            Ptitle1 = "True"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//table[@class='table datatable-sorting']/thead/tr/th[1]/input").is_displayed()
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not "
+                TestResult.append(PageName + " is present for Invoice entry table")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present for Invoice entry table")
+                TestResultStatus.append("Fail")
+            print()
+            # ----------------------------------------------------------------------------------------------------------
+
+            # ---------------------------Verify Presence of elements in Invoice entry table-----------------------------
+            inside = "Invoice entry"
+            # ---------------loop for Columns in table for Funds View----------
+            ItemList = ["#", "Created", "Invoice Date", "Service Provider", "Invoice Number",
+                        "Client", "Action"]
+            print(len(ItemList))
+            ItemPresent = []
+            ItemNotPresent = []
+            for ii in range(len(ItemList)):
+                Text1 = ItemList[ii]
+                try:
+                    Element1 = driver.find_element_by_xpath(
+                        "//table[@class='table datatable-sorting']/thead/tr/th[" + str(ii + 1) + "]").text
+                except Exception:
+                    pass
+                try:
+                    assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
+                    ItemPresent.append(Text1)
+                except Exception as e1:
+                    ItemNotPresent.append(Text1)
+            if ItemPresent:
+                print("ItemPresent list is not empty")
+                ListC = ', '.join(ItemPresent)
+                TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
+                TestResultStatus.append("Pass")
+            if ItemNotPresent:
+                print("ItemNotPresent list is not empty")
+                ListD = ', '.join(ItemNotPresent)
+                TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
+                TestResultStatus.append("Fail")
+            # ---------------------------------------------------------------------------------
+
+            # # ---------------------------Verify Pagination clicks for Invoice entry table-----------------------------
+            # PageName = "Invoice entry table"
+            # NumberOfPages = "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[14]/a"
+            # LimitDropdown = "//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select"
+            # try:
+            #     for i1 in range(4):
+            #         try:
+            #             select = Select(driver.find_element_by_xpath("//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select"))
+            #             select.select_by_index(i1)
+            #             time.sleep(1)
+            #             RecordsPerPage = driver.find_element_by_xpath("//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select/option").text
+            #             RecordsPerPage = int(RecordsPerPage)
+            #             TestResult.append(
+            #                 "Selected [ " + str(RecordsPerPage) + " ] no. of records per page")
+            #             TestResultStatus.append("Pass")
+            #         except Exception:
+            #             TestResult.append(
+            #                 "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not able to click")
+            #             TestResultStatus.append("Fail")
+            #     for scrolldown in range(1, 10):
+            #         time.sleep(2)
+            #         try:
+            #             driver.execute_script("arguments[0].scrollIntoView();", NumberOfPages)
+            #             # driver.find_element_by_xpath(
+            #             #     "").click()
+            #             break
+            #         except Exception:
+            #             # ActionChains(driver).key_down(Keys.).perform()
+            #             print("Inside Excep")
+            #             ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
+            #             print("Page Down")
+            #             pass
+            #     NumberOfPages = driver.find_element_by_xpath(
+            #         "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[14]/a").text
+            #     NumberOfPages = int(NumberOfPages)
+            #     print(NumberOfPages)
+            #     for sl in range(NumberOfPages):
+            #         if sl == NumberOfPages - 1:
+            #             TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
+            #             TestResultStatus.append("Pass")
+            #             break
+            #         driver.find_element_by_xpath(
+            #             "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[last()]/a").click()
+            #         time.sleep(1)
+            #     if sl != NumberOfPages - 1:
+            #         TestResult.append(
+            #             (
+            #                     "Pagination for " + str(PageName) + " is not working correctly"))
+            #         TestResultStatus.append("Fail")
+            #     driver.refresh()
+            #     for scrolldown in range(1, 10):
+            #         time.sleep(2)
+            #         try:
+            #             driver.execute_script("arguments[0].scrollIntoView();", LimitDropdown)
+            #             # driver.find_element_by_xpath(
+            #             #     "").click()
+            #             break
+            #         except Exception:
+            #             # ActionChains(driver).key_down(Keys.).perform()
+            #             print("Inside Excep")
+            #             ActionChains(driver).key_down(Keys.PAGE_UP).perform()
+            #             print("Page Down")
+            #             pass
+            #     try:
+            #         WebDriverWait(driver, SHORT_TIMEOUT
+            #                       ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+            #
+            #         WebDriverWait(driver, LONG_TIMEOUT
+            #                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+            #     except TimeoutException:
+            #         pass
+            # except Exception as aq:
+            #     print(aq)
+            #     TestResult.append("Pagination for " + str(PageName) + " is not present")
+            #     TestResultStatus.append("Fail")
+            # # ----------------------------------------------------------------------------------------------------------
 
             # # ---------------------------Verify Presence of No. of invoices selected text-----------------------------
             # PageName = "No. of invoices selected text"

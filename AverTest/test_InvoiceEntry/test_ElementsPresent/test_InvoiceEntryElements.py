@@ -205,37 +205,7 @@ def test_VerifyAllClickables(test_setup):
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
-            Lista=[]
-            Listb=[]
-            elem = driver.find_elements_by_xpath("//a[@href]")
-            for elema in elem:
-                Lista.append(elema.get_attribute("href"))
-            for qw in range(len(elem)):
-                try:
-                    check=Lista[qw]
-                    if "logout" in Lista[qw]:
-                        print("logout found")
-                    elif "Logout" in Lista[qw]:
-                        print("logout found")
-                    elif "storage" in Lista[qw]:
-                        print("storage found")
-                    elif check in Listb:
-                        print(check+ " already exist")
-                    else:
-                        driver.get(Lista[qw])
-                        try:
-                            WebDriverWait(driver, SHORT_TIMEOUT
-                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
-                            WebDriverWait(driver, LONG_TIMEOUT
-                                          ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                        except TimeoutException:
-                            pass
-                except Exception as aa:
-                    print(aa)
-                    pass
-                Listb.append(check)
-            driver.close()
             # # ---------------------------Verify Page title-----------------------------
             # PageName = "Page title"
             # Ptitle1 = "Invoice Entry "

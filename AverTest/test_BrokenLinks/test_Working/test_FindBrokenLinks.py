@@ -31,8 +31,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_LoginPageWorking"
-  description = "This test scenario is to verify working of Login Process"
+  TestName = "test_FindBrokenLinks.py"
+  description = "This test scenario is to verify Broken links"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -180,16 +180,17 @@ def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
         TimeSpeed = 2
         SHORT_TIMEOUT = 5
-        LONG_TIMEOUT = 400
+        LONG_TIMEOUT = 200
         LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
 
         try:
             print()
-            Lista = []
             Listb = []
+            elem = []
 
             for ii in range(14):
                 try:
+                    elem.clear()
                     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li["+str(ii)+"]/a/i").click()
                     try:
                         WebDriverWait(driver, SHORT_TIMEOUT
@@ -199,7 +200,7 @@ def test_VerifyAllClickables(test_setup):
                                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                     except TimeoutException:
                         pass
-                    time.sleep(2)
+                    time.sleep(1)
                     elem = driver.find_elements_by_xpath("//a[@href]")
                     for elema in elem:
                         if len(elema.get_attribute("href")) > 1:
@@ -218,16 +219,12 @@ def test_VerifyAllClickables(test_setup):
                                     Listb.append(elema.get_attribute("href"))
 
                 except Exception as dd:
-                    print(dd)
                     pass
 
-            print(Listb)
             print(len(Listb))
-            driver.close()
-
             for ad in range (len(Listb)):
-                time.sleep(1)
                 try:
+                    print(Listb[ad])
                     driver.get(Listb[ad])
                 except Exception as cl:
                     print(cl)

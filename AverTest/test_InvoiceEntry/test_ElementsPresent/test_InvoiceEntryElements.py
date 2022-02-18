@@ -206,308 +206,646 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Page title-----------------------------
-            PageName = "Page title"
-            Ptitle1 = "Invoice Entry "
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//h2[text()='Invoice Entry ']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " (Invoice Entry) is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " (Invoice Entry) is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Total Count tab -------------------------------------
-            PageName = "Total Count tab"
-            Ptitle1 = "Total Count"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//p[text()='Total Count:- ']").text
-                print(PageTitle1)
-                if ":-\n" in PageTitle1:
-                    PageTitle1 = PageTitle1.split(":-\n")
-                    PageTitle1 = PageTitle1[0]
-                    print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Total amount tab -------------------------------------
-            PageName = "Total amount tab"
-            Ptitle1 = "Total Amount"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//p[text()='Total Amount:- ']").text
-                print(PageTitle1)
-                if ":-\n" in PageTitle1:
-                    PageTitle1 = PageTitle1.split(":-\n")
-                    PageTitle1 = PageTitle1[0]
-                    print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of XERO CSV button-------------------------------------
-            PageName = "XERO CSV button"
-            Ptitle1 = "XERO CSV"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//button[text()='XERO CSV']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Create New button-------------------------------------
-            PageName = "Create New button"
-            Ptitle1 = "Create New"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//a[text()='Create New']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Back button-------------------------------------
-            PageName = "Back button"
-            Ptitle1 = "Back"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//a[text()='Back']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Report button-------------------------------------
-            PageName = "Report button"
-            Ptitle1 = "Report"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//button[text()='Report']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Action button-------------------------------------
-            PageName = "Action button"
-            Ptitle1 = "actionBtn"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//button[@id='actionBtn']").get_attribute('id')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of From date field-------------------------------------
-            PageName = "From date field"
-            Ptitle1 = "search_date_from"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//input[@id='search_date_from']").send_keys("11-02-2022")
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//input[@id='search_date_from']").get_attribute('id')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present and user able to to send inputs")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # -----------------------------------------------------------------------------------------------
-            # ---------------------------Verify Presence of To date field-------------------------------------
-            PageName = "To date field"
-            Ptitle1 = "search_date_to"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//input[@id='search_date_to']").send_keys("17-02-2022")
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//input[@id='search_date_to']").get_attribute('id')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is present and user able to to send inputs")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Limit dropdown-----------------------------
-            PageName = "Limit dropdown"
-            Ptitle1 = "50"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//select[@id='invoice_entry_listing_limit']/option[1]").text
-                print(PageTitle1)
-
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            PageTitle1 = driver.find_element_by_xpath(
-                "//select[@id='invoice_entry_listing_limit']").click()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify 50 dropdown value-----------------------------
-            PageName = "50 dropdown value"
-            Ptitle1 = "50"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//select[@id='invoice_entry_listing_limit']/option[1]").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present in limit dropdown")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present in limit dropdown")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify 100 dropdown value-----------------------------
-            PageName = "100 dropdown value"
-            Ptitle1 = "100"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//select[@id='invoice_entry_listing_limit']/option[2]").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present in limit dropdown")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present in limit dropdown")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify 300 dropdown value-----------------------------
-            PageName = "300 dropdown value"
-            Ptitle1 = "300"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//select[@id='invoice_entry_listing_limit']/option[3]").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present in limit dropdown")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present in limit dropdown")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify 500 dropdown value-----------------------------
-            PageName = "500 dropdown value"
-            Ptitle1 = "500"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//select[@id='invoice_entry_listing_limit']/option[4]").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present in limit dropdown")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present in limit dropdown")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Clear Filter button-----------------------------
-            PageName = "Clear Filter button"
-            Ptitle1 = "Clear Filter"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//a[text()='Clear Filter']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Exclude Paid Invoices check box-----------------------------
-            PageName = "Exclude Paid Invoices check box"
-            Ptitle1 = "form-check-label"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//div[@class='row invce_dta']/div[1]/div[1]/div[3]/label").get_attribute('class')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # # ---------------------------Verify Pagination clicks for Invoice entry table-----------------------------
-            # PageName = "Invoice entry table"
+            # # ---------------------------Verify Page title-----------------------------
+            # PageName = "Page title"
+            # Ptitle1 = "Invoice Entry "
             # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//h2[text()='Invoice Entry ']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " (Invoice Entry) is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " (Invoice Entry) is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Total Count tab -------------------------------------
+            # PageName = "Total Count tab"
+            # Ptitle1 = "Total Count"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//p[text()='Total Count:- ']").text
+            #     print(PageTitle1)
+            #     if ":-\n" in PageTitle1:
+            #         PageTitle1 = PageTitle1.split(":-\n")
+            #         PageTitle1 = PageTitle1[0]
+            #         print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Total amount tab -------------------------------------
+            # PageName = "Total amount tab"
+            # Ptitle1 = "Total Amount"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//p[text()='Total Amount:- ']").text
+            #     print(PageTitle1)
+            #     if ":-\n" in PageTitle1:
+            #         PageTitle1 = PageTitle1.split(":-\n")
+            #         PageTitle1 = PageTitle1[0]
+            #         print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of XERO CSV button-------------------------------------
+            # PageName = "XERO CSV button"
+            # Ptitle1 = "XERO CSV"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//button[text()='XERO CSV']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Create New button-------------------------------------
+            # PageName = "Create New button"
+            # Ptitle1 = "Create New"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//a[text()='Create New']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Back button-------------------------------------
+            # PageName = "Back button"
+            # Ptitle1 = "Back"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//a[text()='Back']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Report button-------------------------------------
+            # PageName = "Report button"
+            # Ptitle1 = "Report"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//button[text()='Report']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Action button-------------------------------------
+            # PageName = "Action button"
+            # Ptitle1 = "actionBtn"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//button[@id='actionBtn']").get_attribute('id')
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of From date field-------------------------------------
+            # PageName = "From date field"
+            # Ptitle1 = "search_date_from"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_date_from']").send_keys("11-02-2022")
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_date_from']").get_attribute('name')
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present for Invoice entry table and user able to send inputs")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for Invoice entry table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # -----------------------------------------------------------------------------------------------
+            # # ---------------------------Verify Presence of To date field-------------------------------------
+            # PageName = "To date field"
+            # Ptitle1 = "search_date_to"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_date_to']").send_keys("17-02-2022")
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_date_to']").get_attribute('name')
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present for Invoice entry table and user able to send inputs")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for Invoice entry table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Limit dropdown-----------------------------
+            # PageName = "Limit dropdown"
+            # Ptitle1 = "50"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//select[@id='invoice_entry_listing_limit']/option[1]").text
+            #     print(PageTitle1)
+            #
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present for Invoice entry table")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for Invoice entry table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # PageTitle1 = driver.find_element_by_xpath(
+            #     "//select[@id='invoice_entry_listing_limit']").click()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify 50 dropdown value-----------------------------
+            # PageName = "50 dropdown value"
+            # Ptitle1 = "50"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//select[@id='invoice_entry_listing_limit']/option[1]").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present in limit dropdown")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present in limit dropdown")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify 100 dropdown value-----------------------------
+            # PageName = "100 dropdown value"
+            # Ptitle1 = "100"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//select[@id='invoice_entry_listing_limit']/option[2]").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present in limit dropdown")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present in limit dropdown")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify 300 dropdown value-----------------------------
+            # PageName = "300 dropdown value"
+            # Ptitle1 = "300"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//select[@id='invoice_entry_listing_limit']/option[3]").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present in limit dropdown")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present in limit dropdown")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify 500 dropdown value-----------------------------
+            # PageName = "500 dropdown value"
+            # Ptitle1 = "500"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//select[@id='invoice_entry_listing_limit']/option[4]").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present in limit dropdown")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present in limit dropdown")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Clear Filter button-----------------------------
+            # PageName = "Clear Filter button"
+            # Ptitle1 = "Clear Filter"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//a[text()='Clear Filter']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present for Invoice entry table")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for Invoice entry table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # --------------------------------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Exclude Paid Invoices check box-----------------------------
+            # PageName = "Exclude Paid Invoices check box"
+            # Ptitle1 = "form-check-label"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//div[@class='row invce_dta']/div[1]/div[1]/div[3]/label").get_attribute('class')
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present for Invoice entry table")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for Invoice entry table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ----------------------------------------------------------------------------------------------------------
+
+            # ---------------------------Verify Pagination clicks for Invoice entry table-----------------------------
+            PageName = "Invoice entry table"
+            NumberOfPages = "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[14]/a"
+            LimitDropdown = "//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select"
+            try:
+                for i1 in range(4):
+                    try:
+                        select = Select(driver.find_element_by_xpath("//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select"))
+                        select.select_by_index(i1)
+                        time.sleep(1)
+                        RecordsPerPage = driver.find_element_by_xpath("//div[@class='row invce_dta']/div[1]/div[1]/div[2]/select/option").text
+                        RecordsPerPage = int(RecordsPerPage)
+                        TestResult.append(
+                            "Selected [ " + str(RecordsPerPage) + " ] no. of records per page")
+                        TestResultStatus.append("Pass")
+                    except Exception:
+                        TestResult.append(
+                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not able to click")
+                        TestResultStatus.append("Fail")
+                for scrolldown in range(1, 10):
+                    time.sleep(2)
+                    try:
+                        driver.execute_script("arguments[0].scrollIntoView();", NumberOfPages)
+                        # driver.find_element_by_xpath(
+                        #     "").click()
+                        break
+                    except Exception:
+                        # ActionChains(driver).key_down(Keys.).perform()
+                        print("Inside Excep")
+                        ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
+                        print("Page Down")
+                        pass
+                NumberOfPages = driver.find_element_by_xpath(
+                    "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[14]/a").text
+                NumberOfPages = int(NumberOfPages)
+                print(NumberOfPages)
+                for sl in range(NumberOfPages):
+                    if sl == NumberOfPages - 1:
+                        TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
+                        TestResultStatus.append("Pass")
+                        break
+                    driver.find_element_by_xpath(
+                        "//table[@class='table datatable-sorting']/tbody/tr[last()]/td/nav/ul/li[last()]/a").click()
+                    time.sleep(1)
+                if sl != NumberOfPages - 1:
+                    TestResult.append(
+                        (
+                                "Pagination for " + str(PageName) + " is not working correctly"))
+                    TestResultStatus.append("Fail")
+                driver.refresh()
+                for scrolldown in range(1, 10):
+                    time.sleep(2)
+                    try:
+                        driver.execute_script("arguments[0].scrollIntoView();", LimitDropdown)
+                        # driver.find_element_by_xpath(
+                        #     "").click()
+                        break
+                    except Exception:
+                        # ActionChains(driver).key_down(Keys.).perform()
+                        print("Inside Excep")
+                        ActionChains(driver).key_down(Keys.PAGE_UP).perform()
+                        print("Page Down")
+                        pass
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+            except Exception as aq:
+                print(aq)
+                TestResult.append("Pagination for " + str(PageName) + " is not present")
+                TestResultStatus.append("Fail")
+            # ----------------------------------------------------------------------------------------------------------
+
+            # # ---------------------------Verify Presence of No. of invoices selected text-----------------------------
+            # PageName = "No. of invoices selected text"
+            # Ptitle1 = "No. of invoices selected "
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//label[text()='No. of invoices selected ']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present below invoice entry table pagination")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present below invoice entry table pagination")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # -----------------------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Total Amount  $ text-----------------------------
+            # PageName = "Total Amount  $ text"
+            # Ptitle1 = "Total Amount  $ "
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//label[text()='Total Amount  $ ']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present below invoice entry table pagination")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present below invoice entry table pagination")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ----------------------------------------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Today's Total Setup & Monthly Fee text-----------------------------
+            # PageName = "Today's Total Setup & Monthly Fee text"
+            # Ptitle1 = "Today's Total Setup & Monthly Fee"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//div[@class='content']/div[2]/div[1]/div[3]/div[2]/div[1]/label").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present below invoice entry table pagination")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present below invoice entry table pagination")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Setup & Monthly Fee Amount text-----------------------------
+            # PageName = "Setup & Monthly Fee Amount text"
+            # Ptitle1 = "Setup & Monthly Fee Amount"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//div[@class='content']/div[2]/div[1]/div[3]/div[2]/div[2]/label").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present below invoice entry table pagination")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present below invoice entry table pagination")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # --------------------------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Today's Total Count text-----------------------------
+            # PageName = "Today's Total Count text"
+            # Ptitle1 = "Today's Total Count"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//div[@class='content']/div[2]/div[1]/div[3]/div[3]/div[1]/label").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present below invoice entry table pagination")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present below invoice entry table pagination")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Today's Total Amount text-----------------------------
+            # PageName = "Today's Total Amount text"
+            # Ptitle1 = "Today's Total Amount"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//div[@class='content']/div[2]/div[1]/div[3]/div[3]/div[2]/label").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present below invoice entry table pagination")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present below invoice entry table pagination")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Invoice entry draft table header-----------------------------
+            # PageName = "Draft table header"
+            # Ptitle1 = "Draft"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//div[@class='content']/div[2]/div[1]/div[4]/div[1]/div/h2").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            # # ---------------------------Verify Presence of elements in Invoice entry draft table-----------------------------
+            # inside = "Invoice entry draft"
+            # # ---------------loop for Columns in table for Funds View----------
+            # ItemList = ["#", "Created", "Invoice Date", "Service Provider", "Invoice Number",
+            #             "Client", "Action"]
+            # print(len(ItemList))
+            # ItemPresent = []
+            # ItemNotPresent = []
+            # for ii in range(len(ItemList)):
+            #     Text1 = ItemList[ii]
+            #     try:
+            #         Element1 = driver.find_element_by_xpath(
+            #             "//table[@id='invoice_draft_listing']/thead/tr/th[" + str(ii + 1) + "]").text
+            #     except Exception:
+            #         pass
+            #     try:
+            #         assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
+            #         ItemPresent.append(Text1)
+            #     except Exception as e1:
+            #         ItemNotPresent.append(Text1)
+            # if ItemPresent:
+            #     print("ItemPresent list is not empty")
+            #     ListC = ', '.join(ItemPresent)
+            #     TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
+            #     TestResultStatus.append("Pass")
+            # if ItemNotPresent:
+            #     print("ItemNotPresent list is not empty")
+            #     ListD = ', '.join(ItemNotPresent)
+            #     TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
+            #     TestResultStatus.append("Fail")
+            # # ---------------------------------------------------------------------------------
+
+            # # ---------------------------Verify Status Logs table header-----------------------------
+            # PageName = "Status Logs table header"
+            # Ptitle1 = "Status Logs"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//h2[text()='Status Logs']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not "
+            #     TestResult.append(PageName + " is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of From date field under status logs table-------------------------------------
+            # PageName = "From date field"
+            # Ptitle1 = "search_status_log_date_from"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_status_log_date_from']").send_keys("11-02-2022")
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_status_log_date_from']").get_attribute('name')
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present for status logs table and user able to send inputs")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for status logs table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # -----------------------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of To date field under status logs table-------------------------------------
+            # PageName = "To date field"
+            # Ptitle1 = "search_status_log_date_to"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_status_log_date_to']").send_keys("17-02-2022")
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_status_log_date_to']").get_attribute('name')
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is present for status logs table and user able to send inputs")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for status logs table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Search filter under status logs table-------------------------------------
+            # PageName = "Search filter"
+            # Ptitle1 = "search_status_log"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_status_log']").get_attribute('name')
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//input[@id='search_status_log']").send_keys("85685")
+            #     TestResult.append(PageName + " is present for status logs table and user able to send inputs")
+            #     TestResultStatus.append("Pass")
+            #     driver.refresh()
+            # except Exception:
+            #     TestResult.append(PageName + " is not present for status logs table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(2)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of elements in Status logs table-----------------------------
+            # inside = "Status logs"
+            # # ---------------loop for Columns in table for Funds View----------
+            # ItemList = ["Invoice Number", "Staff Name", "Previous Status", "Current Status", "Date Time"]
+            # print(len(ItemList))
+            # ItemPresent = []
+            # ItemNotPresent = []
+            # for ii in range(len(ItemList)):
+            #     Text1 = ItemList[ii]
+            #     try:
+            #         Element1 = driver.find_element_by_xpath(
+            #             "//table[@id='invoice_status_listing']/thead/tr/th[" + str(ii + 1) + "]").text
+            #     except Exception:
+            #         pass
+            #     try:
+            #         assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
+            #         ItemPresent.append(Text1)
+            #     except Exception as e1:
+            #         ItemNotPresent.append(Text1)
+            # if ItemPresent:
+            #     print("ItemPresent list is not empty")
+            #     ListC = ', '.join(ItemPresent)
+            #     TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
+            #     TestResultStatus.append("Pass")
+            # if ItemNotPresent:
+            #     print("ItemNotPresent list is not empty")
+            #     ListD = ', '.join(ItemNotPresent)
+            #     TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
+            #     TestResultStatus.append("Fail")
+            # time.sleep(2)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Pagination clicks for Status Logs table-----------------------------
+            # PageName = "Status Logs table"
+            # NumberOfPages = "//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[5]/a"
+            # try:
+            #     for scrolldown in range(1, 10):
+            #         time.sleep(2)
+            #         try:
+            #             driver.execute_script("arguments[0].scrollIntoView();", NumberOfPages)
+            #             # driver.find_element_by_xpath(
+            #             #     "").click()
+            #             break
+            #         except Exception:
+            #             # ActionChains(driver).key_down(Keys.).perform()
+            #             print("Inside Excep")
+            #             ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
+            #             print("Page Down")
+            #             pass
             #     NumberOfPages = driver.find_element_by_xpath(
-            #         "//tbody[@id='invoiceEntryListingAjaxView']/tr[last()]/td/nav/ul/li[14]/a").text
+            #         "//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[5]/a").text
             #     NumberOfPages = int(NumberOfPages)
             #     print(NumberOfPages)
-            #     for i in range(NumberOfPages):
-            #         if i == NumberOfPages - 1:
+            #     for sl in range(NumberOfPages):
+            #         if sl == NumberOfPages - 1:
             #             TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
             #             TestResultStatus.append("Pass")
             #             break
-            #         driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr[last()]/td/nav/ul/li[last()]/a").click()
+            #         driver.find_element_by_xpath("//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[6]/a").click()
             #         time.sleep(1)
-            #     if i != NumberOfPages - 1:
+            #     if sl != NumberOfPages - 1:
             #         TestResult.append(
             #             (
             #                 "Pagination for " + str(PageName) + " is not working correctly"))
@@ -523,121 +861,9 @@ def test_VerifyAllClickables(test_setup):
             #         pass
             # except Exception as aq:
             #     print(aq)
-            #     TestResult.append(PageName + " is not present")
+            #     TestResult.append("Pagination for " + str(PageName) + " is not present")
             #     TestResultStatus.append("Fail")
-            #     # # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of No. of invoices selected text-----------------------------
-            PageName = "No. of invoices selected text"
-            Ptitle1 = "No. of invoices selected "
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//label[text()='No. of invoices selected ']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Total Amount  $ text-----------------------------
-            PageName = "Total Amount  $ text"
-            Ptitle1 = "Total Amount  $ "
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//label[text()='Total Amount  $ ']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Today's Total Setup & Monthly Fee text-----------------------------
-            PageName = "Today's Total Setup & Monthly Fee text"
-            Ptitle1 = "Today's Total Setup & Monthly Fee"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//div[@class='content']/div[2]/div[1]/div[3]/div[2]/div[1]/label").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Setup & Monthly Fee Amount text-----------------------------
-            PageName = "Setup & Monthly Fee Amount text"
-            Ptitle1 = "Setup & Monthly Fee Amount"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//div[@class='content']/div[2]/div[1]/div[3]/div[2]/div[2]/label").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Today's Total Count text-----------------------------
-            PageName = "Today's Total Count text"
-            Ptitle1 = "Today's Total Count"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//div[@class='content']/div[2]/div[1]/div[3]/div[3]/div[1]/label").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Today's Total Amount text-----------------------------
-            PageName = "Today's Total Amount text"
-            Ptitle1 = "Today's Total Amount"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//div[@class='content']/div[2]/div[1]/div[3]/div[3]/div[2]/label").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Draft table header-----------------------------
-            PageName = "Draft table header"
-            Ptitle1 = "Draft"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//div[@class='content']/div[2]/div[1]/div[4]/div[1]/div/h2").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + " is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
+            # # -----------------------------------------------------------------------------------------------
 
 
         except Exception as err:

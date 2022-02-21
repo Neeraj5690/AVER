@@ -3,6 +3,9 @@ import math
 import re
 import time
 import openpyxl
+from datetime import datetime,date
+#from dateutil.utils import today
+from dateutil.utils import today
 from fpdf import FPDF
 import pytest
 from selenium import webdriver
@@ -16,6 +19,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import pyperclip
+import random
+import string
 
 
 @allure.step("Entering username ")
@@ -189,581 +194,265 @@ def test_VerifyAllClickables(test_setup):
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
         try:
-            # ---------------------------Verify Communication Log icon click-----------------------------
-            PageName = "Communication log icon"
+            # ---------------------------Verify Invoice Entry icon click-----------------------------
+            PageName = "Invoice Entry icon"
             Ptitle1 = ""
             try:
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-                time.sleep(TimeSpeed)
-                TestResult.append(PageName + "  is present in left menu and able to click")
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/a/i").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/ul/li[1]/a").click()
+                time.sleep(2)
+                TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Working of Back button on Communication log page-----------------------------
-            PageName = "Back button on Communication log page"
-            Ptitle1 = "Rae"
+            # # ---------------------------Verify working of Back button on Invoice entry page -----------------------------
+            # PageName = "Back button"
+            # Ptitle1 = "Rae"
+            # try:
+            #     driver.find_element_by_xpath("//a[text()='Back']").click()
+            #     time.sleep(2)
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ----------------Verify Invoice entry icon click after verifying back--------
+            # PageName = "Invoice entry icon"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/a/i").click()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/ul/li[1]/a").click()
+            #     time.sleep(2)
+            #     TestResult.append(PageName + "  is opened again after verifying back button")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not opened again after verifying back button")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify working of XERO CSV button-----------------------------
+            # PageName = "XERO CSV button"
+            # Ptitle1 = "Generate Invoice Report"
+            # try:
+            #     driver.find_element_by_xpath("//button[text()='XERO CSV']").click()
+            #     time.sleep(2)
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@id='xeroReport']/div/div/div[1]/h4").text
+            #     time.sleep(2)
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # CloseButton = driver.find_element_by_xpath("// div[ @ id = 'xeroReport'] / div / div / div[1] / button").click()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify working of Create new button on Invoice entry page-----------------------------
+            PageName = "Create new button"
+            Ptitle1 = "Create New Invoice"
             try:
-                driver.find_element_by_xpath("//div[@class='content yellow_color']/div/div[2]/div/a").click()
-                time.sleep(TimeSpeed)
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+                driver.find_element_by_xpath("//a[text()='Create New']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//h2[text()='Create New Invoice']").text
+                time.sleep(2)
                 print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not "
-                TestResult.append(PageName + "  is clickable")
+
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " on Invoice entry page is clickable")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not clickable")
+                TestResult.append(PageName + " on Invoice entry page is not clickable")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ----------------Verify Communication Log icon click after verifying back--------
-            PageName = "Communication log icon"
+            # # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
+            # PageName = "Create Reimburse Client button"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
+            #     time.sleep(2)
+            #     for aa in range(5):
+            #         letters = string.ascii_lowercase
+            #         returna = ''.join(random.choice(letters) for i in range(5))
+            #         EmailID = returna + "@gmail.com"
+            #
+            #         letters1 = string.ascii_lowercase
+            #         returna1 = ''.join(random.choice(letters1) for i in range(5))
+            #         Name = returna1
+            #     driver.find_element_by_xpath("//input[@name='re_service_name']").send_keys(Name)
+            #     time.sleep(2)
+            #     print(PageTitle1)
+            #     # select = Select(driver.find_element_by_xpath("//select[@name='re_service_status']"))
+            #     # select.select_by_visible_text("Active")
+            #     # time.sleep(2)
+            #     SetUpDate = driver.find_element_by_xpath("//input[@name='re_set_up_data']")
+            #     SetUpDate.clear()
+            #     SetUpDate.send_keys("16-02-2022")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='re_account_name']").send_keys(Name)
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='re_bsb']").send_keys("123456")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='re_account_number']").send_keys("12345678")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='re_send_remittance_email']").click()
+            #     driver.find_element_by_xpath("//input[@name='re_send_remittance_email']").click()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='re_remittance_email']").send_keys(EmailID)
+            #     driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[last()]/button").click()
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + "on create new invoice page is clickable and user able to create reimburse client ")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+
+            # # ---------------------------Verify working of Create Service Provider button on Create new page-----------------------------
+            # PageName = "Create Service Provider button"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath("//a[@title='Create Service Provider']").click()
+            #     time.sleep(2)
+            #     for aa in range(5):
+            #         letters = string.ascii_lowercase
+            #         returna = ''.join(random.choice(letters) for i in range(5))
+            #         EmailID = returna + "@gmail.com"
+            #
+            #         letters1 = string.ascii_lowercase
+            #         returna1 = ''.join(random.choice(letters1) for i in range(5))
+            #         Name = returna1
+            #     driver.find_element_by_xpath("//input[@name='service_name']").send_keys(Name)
+            #     time.sleep(2)
+            #     print(PageTitle1)
+            #     # select = Select(driver.find_element_by_xpath("//select[@name='re_service_status']"))
+            #     # select.select_by_visible_text("Active")
+            #     # time.sleep(2)
+            #     SetUpDate = driver.find_element_by_xpath("//input[@name='set_up_data']")
+            #     SetUpDate.clear()
+            #     SetUpDate.send_keys("16-02-2022")
+            #     # act = ActionChains(driver)
+            #     # act.send_keys(Keys.ENTER).perform()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='abn']").send_keys("123678")
+            #     select = Select(driver.find_element_by_xpath("//select[@name='franchise']"))
+            #     select.select_by_index(1)
+            #     time.sleep(2)
+            #     # select = Select(driver.find_element_by_xpath("//select[@name='related_franchise']"))
+            #     # select.select_by_index(0)
+            #     select = Select(driver.find_element_by_xpath("//select[@id='service_type']"))
+            #     select.select_by_index(4)
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='office_number']").send_keys("1234567890")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='mobile_number']").send_keys("1122334455")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='service_email']").send_keys("test@abc.com")
+            #     select = Select(driver.find_element_by_xpath("//select[@name='address_country']"))
+            #     select.select_by_index(5)
+            #     time.sleep(2)
+            #     select = Select(driver.find_element_by_xpath("//select[@name='address_state']"))
+            #     select.select_by_index(5)
+            #     time.sleep(2)
+            #     select = Select(driver.find_element_by_xpath("//select[@name='address_city']"))
+            #     select.select_by_index(5)
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='address_street']").send_keys("XYZ")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='postcode']").send_keys("225588")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='suburb']").send_keys("147258")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='account_name']").send_keys(Name)
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='bsb']").send_keys("123456")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='account_number']").send_keys("12345678")
+            #     time.sleep(2)
+            #     CheckBox = driver.find_element_by_xpath("//input[@name='remittance_email']")
+            #     CheckBox.clear()
+            #     CheckBox.click()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='remittance_email']").send_keys(EmailID)
+            #     driver.find_element_by_xpath(
+            #         "//div[@id='createnewsplatest']/div/div/div[2]/form/div[last()]/button").click()
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(
+            #         PageName + "on create new invoice page is clickable and user able to create reimburse client ")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify working of Create New Invoice page-----------------------------
+            PageName = "Create New Invoice page"
             Ptitle1 = ""
+            l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            random.shuffle(l)
+            if l[0] == 0:
+                pos = random.choice(range(1, len(l)))
+                l[0], l[pos] = l[pos], l[0]
+            InvoiceNumber = ''.join(map(str, l[0:4]))
+            print(InvoiceNumber)
             try:
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-                time.sleep(TimeSpeed)
-                TestResult.append(PageName + "  is opened again after verifying back button")
+                act = ActionChains(driver)
+                driver.find_element_by_xpath("//input[@name='search_client_name']").send_keys("SUNIL")
+                time.sleep(2)
+                act.send_keys(Keys.DOWN).perform()
+                act.send_keys(Keys.ENTER).perform()
+                time.sleep(2)
+                driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
+                time.sleep(2)
+                driver.find_element_by_xpath("//input[@name='search_service_provider_name']").send_keys("Blossom")
+                act.send_keys(Keys.DOWN).perform()
+                act.send_keys(Keys.ENTER).perform()
+                time.sleep(2)
+                today = date.today()
+                D1 = today.strftime("%d-%m-%Y")
+                driver.find_element_by_xpath("//input[@name='provider_invoice_date']").send_keys(D1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " on Invoice entry page is clickable")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not opened again after verifying back button")
+                TestResult.append(PageName + " on Invoice entry page is not clickable")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
-            # ---------------------------Verify Select entry dropdown working-----------------------------
-            for cv in range (5):
-                DropdownValues = {"Email": "//select[@name='communication_type']/option","Letter": "//select[@name='communication_type']/option","SMS": "//select[@name='communication_type']/option    ","Phone Call": "//select[@name='communication_type']/option","New Plan Form": "//ul[@class='GeneralClientDetails']/li[1]"}
-                select = Select(driver.find_element_by_xpath(
-                    "//select[@id='selectTemplateOption']"))
-                Selector=['Email','Letter','SMS','Phone Call','New Plan Form']
-                if cv==0:
-                    select.select_by_visible_text(Selector[3])
-                    time.sleep(TimeSpeed)
-                    TextCheck=Selector[3]
-                    path1=DropdownValues[Selector[3]]
-                elif cv==1:
-                    select.select_by_visible_text(Selector[0])
-                    time.sleep(TimeSpeed)
-                    TextCheck = Selector[0]
-                    path1 =DropdownValues[Selector[0]]
-                elif cv==2:
-                    select.select_by_visible_text(Selector[1])
-                    time.sleep(TimeSpeed)
-                    TextCheck = Selector[1]
-                    path1 =DropdownValues[Selector[1]]
-                elif cv==3:
-                    select.select_by_visible_text(Selector[2])
-                    time.sleep(TimeSpeed)
-                    TextCheck = Selector[2]
-                    path1 =DropdownValues[Selector[2]]
-                elif cv==4:
-                    select.select_by_visible_text(Selector[4])
-                    time.sleep(TimeSpeed)
-                    TextCheck = Selector[4]
-                    path1 =DropdownValues[Selector[4]]
-
-
-                textFound=driver.find_element_by_xpath(path1).text
-                if ":" in textFound:
-                    textFound=textFound.split(":")
-                    textFound=textFound[1]
-
-                textFound=textFound.strip()
-                if textFound==TextCheck:
-                    TestResult.append(TextCheck + " dropdown value inside select new entry dropdown is able to click and open")
-                    TestResultStatus.append("Pass")
-                else:
-                    TestResult.append(TextCheck + " dropdown value inside select new entry dropdown is not able to click")
-                    TestResultStatus.append("Fail")
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-                time.sleep(TimeSpeed)
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Choose template dropdown working-----------------------------
-            for dct in range(2):
-                DropdownCT = {"General": "//div[@class='content yellow_color']/div[2]/div[1]/div/div/h2/small",
-                                  "New Plan Form": "//div[@class='content-wrapper']/div[2]/div[3]/div[1]/div/div/h2/small"}
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[2]/div/div/div/form/div/div/select"))
-                Selector = ['General', 'New Plan Form']
-                if dct == 0:
-                    select.select_by_index(1)
-                    time.sleep(TimeSpeed)
-                    TextCheck = Selector[1]
-                    path1 = DropdownCT[Selector[1]]
-                elif dct == 1:
-                    select.select_by_index(0)
-                    time.sleep(TimeSpeed)
-                    TextCheck = Selector[0]
-                    path1 = DropdownCT[Selector[0]]
-                textFound = driver.find_element_by_xpath(path1).text
-
-                if textFound == TextCheck:
-                    TestResult.append(TextCheck + " dropdown value inside Choose Template dropdown is able to click")
-                    TestResultStatus.append("Pass")
-                else:
-                    TestResult.append(TextCheck + " dropdown value inside Choose Template dropdown is not able to click and open")
-                    TestResultStatus.append("Fail")
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-                time.sleep(TimeSpeed)
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Communication Log Listing - General pagination working-----------------------------
-            try:
-                TotalItem = driver.find_element_by_xpath("//div[@id='comm-log-blank_info']").text
-                print(TotalItem)
-                substr = "of"
-                x = TotalItem.split(substr)
-                string_name = x[0]
-                TotalItemAfterOf = x[1]
-                abc = ""
-                countspace = 0
-                for element in range(0, len(string_name)):
-                    if string_name[(len(string_name) - 1) - element] == " ":
-                        countspace = countspace + 1
-                        if countspace == 2:
-                            break
-                    else:
-                        abc = abc + string_name[(len(string_name) - 1) - element]
-                abc = abc[::-1]
-                TotalItemBeforeOf = abc
-                TotalItemAfterOf = TotalItemAfterOf.split(" ")
-                TotalItemAfterOf=TotalItemAfterOf[1]
-                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-
-                TotalItemAfterOf = int(TotalItemAfterOf)
-                RecordsPerPage=50
-                TotalPages = TotalItemAfterOf/RecordsPerPage
-                NumberOfPages = math.ceil(float(TotalPages))
-                ClickCounter=0
-                for i in range(NumberOfPages):
-                    if i<1:
-                        if i==NumberOfPages-1:
-                            TestResult.append("No Pagination found for [ "+str(RecordsPerPage)+" ] no. of records under Communication Log Listing - General table")
-                            TestResultStatus.append("Pass")
-                            break
-                    try:
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                        time.sleep(1)
-                        ClickCounter=ClickCounter+1
-                        TestResult.append("Pagination verified for [ " + str(
-                            TotalItemAfterOf) + " ] no. of records under Communication Log Listing - General table")
-                        TestResultStatus.append("Pass")
-                    except Exception as cc:
-                        pass
-                if i != ClickCounter:
-                    TestResult.append(
-                        "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
-                    TestResultStatus.append("Fail")
-                driver.refresh()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-            except Exception as aq:
-                TestResult.append("Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
-                TestResultStatus.append("Fail")
-
-            # ---------------------------Verify Add new process by all Select entry dropdowns-----
-            DropdownValues = {"Email": "","Letter": "","SMS": "","Phone Call": "","New Plan Form": ""}
-            Selector=['Email','Letter','SMS','Phone Call','New Plan Form']
-
-            #-------Verifying add new Email process-------------------------------------------------
-            try:
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
-                select.select_by_visible_text(Selector[0])
-                driver.find_element_by_xpath("//input[@id='autocompleteSystemContactSearch']").send_keys("sumreet client")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath("//div[@id='communication-log-form']/form/div[3]/div/div[2]/div/div[3]/div[1]/div[2]/div/input").send_keys("Test Subject")
-                time.sleep(TimeSpeed)
-                select = Select(driver.find_element_by_xpath("//div[@id='communication-log-form']/form/div[3]/div/div[5]/div/div[2]/div/div[1]/div/select"))
-                select.select_by_index(1)
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath("//button[text()='Save']").click()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-                time.sleep(TimeSpeed)
-                TestResult.append("Add new Email process successfully verified")
-                TestResultStatus.append("Pass")
-            except Exception as er1:
-                TestResult.append("Below error found while verifying Add new Email process\n"+str(er1))
-                TestResultStatus.append("Fail")
-            # ----------------------------------------------------------------------------------------------
-
-            # -------Verifying add new Letter process--------------------------------------------------------
-            try:
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
-                select.select_by_visible_text(Selector[1])
-                driver.find_element_by_xpath("//input[@id='autocompleteSystemContactSearch']").send_keys("sumreet client")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//div[@id='communication-log-form']/form/div[3]/div/div[2]/div/div[3]/div[1]/div[2]/div/input").send_keys(
-                    "Test Subject")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.TAB).key_up(Keys.TAB).perform()
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.TAB).key_up(Keys.TAB).perform()
-                TEXT = "Test Content"
-                pyperclip.copy(TEXT)
-                ActionChains(driver).key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
-                time.sleep(TimeSpeed)
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@id='communication-log-form']/form/div[3]/div/div[5]/div/div[2]/div/div[1]/div/select"))
-                select.select_by_index(1)
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath("//button[text()='Save']").click()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-                time.sleep(TimeSpeed)
-                TestResult.append("Add new Letter process successfully verified")
-                TestResultStatus.append("Pass")
-            except Exception as er2:
-                TestResult.append("Below error found while verifying Add new Letter process\n" + str(er2))
-                TestResultStatus.append("Fail")
-
-            # -------Verifying add new Phone call process-------------------------------------------------
-            try:
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
-                select.select_by_visible_text(Selector[3])
-                driver.find_element_by_xpath("//input[@id='autocompleteCallerNameSearch']").send_keys("sumreet client")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//input[@id='autocompleteSystemContactSearch']").send_keys(
-                    "Test System Contact")
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//h3[@class='NoteAlertSectionHed NoteSectionHed']").click()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//input[@name='note_heading']").send_keys(
-                    "Test call Note")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.TAB).key_up(Keys.TAB).perform()
-                time.sleep(TimeSpeed)
-                TEXT = "Test Content"
-                pyperclip.copy(TEXT)
-                ActionChains(driver).key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
-                time.sleep(TimeSpeed)
-                select = Select(driver.find_element_by_xpath(
-                    "//select[@name='communication_method']"))
-                select.select_by_index(1)
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath("//button[text()='Save']").click()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-                time.sleep(TimeSpeed)
-                TestResult.append("Add new Phone call process successfully verified")
-                TestResultStatus.append("Pass")
-            except Exception as er3:
-                TestResult.append("Below error found while verifying Add new Phone call process\n" + str(er3))
-                TestResultStatus.append("Fail")
-            # ----------------------------------------------------------------------------------------------
-
-            # -------Verifying add SMS process-------------------------------------------------
-            try:
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
-                select.select_by_visible_text(Selector[2])
-                driver.find_element_by_xpath("//input[@name='system_contact']").send_keys("sumreet client")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//input[@name='note_heading']").send_keys(
-                    "Test SMS")
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//textarea[@id='editor-full1']").send_keys(
-                    "This is a test SMS")
-                time.sleep(TimeSpeed)
-                select = Select(driver.find_element_by_xpath(
-                    "//select[@name='communication_method']"))
-                select.select_by_index(1)
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath("//button[text()='Save']").click()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-                time.sleep(TimeSpeed)
-                TestResult.append("Add SMS process successfully verified")
-                TestResultStatus.append("Pass")
-            except Exception as er4:
-                TestResult.append("Below error found while verifying Add SMS process\n" + str(er4))
-                TestResultStatus.append("Fail")
-            # ----------------------------------------------------------------------------------------------
-
-            # -------Verifying add New plan form process-------------------------------------------------
-            PageName = "Communication log"
-            try:
-                print()
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
-                select.select_by_visible_text(Selector[4])
-                driver.find_element_by_xpath("//div[@id='communication-log-form']/form/div[2]/div[1]/div/div/label[1]/input").click()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//div[@id='communication-log-form']/form/div[2]/div[2]/div/input").send_keys("Sumreet Client2")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(TimeSpeed)
-
-                # # # -------Participant information table-------------------------------------------------
-                # # ParticipantInfo = driver.find_elements_by_xpath("//div[@id='client-div']/div[2]/div/table/tbody/tr")
-                # # RowsLength = len(ParticipantInfo)
-                # # for a in range(1,RowsLength, 2):
-                # #     driver.find_element_by_xpath(
-                # #         "//div[@id='client-div']/div[2]/div/table/tbody/tr["+str(a)+"]/td[3]/div/div/label[1]/input").click()
-                # #     time.sleep(TimeSpeed)
-                #
-                # # -------Additional contacts table-------------------------------------------------
-                #
-                # print()
-                # for scrolldown in range(1, 10):
-                #     time.sleep(2)
-                #     try:
-                #         driver.find_element_by_xpath(
-                #             "//div[@id='add-cont-div']/div/div/table/tbody/tr[1]/td")
-                #         break
-                #     except Exception:
-                #         # ActionChains(driver).key_down(Keys.).perform()
-                #         print("Inside Excep")
-                #         ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
-                #         print("Page Down")
-                #         pass
-                # AdditionalText = driver.find_elements_by_xpath(
-                #     "//div[@id='add-cont-div']/div/div/table/tbody/tr[1]/td").text
-                # print(AdditionalText)
-                # AdditionalCont = driver.find_elements_by_xpath("//div[@id='add-cont-div']/div/div/table/tbody/tr")
-                # AddConLength = len(AdditionalCont)
-                # print(AddConLength)
-                # for i in range(1,AddConLength):
-                #     if "No Contacts Available" not in AdditionalText:
-                #         driver.find_element_by_xpath(
-                #             "//div[@id='add-cont-div']/div/div/table/tbody/tr["+str(i)+"]/td[8]/div/div/label[1]/input").click()
-                #         time.sleep(TimeSpeed)
-                #     if "No Contacts Available" in AdditionalText:
-                #         driver.find_element_by_xpath(
-                #             "//div[@id='add-cont-div']/div/div/table/tbody/tr[last()]/td/a").click()
-                #         time.sleep(TimeSpeed)
-                #         driver.find_element_by_xpath(
-                #             "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[1]/div/input").send_keys(
-                #             "Test First Name")
-                #         time.sleep(TimeSpeed)
-                #         driver.find_element_by_xpath(
-                #             "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[2]/div/input").send_keys(
-                #             "Test Last Name")
-                #         time.sleep(TimeSpeed)
-                #         select = Select(driver.find_element_by_xpath(
-                #             "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[3]/div/select"))
-                #         select.select_by_visible_text("Grandma")
-                #         time.sleep(TimeSpeed)
-                #         select = Select(driver.find_element_by_xpath(
-                #             "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[4]/div/select"))
-                #         select.select_by_visible_text("sumreet SP")
-                #         time.sleep(TimeSpeed)
-                #         driver.find_element_by_xpath(
-                #             "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[5]/div/input").send_keys(
-                #             "abc@test.com")
-                #         time.sleep(TimeSpeed)
-                #         select = Select(driver.find_element_by_xpath(
-                #             "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[6]/div/select"))
-                #         select.select_by_visible_text("Account Nominee")
-                #         driver.find_element_by_xpath(
-                #             "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[last()]/button").click()
-                #         time.sleep(TimeSpeed)
-                #         print("Additional contact added successfully")
-                #
-                # # ----------------------------------------------------------------------------------------------
-
-                # -------App access table-------------------------------------------------
-                AppAccess = driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr")
-                AppText =  driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr[1]/td").text
-                AppAccLength = len(AppAccess)
-                print(AppAccLength)
-                print(AppText)
-                for ac in range(1,AppAccLength):
-                    if "No Contacts Available" not in AppText:
-                        driver.find_element_by_xpath("//div[@id='add-access-div']/div/div/table/tbody//tr[" + str(i) + "]/td[8]/div/div/label[1]/input").click()
-                        time.sleep(TimeSpeed)
-                    if "No Contacts Available" in AppText:
-                        driver.find_element_by_xpath(
-                            "//div[@id='add-access-div']/div/div/table/tbody/tr[2]/td/a").click()
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[1]/div/input").send_keys(
-                            "Test First Name")
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[2]/div/input").send_keys(
-                            "Test Last Name")
-                        time.sleep(TimeSpeed)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[3]/div/select"))
-                        select.select_by_visible_text("Grandma")
-                        time.sleep(TimeSpeed)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[4]/div/select"))
-                        select.select_by_visible_text("sumreet SP")
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[5]/div/input").send_keys(
-                            "abc@test.com")
-                        time.sleep(TimeSpeed)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[6]/div/select"))
-                        select.select_by_visible_text("Account Nominee")
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[last()]/button").click()
-                        time.sleep(TimeSpeed)
-                        print("App access added successfully")
-
-                # # -------Add Additional Contacts-------------------------------------------------
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='add-cont-div']/div/div/table/tbody/tr[last()]/td/a").click()
-                # # time.sleep(TimeSpeed)
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[1]/div/input").send_keys("Test First Name")
-                # # time.sleep(TimeSpeed)
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[2]/div/input").send_keys("Test Last Name")
-                # # time.sleep(TimeSpeed)
-                # # select = Select(driver.find_element_by_xpath(
-                # #     "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[3]/div/select"))
-                # # select.select_by_visible_text("Grandma")
-                # # time.sleep(TimeSpeed)
-                # # select = Select(driver.find_element_by_xpath(
-                # #     "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[4]/div/select"))
-                # # select.select_by_visible_text("sumreet SP")
-                # # time.sleep(TimeSpeed)
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[5]/div/input").send_keys("abc@test.com")
-                # # time.sleep(TimeSpeed)
-                # # select = Select(driver.find_element_by_xpath(
-                # #     "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[6]/div/select"))
-                # # select.select_by_visible_text("Account Nominee")
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddAnotherContact']/div/div/div[2]/form/div[last()]/button").click()
-                # # time.sleep(TimeSpeed)
-                # # print("Additional contact added successfully")
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='add-access-div']/div/div/table/tbody/tr[1]/td[8]/div/div/label[1]/input").click()
-                # # time.sleep(TimeSpeed)
-                # #
-                # # # -------Add App Access-------------------------------------------------
-                # # driver.find_element_by_xpath(
-                # #         "//div[@id='add-access-div']/div/div/table/tbody/tr[2]/td/a").click()
-                # # time.sleep(TimeSpeed)
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[1]/div/input").send_keys("Test First Name")
-                # # time.sleep(TimeSpeed)
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[2]/div/input").send_keys("Test Last Name")
-                # # time.sleep(TimeSpeed)
-                # # select = Select(driver.find_element_by_xpath(
-                # #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[3]/div/select"))
-                # # select.select_by_visible_text("Grandma")
-                # # time.sleep(TimeSpeed)
-                # # select = Select(driver.find_element_by_xpath(
-                # #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[4]/div/select"))
-                # # select.select_by_visible_text("sumreet SP")
-                # # time.sleep(TimeSpeed)
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[5]/div/input").send_keys("abc@test.com")
-                # # time.sleep(TimeSpeed)
-                # # select = Select(driver.find_element_by_xpath(
-                # #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[6]/div/select"))
-                # # select.select_by_visible_text("Account Nominee")
-                # # driver.find_element_by_xpath(
-                # #     "//div[@id='AddClientAccess']/div/div/div[2]/form/div[last()]/button").click()
-                # # time.sleep(TimeSpeed)
-                # # print("App access added successfully")
-                #
-                # # -------Communication log New plan form-------------------------------------------------
-                # driver.find_element_by_xpath(
-                #     "//div[@id='communication-log-form']/form/div[2]/div[6]/div/textarea").send_keys("Test feedback")
-                # time.sleep(TimeSpeed)
-                # driver.find_element_by_xpath(
-                #     "//div[@id='communication-log-form']/form/div[2]/div[7]/div/div/label[1]/input").click()
-                # time.sleep(TimeSpeed)
-                # driver.find_element_by_xpath(
-                #     "//div[@id='communication-log-form']/form/div[2]/div[8]/div/textarea").send_keys("Test regular check in's")
-                # time.sleep(TimeSpeed)
-                # driver.find_element_by_xpath(
-                #     "//div[@id='communication-log-form']/form/div[2]/div[9]/div/textarea").send_keys(
-                #     "Test action")
-                # time.sleep(TimeSpeed)
-                # driver.find_element_by_xpath("//button[text()='Save']").click()
-                # time.sleep(TimeSpeed)
-                # SuccessText = driver.find_element_by_xpath(
-                #     "//div[@class='content-wrapper']/div/p").text
-                # print(SuccessText)
-                # if SuccessText=="Communication Log data is saved successfully.":
-                #     TestResult.append(SuccessText)
-                #     TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " data is not saved")
-                TestResultStatus.append("Fail")
-            # ----------------------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)
-            TestResult.append("Communication Log is not working correctly. Below error found\n"+str(err))
+            TestResult.append("Invoice entry is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

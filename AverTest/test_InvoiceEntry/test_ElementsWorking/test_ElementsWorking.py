@@ -4,8 +4,7 @@ import re
 import time
 import openpyxl
 from datetime import datetime,date
-#from dateutil.utils import today
-from dateutil.utils import today
+import datetime as datetime
 from fpdf import FPDF
 import pytest
 from selenium import webdriver
@@ -414,8 +413,8 @@ def test_VerifyAllClickables(test_setup):
             # time.sleep(TimeSpeed)
             # # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Create New Invoice page-----------------------------
-            PageName = "Create New Invoice page"
+            # ---------------------------Verify working of Create New Invoice form-----------------------------
+            PageName = "Create New Invoice form"
             Ptitle1 = ""
             l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
             random.shuffle(l)
@@ -434,17 +433,48 @@ def test_VerifyAllClickables(test_setup):
                 driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
                 time.sleep(2)
                 driver.find_element_by_xpath("//input[@name='search_service_provider_name']").send_keys("Blossom")
+                time.sleep(2)
                 act.send_keys(Keys.DOWN).perform()
                 act.send_keys(Keys.ENTER).perform()
                 time.sleep(2)
                 today = date.today()
                 D1 = today.strftime("%d-%m-%Y")
                 driver.find_element_by_xpath("//input[@name='provider_invoice_date']").send_keys(D1)
+                time.sleep(2)
+                act.send_keys(Keys.ENTER).perform()
+                select = Select(driver.find_element_by_xpath("//select[@id='approvedByClientText']"))
+                select.select_by_index(0)
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[1]/h3").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[1]/div/textarea").send_keys("Test Notes")
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[3]/h3").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[3]/div/div/div[1]/label/input").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//input[@name='service_detail[2][delivered_date]']").send_keys("05-02-2022")
+                time.sleep(2)
+                driver.find_element_by_xpath("//span[@title='Select Category']").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//input[@class='select2-search__field']").send_keys("Transport")
+                time.sleep(2)
+                act.send_keys(Keys.ENTER).perform()
+                driver.find_element_by_xpath("//span[@title='Select Item Number']").click()
+                time.sleep(2)
+                act.send_keys(Keys.DOWN).perform()
+                act.send_keys(Keys.DOWN).perform()
+                time.sleep(2)
+                act.send_keys(Keys.ENTER).perform()
+                driver.find_element_by_xpath("//input[@name='service_detail[2][qty]']").send_keys("1")
+                time.sleep(2)
+                driver.find_element_by_xpath("//input[@name='service_detail[2][price]']").send_keys("5")
+                time.sleep(2)
                 assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " on Invoice entry page is clickable")
+                TestResult.append(PageName + " on Invoice entry page is working")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " on Invoice entry page is not clickable")
+                TestResult.append(PageName + " on Invoice entry page is not working")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)

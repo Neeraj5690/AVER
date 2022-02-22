@@ -3,6 +3,8 @@ import math
 import re
 import time
 import openpyxl
+from datetime import datetime,date
+import datetime as datetime
 from fpdf import FPDF
 import pytest
 from selenium import webdriver
@@ -16,6 +18,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import pyperclip
+import random
+import string
 
 
 @allure.step("Entering username ")
@@ -37,7 +41,7 @@ def test_setup():
   global path
 
   TestName = "test_ElementsWorking"
-  description = "This test scenario is to verify all the Working of Elements at Client Listing page"
+  description = "This test scenario is to verify all the Working of Elements at Invoice Entry page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -45,7 +49,7 @@ def test_setup():
   TestDirectoryName = "test_ElementsWorking"
   global Exe
   Exe="Yes"
-  Directory = 'test_ClientListing/'
+  Directory = 'test_InvoiceEntry/'
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
@@ -189,12 +193,24 @@ def test_VerifyAllClickables(test_setup):
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
         try:
-            # ---------------------------Verify Client Listing icon click-----------------------------
-            PageName = "Client Listing icon"
+            # ---------------------------Verify Invoice Entry icon click-----------------------------
+            PageName = "Invoice Entry icon"
             Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
                 time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='row client_listing_box']/div[3]/input").send_keys("Sunil")
+                time.sleep(2)
+                act = ActionChains(driver)
+                act.send_keys(Keys.ENTER).perform()
+                Status = driver.find_element_by_xpath("//table[@class='table datatable-sorting dataTable']/tbody/tr/td[last()]").text
+                print(Status)
+                time.sleep(2)
+                if Status == "Active":
+                    driver.find_element_by_xpath("//table[@class='table datatable-sorting dataTable']/tbody/tr/td[2]/a").click()
+                elif Status != "Active" :
+                    driver.find_element_by_xpath("//div[@class='row client_listing_box']/div[3]/input").send_keys("Sumreet")
+                    time.sleep(2)
                 TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
             except Exception:
@@ -204,11 +220,10 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ----------------------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)
-            TestResult.append("Communication Log is not working correctly. Below error found\n"+str(err))
+            TestResult.append("Invoice entry is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

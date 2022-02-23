@@ -194,7 +194,9 @@ def test_VerifyAllClickables(test_setup):
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
         try:
-            # ---------------------------Verify Invoice Entry icon click-----------------------------
+            # ---------------------------Verify Create new client process-----------------------------
+            Fnames = []
+            MyClient = "BitsInGlass"
             today = date.today()
             D1 = today.strftime("%d-%m-%Y")
             ClientListing = driver.find_element_by_xpath(
@@ -204,14 +206,22 @@ def test_VerifyAllClickables(test_setup):
             RowsLength = len(Records)
             for i in range(1,RowsLength):
                 FirstName = driver.find_element_by_xpath("//div[@class='datatable-scroll']/table/tbody/tr["+str(i)+"]/td[2]").text
-                print(FirstName)
+                Fnames.append(FirstName)
 
-                if FirstName == "BitsInGlass":
-                    driver.find_element_by_xpath("//table[@class='table datatable-sorting dataTable']/tbody/tr[1]/td[2]").click()
-                    break
-                elif FirstName != "BitsInGlass":
-                    driver.find_element_by_xpath("//a[text()='Create New Client']").click()
-                    break
+            if MyClient in Fnames:
+                driver.find_element_by_xpath("//td[text()='BitsInGlass']/a").click()
+                time.sleep(1)
+                #-------------Upload New Plan----------------------------------------
+                driver.find_element_by_xpath("//a[@id='addNewServicePlan']").click()
+                time.sleep(1)
+                InactiveText = driver.find_element_by_xpath("//h3[@class='SQClientName mt-1']").is_displayed()
+                if InactiveText==True:
+                    OldPlan = driver.find_element_by_xpath("//select[@name='inactivate_plan']/option").text
+                    print(OldPlan)
+                elif InactiveText==False:
+                    PlanStartDate = driver.find_element_by_xpath("//input[@class='datepickrange_start']").send_keys()
+            elif MyClient not in Fnames:
+                driver.find_element_by_xpath("//a[text()='Create New Client']").click()
             for aa in range(5):
                 letters = string.ascii_lowercase
                 returna = ''.join(random.choice(letters) for i in range(5))
@@ -220,35 +230,42 @@ def test_VerifyAllClickables(test_setup):
 
             Data=[FName,"Lname","TReferTo","01-02-1990","2456",D1,"1122334455","TStreet","123","TSuburb","@test.com","213243","1000","TestSupport","TestCommunication"]
             for i2 in range(1, 29):
+                #-------------Client Status dropdown--------------------------------------------
                 if i2==1:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[1]/div/select"))
                     select.select_by_visible_text("Active")
+                # -------------First Name--------------------------------------------
                 elif i2 == 2:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[0])
+                # -------------Last Name--------------------------------------------
                 elif i2 == 3:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[1])
+                # -------------Referred To By--------------------------------------------
                 elif i2 == 4:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[2])
+                # -------------DOB--------------------------------------------
                 elif i2 == 5:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[3])
                     ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                # -------------Gender--------------------------------------------
                 elif i2==6:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[6]/div/select"))
                     select.select_by_visible_text("Male")
+                # -------------NDIS Number--------------------------------------------
                 elif i2 == 9:
                     time.sleep(1)
                     NDISNumToUSe = int(Data[4])
@@ -275,89 +292,103 @@ def test_VerifyAllClickables(test_setup):
                         elif  NdisError == False:
                             break
                         NDISNumToUSe=NDISNumToUSe+1
-
+                # -------------Sign Up Date--------------------------------------------
                 elif i2 == 10:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[5])
                     ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                #------------asasasasd------------------
+                # -------------Mobile Number--------------------------------------------
                 elif i2 == 11:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[6])
-                # ------------asasasasd------------------
+                # -------------Street Address--------------------------------------------
                 elif i2 == 12:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[7])
-                # ------------asasasasd------------------
+                # -------------Home Number--------------------------------------------
                 elif i2 == 13:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[8])
+                # -------------Suburb--------------------------------------------
                 elif i2 == 14:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[9])
+                # -------------Email Address--------------------------------------------
                 elif i2 == 15:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(Data[0]+
                         Data[10])
+                # -------------State--------------------------------------------
                 elif i2==16:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                     select.select_by_visible_text("SA")
+                # -------------Access to App--------------------------------------------
                 elif i2==17:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                     select.select_by_visible_text("Yes")
+                # -------------Postcode--------------------------------------------
                 elif i2 == 18:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[11])
+                # -------------Profile Type--------------------------------------------
                 elif i2==19:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                     select.select_by_visible_text("Plan Managed")
+                # -------------Monthly Fee Rate ($)--------------------------------------------
                 elif i2 == 20:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[12])
+                # -------------Support Coordinator--------------------------------------------
                 elif i2 == 21:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/input").send_keys(
                         Data[13])
+                # -------------Main Profile Contact--------------------------------------------
                 elif i2==22:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                     select.select_by_visible_text("Yes")
+                # -------------Receive Payment Updates--------------------------------------------
                 elif i2==23:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                     select.select_by_visible_text("Yes")
+                # -------------Statement Preference--------------------------------------------
                 elif i2==24:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                     select.select_by_visible_text("No")
+                # -------------Communication Preferences--------------------------------------------
                 elif i2 == 26:
                     time.sleep(1)
                     driver.find_element_by_xpath(
                         "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/textarea").send_keys(
                         Data[14])
+                # -------------NDIS Rate--------------------------------------------
                 elif i2==27:
                     time.sleep(1)
                     select = Select(driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                     select.select_by_visible_text("National Remote")
+                # -------------Save button--------------------------------------------
                 elif i2 == 28:
                     time.sleep(1)
                     driver.find_element_by_xpath(

@@ -199,7 +199,7 @@ def test_VerifyAllClickables(test_setup):
 
         try:
             # ---------------------------Verify Create new client process-----------------------------
-            MyClient = "BitsInGlannss"
+            MyClient = "FName"
 
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
             time.sleep(2)
@@ -229,7 +229,7 @@ def test_VerifyAllClickables(test_setup):
                 except TimeoutException:
                     pass
 
-                Data = [FName, "Lname", "TReferTo", "01-02-1990", "2456", D1, "1122334455", "TStreet", "123", "TSuburb",
+                Data = [FName, "Lname", "TReferTo", "01-02-1990", "2464", D1, "1122334455", "TStreet", "123", "TSuburb",
                         "@test.com", "213243", "1000", "TestSupport", "TestCommunication"]
                 for i2 in range(1, 29):
                     # -------------Client Status dropdown--------------------------------------------
@@ -431,17 +431,30 @@ def test_VerifyAllClickables(test_setup):
                         except TimeoutException:
                             pass
                         time.sleep(2)
+                        try:
+                            EmailError = driver.find_element_by_xpath(
+                                "//span[@id='error_email_address']").is_displayed()
+                            if EmailError == True:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        15) + "]/div/input").clear()
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        15) + "]/div/input").send_keys(Data[0] + Data[1] + Data[10])
+                        except Exception as ec:
+                            pass
 
-                        EmailError = driver.find_element_by_xpath(
-                            "//span[@id='error_email_address']").is_displayed()
-                        if EmailError == True:
-                            time.sleep(1)
-                            driver.find_element_by_xpath(
-                                "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                    15) + "]/div/input").clear()
-                            driver.find_element_by_xpath(
-                                "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                    15) + "]/div/input").send_keys(Data[0] + Data[1] + Data[10])
+                driver.find_element_by_xpath("//a[text()='Back']").click()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(
+                        EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
 
                 driver.find_element_by_xpath("//td[text()='"+FName+"']/a").click()
                 try:
@@ -453,9 +466,26 @@ def test_VerifyAllClickables(test_setup):
                         EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                 except TimeoutException:
                     pass
+            try:
+                PlanStatus=driver.find_element_by_xpath("//tbody/tr[1]/td[2]").text
+                print(PlanStatus)
+            except Exception:
+                PlanStatus="InActive"
 
-            PlanStatus=driver.find_element_by_xpath("//tbody/tr[1]/td[2]").text
-            print(PlanStatus)
+            if PlanStatus == "Active":
+                driver.find_element_by_xpath("//tbody/tr[1]/td[last()]").click()
+
+
+
+            elif PlanStatus == "InActive":
+                driver.find_element_by_xpath("//a[@id='addNewServicePlan']").click()
+
+
+
+
+
+
+
             # if PlanStatus=="Inactive":
             #     #-------------Upload New Plan----------------------------------------
             #     driver.find_element_by_xpath("//a[@id='addNewServicePlan']").click()

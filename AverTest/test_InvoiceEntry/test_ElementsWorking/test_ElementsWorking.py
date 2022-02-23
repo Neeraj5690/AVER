@@ -289,6 +289,258 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
+            # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
+            l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            random.shuffle(l)
+            if l[0] == 0:
+                pos = random.choice(range(1, len(l)))
+                l[0], l[pos] = l[pos], l[0]
+            AccountBsb = ''.join(map(str, l[0:6]))
+            print(AccountBsb)
+            today = date.today()
+            D1 = today.strftime("%d-%m-%Y")
+
+            driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
+            time.sleep(2)
+            for rc in range(5):
+                letters = string.ascii_lowercase
+                returna = ''.join(random.choice(letters) for i in range(5))
+                Name = returna
+            print(Name)
+            Data = [Name, D1, AccountBsb,"@test.com"]
+            for ii in range(1, 6):
+                driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]")
+                if ii==1:
+                    for i1 in range(1,4):
+                        driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div")
+                        # -------------Name Field--------------------------------------------
+                        if i1 == 1:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/input").send_keys(Data[0])
+
+                        # -------------Status Dropdown--------------------------------------------
+                        elif i1 == 2:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/select"))
+                            select.select_by_visible_text("Active")
+                        # -------------Set Up Date Field--------------------------------------------
+                        elif i1 == 3:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
+                                    i1) + "]/div/input").clear()
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
+                                    i1) + "]/div/input").send_keys(Data[1])
+                            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            time.sleep(2)
+                # -------------Account Name Field--------------------------------------------
+                elif ii == 2:
+                    for ii1 in range(1,4):
+                        if ii1 ==1:
+                            time.sleep(1)
+                            driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div["+str(ii1)+"]/div/input").send_keys(
+                                Data[0])
+                        # -------------Account BSB Field--------------------------------------------
+                        elif ii1==2:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
+                                    ii1) + "]/div/input").send_keys(
+                                Data[2])
+                        # -------------Account Number Field--------------------------------------------
+                        elif ii1 == 3:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
+                                    ii1) + "]/div/input").send_keys(
+                                Data[2])
+                # -------------Send Remittance Email Check Box--------------------------------------------
+                elif ii == 3:
+                    print(ii)
+                    time.sleep(1)
+                    driver.find_element_by_xpath(
+                        "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                            ii) + "]/div/div/label/input").click()
+                    time.sleep(1)
+                    driver.find_element_by_xpath(
+                        "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                            ii) + "]/div/div/label/input").click()
+                    print(ii)
+                # -------------Remittance Email Address(s)--------------------------------------------
+                elif ii == 4:
+                    print(ii)
+                    time.sleep(1)
+                    driver.find_element_by_xpath(
+                        "//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]/div/input").send_keys(Data[0] + Data[3])
+                    print(ii)
+                # -------------Save Button--------------------------------------------
+                elif ii == 5:
+                    print(ii)
+                    time.sleep(1)
+                    driver.find_element_by_xpath(
+                        "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(ii) + "]/button").click()
+                    print(ii)
+
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
+            l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            random.shuffle(l)
+            if l[0] == 0:
+                pos = random.choice(range(1, len(l)))
+                l[0], l[pos] = l[pos], l[0]
+            Number = ''.join(map(str, l[0:6]))
+            print(Number)
+
+            today = date.today()
+            D1 = today.strftime("%d-%m-%Y")
+
+            driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
+            time.sleep(2)
+
+            for rc in range(5):
+                letters = string.ascii_lowercase
+                returna = ''.join(random.choice(letters) for i in range(5))
+                Name = returna
+            print(Name)
+            Data1 = [Name, D1, Number, "@test.com","2132435465"]
+            for ii2 in range(1, 7):
+                driver.find_element_by_xpath(
+                    "//div[@id='createnewsp']/div/div/div[2]/form/div[" + str(ii2) + "]")
+                if ii2 == 1:
+                    for i2 in range(1, 4):
+                        driver.find_element_by_xpath(
+                            "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div["+str(i2)+"]")
+                        # -------------Name Field--------------------------------------------
+                        if i2 == 1:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div["+str(i2)+"]/div/input").send_keys(Data[0])
+
+                        # -------------Status Dropdown--------------------------------------------
+                        elif i2 == 2:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div["+str(i2)+"]/div/select"))
+                            select.select_by_visible_text("Active")
+                        # -------------Set Up Date Field--------------------------------------------
+                        elif i2 == 3:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div["+str(i2)+"]/div/input").clear()
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div[" + str(i2) + "]/div/input").send_keys(Data[1])
+                            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            time.sleep(2)
+                        # -------------ABN Field--------------------------------------------
+                        elif i2 == 4:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div[" + str(
+                                    i2) + "]/div/input").send_keys(Data1[2])
+                        # -------------Franchise Dropdown--------------------------------------------
+                        elif i2 == 5:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div["+str(i2)+"]/div/select"))
+                            select.select_by_visible_text("Yes")
+                        # -------------Related Franchise Dropdown--------------------------------------------
+                        elif i2 == 6:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div[" + str(i2) + "]/div/select"))
+                            select.select_by_index(0)
+                        # -------------Service Type Dropdown--------------------------------------------
+                        elif i2 == 7:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[1]/div[" + str(i2) + "]/div/span/select"))
+                            select.select_by_index(3)
+                # -------------Office Number Field--------------------------------------------
+                elif ii2 == 2:
+                    for ii3 in range(1, 10):
+                        if ii3 == 1:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div["+str(ii3)+"]/div/input").send_keys(
+                                Data1[2])
+                        # -------------Mobile Number Field--------------------------------------------
+                        elif ii3 == 2:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div["+str(ii3)+"]/div/input").send_keys(
+                                Data1[4])
+                        # -------------Admin Email Address Field--------------------------------------------
+                        elif ii3 == 3:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div["+str(ii3)+"]/div/input").send_keys(Data1[0] + Data1[3])
+                        # -------------Address Country Field--------------------------------------------
+                        elif ii3 == 4:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div["+str(ii3)+"]/div/select"))
+                            select.select_by_index(4)
+                        # -------------Address State Field--------------------------------------------
+                        elif ii3 == 5:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div[" + str(ii3) + "]/div/select"))
+                            select.select_by_index(3)
+                        # -------------Address City Field--------------------------------------------
+                        elif ii3 == 6:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div[" + str(ii3) + "]/div/select"))
+                            select.select_by_index(2)
+                        # -------------Address Street Field--------------------------------------------
+                        elif ii3 == 7:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div[" + str(ii3) + "]/div/input").send_keys(Data[0])
+                        # -------------Address Street Field--------------------------------------------
+                        elif ii3 == 8:
+                            time.sleep(1)
+                            driver.find_element_by_xpath("//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div[" + str(
+                                    ii3) + "]/div/input").send_keys(Data1[2])
+                        # -------------Address Street Field--------------------------------------------
+                        elif ii3 == 9:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='createnewsp']/div/div/div[2]/form/div[2]/div[" + str(
+                                    ii3) + "]/div/input").send_keys(Data1[0])
+                # -------------Account Name Field--------------------------------------------
+                elif ii2 == 3:
+                    for cc in range(1,4):
+                        driver.find_element_by_xpath("//div[@id='createnewsp']/div/div/div[2]/form/div[3]/div["+str(cc)+"]")
+                        if cc==1:
+                            driver.find_element_by_xpath("//div[@id='createnewsp']/div/div/div[2]/form/div[3]/div["+str(cc)+"]/div/input").send_keys(Data1[0])
+                        elif cc==2:
+                            driver.find_element_by_xpath("//div[@id='createnewsp']/div/div/div[2]/form/div[3]/div["+str(cc)+"]/div/input").send_keys(Data1[2])
+                # -------------Remittance Email Address(s)--------------------------------------------
+                elif ii2 == 4:
+                    print(ii)
+                    time.sleep(1)
+                    driver.find_element_by_xpath(
+                        "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                            ii) + "]/div/input").send_keys(Data[0] + Data[3])
+                    print(ii)
+                # -------------Save Button--------------------------------------------
+                elif ii2 == 5:
+                    print(ii)
+                    time.sleep(1)
+                    driver.find_element_by_xpath(
+                        "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                            ii) + "]/button").click()
+                    print(ii)
+
+            # ---------------------------------------------------------------------------------
+
             # # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
             # PageName = "Create Reimburse Client button"
             # Ptitle1 = ""

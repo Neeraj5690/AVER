@@ -198,8 +198,20 @@ def test_VerifyAllClickables(test_setup):
 
 
         try:
-            # ---------------------------Verify Create new client process-----------------------------
-            MyClient = "FName"
+            # ---------------------------Verify Create new client and add plan process-----------------------------
+            MyClient = "FNameA"
+            PlanStartDate = "07-02-2022"
+            PlanEndDate = "17-02-2022"
+            AllocatedAmount = "1000"
+            RemainingAmountLimit = 500
+
+            l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            random.shuffle(l)
+            if l[0] == 0:
+                pos = random.choice(range(1, len(l)))
+                l[0], l[pos] = l[pos], l[0]
+            BookingNumber = ''.join(map(str, l[0:4]))
+            print(BookingNumber)
 
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
             time.sleep(2)
@@ -470,15 +482,159 @@ def test_VerifyAllClickables(test_setup):
                 PlanStatus=driver.find_element_by_xpath("//tbody/tr[1]/td[2]").text
                 print(PlanStatus)
             except Exception:
-                PlanStatus="InActive"
+                PlanStatus="No Plan Found"
 
-            if PlanStatus == "Active":
-                driver.find_element_by_xpath("//tbody/tr[1]/td[last()]").click()
-
-
-
-            elif PlanStatus == "InActive":
+            if PlanStatus == "No Plan Found":
+                print("Inside " + PlanStatus)
                 driver.find_element_by_xpath("//a[@id='addNewServicePlan']").click()
+
+                for np in range(1,9):
+                    driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div["+str(np)+"]")
+                    # -----------------Plan start date-------------------------------------------
+                    if np==5:
+                        time.sleep(1)
+                        driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div["+str(np)+"]/div/input[1]").send_keys(PlanStartDate)
+                        ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    # -----------------Plan end date-------------------------------------------
+                    elif np==6:
+                        time.sleep(1)
+                        driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div["+str(np)+"]/div/input[1]").send_keys(PlanEndDate)
+                        ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    # -----------------Status dropdown-------------------------------------------
+                    elif np==7:
+                        time.sleep(1)
+                        select = Select(driver.find_element_by_xpath(
+                            "//div[@id='UploadNewPlan']/div/div/div[2]/form/div["+str(np)+"]/div/select"))
+                        select.select_by_visible_text("Active")
+                    # -----------------Create button-------------------------------------------
+                    elif np==8:
+                        time.sleep(1)
+                        driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div["+str(np)+"]/button").click()
+                        try:
+                            WebDriverWait(driver, SHORT_TIMEOUT
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                            WebDriverWait(driver, LONG_TIMEOUT
+                                          ).until(
+                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        except TimeoutException:
+                            pass
+
+                PlanStatus = "Active"
+
+            if PlanStatus == "InActive":
+                print("Inside " + PlanStatus)
+                print("We need to edit existing plan")
+
+                PlanStatus="Active"
+
+            try:
+                Remaining = driver.find_element_by_xpath("//table[@class='table datatable-sorting']/tbody/tr[1]/td[6]").text
+                print(Remaining)
+
+
+                BalanceAmt = Remaining
+                rem = 0
+                try:
+                    ind = BalanceAmt.index('.')
+                    try:
+                        if BalanceAmt[ind + 1] and BalanceAmt[ind + 2] == "0":
+                            rem = 1
+                    except Exception as qq:
+                        if BalanceAmt[ind + 1] == "0":
+                            rem = 1
+                        pass
+                    ab = re.findall('[^A-Za-z0-9]+', BalanceAmt)
+                    ab = int(len(ab))
+                    ab = ab - 1
+                    BalanceAmt = re.sub('[^A-Za-z0-9]+', '', BalanceAmt)
+                    BalanceAmt = BalanceAmt[:ind - ab] + "." + BalanceAmt[ind - ab:]
+                    if rem == 1:
+                        BalanceAmt = BalanceAmt.strip('.').strip('0').strip('0')
+                        BalanceAmt = BalanceAmt.strip('.')
+                        BalanceAmt = int(BalanceAmt)
+                    print(BalanceAmt)
+                except Exception:
+                    BalanceAmt = re.sub('[^A-Za-z0-9]+', '', BalanceAmt)
+                    print(BalanceAmt)
+            except Exception:
+                pass
+
+            if PlanStatus == "Active" and BalanceAmt<RemainingAmountLimit :
+                print("Inside "+PlanStatus)
+                try:
+                    driver.find_element_by_xpath("//tbody/tr/td[@class='TrButtonAdd']/button[2]").click()
+                    for pm in range(1, 8):
+                        driver.find_element_by_xpath("//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div["+str(pm)+"]")
+                        #----------Booking number field on plan managed service booking page--------------------
+                        if pm == 1:
+                            time.sleep(1)
+                            driver.find_element_by_xpath("//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div["+str(pm)+"]/div/div[2]/ul/li/span[1]/input").send_keys(BookingNumber)
+                        # ----------Support Budget dropdown on plan managed service booking page--------------------
+                        elif pm == 3:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div["+str(pm)+"]/div[1]/div/select"))
+                            select.select_by_index(4)
+                        # ----------Allocated Amount (Unit Price) field on plan managed service booking page--------------------
+                        elif pm == 5:
+                            time.sleep(1)
+                            driver.find_element_by_xpath("//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(pm) + "]/div/input").send_keys(AllocatedAmount)
+                        # ----------Add button on plan managed service booking page--------------------
+                        elif pm == 7:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div["+str(pm)+"]/div/button").click()
+
+                            try:
+                                WebDriverWait(driver, SHORT_TIMEOUT
+                                              ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                                WebDriverWait(driver, LONG_TIMEOUT
+                                              ).until(
+                                    EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                            except TimeoutException:
+                                pass
+
+                            try:
+                                BookingNumberError = driver.find_element_by_xpath("//span[@id='error_booking_number']").is_displayed()
+                                print(BookingNumberError)
+                                if BookingNumberError == True:
+                                    time.sleep(1)
+                                    driver.find_element_by_xpath(
+                                        "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[1]/div/div[2]/ul/li/span[1]/input").clear()
+                                    driver.find_element_by_xpath(
+                                        "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[1]/div/div[2]/ul/li/span[1]/input").send_keys(int(BookingNumber)+1)
+                            except Exception as be:
+                                driver.find_element_by_xpath("//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div["+str(pm)+"]/div/button").click()
+
+                    try:
+                        WebDriverWait(driver, SHORT_TIMEOUT
+                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                        WebDriverWait(driver, LONG_TIMEOUT
+                                      ).until(
+                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    except TimeoutException:
+                        pass
+
+                    driver.find_element_by_xpath("//button[@class='upload_btn_plan btn_clr_gr']").click()
+                    try:
+                        WebDriverWait(driver, SHORT_TIMEOUT
+                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                        WebDriverWait(driver, LONG_TIMEOUT
+                                      ).until(
+                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    except TimeoutException:
+                        pass
+                except Exception:
+                    print("aaaaaaaaaaaaaa")
+            # -----------------Upload new plan button-------------------------------------------
+
+
+
+
 
 
 

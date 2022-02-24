@@ -525,7 +525,14 @@ def test_VerifyAllClickables(test_setup):
             if PlanStatus == "InActive":
                 print("Inside " + PlanStatus)
                 print("We need to edit existing plan")
-
+                try:
+                    driver.find_element_by_xpath("//tbody/tr/td[@class='text-right']/a[2]").click()
+                    select = Select(driver.find_element_by_xpath(
+                        "//select[@class='servicePlanStatus']"))
+                    select.select_by_visible_text("Active")
+                    driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div[10]/button").click()
+                except Exception:
+                    pass
                 PlanStatus="Active"
 
             try:
@@ -562,6 +569,40 @@ def test_VerifyAllClickables(test_setup):
 
             if PlanStatus == "Active" and BalanceAmt<RemainingAmountLimit :
                 print("Inside "+PlanStatus)
+                try:
+                    driver.find_element_by_xpath("//td[@class='ServiceBookingTHwidth']/p/a").click()
+                    try:
+                        WebDriverWait(driver, SHORT_TIMEOUT
+                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                        WebDriverWait(driver, LONG_TIMEOUT
+                                      ).until(
+                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    except TimeoutException:
+                        pass
+                    try:
+                        driver.find_element_by_xpath("//div[@class='src_sec_hed src_sec_hed_cus']/a[1]").click()
+                        time.sleep(2)
+                        AmtToEdit = driver.find_element_by_xpath("//input[@name='booking[0][amount]']").get_attribute('value')
+                        AmtToEdit = int(AmtToEdit)
+                        print(AmtToEdit)
+                    except Exception:
+                        print(AmtToEdit+ "not found")
+
+                    if BalanceAmt<RemainingAmountLimit:
+                        AmtNeedToAdd = RemainingAmountLimit - BalanceAmt
+                        AmtNeedToAdd = int(AmtNeedToAdd)
+                        print(AmtNeedToAdd)
+
+                        NewAmount = AmtToEdit + AmtNeedToAdd
+                        NewAmount = int(NewAmount)
+                        print(NewAmount)
+                        driver.find_element_by_xpath("//input[@name='booking[0][amount]']").clear()
+                        time.sleep(2)
+                        driver.find_element_by_xpath("//input[@name='booking[0][amount]']").send_keys(NewAmount)
+                except Exception:
+                    pass
+
                 try:
                     driver.find_element_by_xpath("//tbody/tr/td[@class='TrButtonAdd']/button[2]").click()
                     for pm in range(1, 8):
@@ -629,7 +670,7 @@ def test_VerifyAllClickables(test_setup):
                     except TimeoutException:
                         pass
                 except Exception:
-                    print("aaaaaaaaaaaaaa")
+                    pass
             # -----------------Upload new plan button-------------------------------------------
 
 

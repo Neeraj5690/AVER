@@ -21,15 +21,13 @@ def test_ReportSendSmokeAll():
     AttachmntAdded= []
 
     p = os.path.dirname(os.path.realpath(__file__))
+    p = os.path.abspath(os.path.join(p, '..'))
     print(p)
-
-    # Directory= 'test_LoginPage/'
-    # if platform == "linux" or platform == "linux2":
-    #     PDFpath = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
-    # elif platform == "win32" or platform == "win64":
-    #     PDFpath = 'C:/AVER/AverTest/' + Directory
-
+    p = p.replace('\\', '/')
+    p = p + "/"
+    print(p)
     PDFpath=p
+
     #-------------------To read content to send in e-Mail--------------------
     ExcelFileName = "FileName"
     loc = (PDFpath+'PDFFileNameData/' + ExcelFileName + '.xlsx')

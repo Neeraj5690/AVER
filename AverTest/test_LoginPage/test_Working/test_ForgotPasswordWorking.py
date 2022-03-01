@@ -36,16 +36,15 @@ def test_setup():
   TestDirectoryName = "test_Working"
   global Exe
   Exe="Yes"
-  # Directory = 'test_LoginPage/'
-  # if platform == "linux" or platform == "linux2":
-  #     path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
-  # elif platform == "win32" or platform == "win64":
-  #     path = 'C:/AVER/AverTest/' + Directory
 
   p = os.path.dirname(os.path.realpath(__file__))
+  p = os.path.abspath(os.path.join(p, '..'))
   print(p)
-  path = p
+  p = p.replace('\\', '/')
+  p = p + "/"
+  print(p)
 
+  path = p
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
   wbx = openpyxl.load_workbook(locx)
@@ -65,7 +64,7 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          driver = webdriver.Chrome(executable_path=path+"C:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
       driver.maximize_window()

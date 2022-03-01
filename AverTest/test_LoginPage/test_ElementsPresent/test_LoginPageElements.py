@@ -35,13 +35,12 @@ def test_setup():
   TestDirectoryName = "test_ElementsPresent"
   global Exe
   Exe="Yes"
-  # Directory = 'test_LoginPage/'
-  # if platform == "linux" or platform == "linux2":
-  #     path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
-  # elif platform == "win32" or platform == "win64":
-  #     path = 'C:/AVER/AverTest/' + Directory
 
   p = os.path.dirname(os.path.realpath(__file__))
+  p = os.path.abspath(os.path.join(p, '..'))
+  print(p)
+  p = p.replace('\\', '/')
+  p = p + "/"
   print(p)
   path = p
 

@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import openpyxl
 import pytest
@@ -7,12 +9,15 @@ from sys import platform
 @pytest.mark.smoke
 def test_PieChartTestResult():
     TestStatus = []
-    Directory = 'test_LoginPage/'
-    if platform == "linux" or platform == "linux2":
-        path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
-    elif platform == "win32" or platform == "win64":
-        path = 'C:/AVER/AverTest/' + Directory
+    # Directory = 'test_LoginPage/'
+    # if platform == "linux" or platform == "linux2":
+    #     path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
+    # elif platform == "win32" or platform == "win64":
+    #     path = 'C:/AVER/AverTest/' + Directory
 
+    p = os.path.dirname(os.path.realpath(__file__))
+    print(p)
+    path=p
     #-------------------To read content to send in e-Mail--------------------
     ExcelFileName = "FileName"
     loc = (path+'PDFFileNameData/' + ExcelFileName + '.xlsx')

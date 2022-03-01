@@ -1,4 +1,5 @@
 import datetime
+import os
 import time
 import openpyxl
 from fpdf import FPDF
@@ -35,11 +36,15 @@ def test_setup():
   TestDirectoryName = "test_Working"
   global Exe
   Exe="Yes"
-  Directory = 'test_LoginPage/'
-  if platform == "linux" or platform == "linux2":
-      path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
-  elif platform == "win32" or platform == "win64":
-      path = 'C:/AVER/AverTest/' + Directory
+  # Directory = 'test_LoginPage/'
+  # if platform == "linux" or platform == "linux2":
+  #     path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
+  # elif platform == "win32" or platform == "win64":
+  #     path = 'C:/AVER/AverTest/' + Directory
+
+  p = os.path.dirname(os.path.realpath(__file__))
+  print(p)
+  path = p
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')

@@ -26,6 +26,7 @@ def test_setup():
   global TestResultStatus
   global TestDirectoryName
   global path
+  global p
 
   TestName = "test_LoginPageWorking"
   description = "This test scenario is to verify working of Login Process"
@@ -36,13 +37,12 @@ def test_setup():
   TestDirectoryName = "test_Working"
   global Exe
   Exe="Yes"
-  # Directory = 'test_LoginPage/'
-  # if platform == "linux" or platform == "linux2":
-  #     path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
-  # elif platform == "win32" or platform == "win64":
-  #     path = 'C:/AVER/AverTest/' + Directory
 
   p = os.path.dirname(os.path.realpath(__file__))
+  p=os.path.abspath(os.path.join(p, '..'))
+  print(p)
+  p = p.replace('\\', '/')
+  p=p+"/"
   print(p)
   path = p
 
@@ -63,9 +63,12 @@ def test_setup():
 
   if Exe=="Yes":
       if platform == "linux" or platform == "linux2":
+          path = os.path.abspath(os.path.join(p, '..'))
           driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          path = os.path.abspath(os.path.join(p, '..'))
+          path = path + "/"
+          driver = webdriver.Chrome(executable_path=path+"chrome/chromedriver.exe")
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
@@ -77,7 +80,10 @@ def test_setup():
 
       class PDF(FPDF):
           def header(self):
-              self.image(path+'EmailReportContent/logo.png', 10, 8, 33)
+              print("-----")
+              print(path)
+              print("-----")
+              self.image(path+'test_LoginPage/EmailReportContent/logo.png', 10, 8, 33)
               self.set_font('Arial', 'B', 15)
               self.cell(73)
               self.set_text_color(0, 0, 0)
@@ -120,7 +126,7 @@ def test_setup():
 
       # -----------To add test case details in PDF details sheet-------------
       ExcelFileName = "FileName"
-      loc = (path+'PDFFileNameData/' + ExcelFileName + '.xlsx')
+      loc = (path+'test_LoginPage/PDFFileNameData/' + ExcelFileName + '.xlsx')
       wb = openpyxl.load_workbook(loc)
       sheet = wb.active
       print()
@@ -151,7 +157,7 @@ def test_setup():
 
       #---------------------To add Test name in Execution sheet--------------------
       ExcelFileName1 = "Execution"
-      loc1 = (path+'Executiondir/' + ExcelFileName1 + '.xlsx')
+      loc1 = (path+'test_LoginPage/Executiondir/' + ExcelFileName1 + '.xlsx')
       wb1 = openpyxl.load_workbook(loc1)
       sheet1 = wb1.active
       checkcount1 = 0

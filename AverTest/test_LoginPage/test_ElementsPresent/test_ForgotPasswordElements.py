@@ -41,13 +41,11 @@ def test_setup():
   global Exe
   Exe="Yes"
 
-  p = os.path.dirname(os.path.realpath(__file__))
-  p = os.path.abspath(os.path.join(p, '..'))
-  print(p)
-  p = p.replace('\\', '/')
-  p = p + "/"
-  print(p)
-  path = p
+  Directory = 'test_LoginPage/'
+  if platform == "linux" or platform == "linux2":
+      path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
+  elif platform == "win32" or platform == "win64":
+      path = 'D:/AVER/AverTest/' + Directory
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -64,17 +62,16 @@ def test_setup():
               elif sheetx.cell(ix, 2).value == "Yes":
                   Exe="Yes"
 
-  if Exe=="Yes":
+  if Exe == "Yes":
       if platform == "linux" or platform == "linux2":
-          driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
+          driver = webdriver.Chrome(
+              executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
-      # enter_username("admin@averplanning.com")
-      # enter_password("admin786")
-      #driver.find_element_by_xpath("//button[@type='submit']").click()
 
   yield
   if Exe == "Yes":

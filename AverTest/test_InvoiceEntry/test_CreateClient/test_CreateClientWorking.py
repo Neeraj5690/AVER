@@ -183,7 +183,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      #driver.quit()
+      driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):

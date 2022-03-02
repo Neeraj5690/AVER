@@ -561,6 +561,8 @@ def test_VerifyAllClickables(test_setup):
 
             if ClientPresentxl=="False":
                 print("Client is not present in reference sheet, Invoice creation process terminated")
+                TestResult.append("Client is not present in reference sheet, Invoice creation process terminated\nFirst run the job for create client")
+                TestResultStatus.append("Fail")
                 driver.close()
 
             PageName = "Create New Invoice form"

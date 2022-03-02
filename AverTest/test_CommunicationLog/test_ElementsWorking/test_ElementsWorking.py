@@ -549,19 +549,22 @@ def test_VerifyAllClickables(test_setup):
             # -------Verifying add New plan form process-------------------------------------------------
             PageName = "Communication log"
             try:
-                print()
-                select = Select(driver.find_element_by_xpath(
-                    "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
-                select.select_by_visible_text(Selector[4])
-                driver.find_element_by_xpath("//div[@id='communication-log-form']/form/div[2]/div[1]/div/div/label[1]/input").click()
-                time.sleep(TimeSpeed)
-                driver.find_element_by_xpath(
-                    "//div[@id='communication-log-form']/form/div[2]/div[2]/div/input").send_keys("Sumreet Client2")
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(TimeSpeed)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(TimeSpeed)
+                try:
+                    print()
+                    select = Select(driver.find_element_by_xpath(
+                        "//div[@class='content yellow_color']/div[1]/div/form/div/div/div/select"))
+                    select.select_by_visible_text(Selector[4])
+                    driver.find_element_by_xpath("//div[@id='communication-log-form']/form/div[2]/div[1]/div/div/label[1]/input").click()
+                    time.sleep(TimeSpeed)
+                    driver.find_element_by_xpath(
+                        "//div[@id='communication-log-form']/form/div[2]/div[2]/div/input").send_keys("Sumreet Client2")
+                    time.sleep(TimeSpeed)
+                    ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+                    time.sleep(TimeSpeed)
+                    ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    time.sleep(TimeSpeed)
+                except Exception:
+                    pass
 
                 # # # -------Participant information table-------------------------------------------------
                 # # ParticipantInfo = driver.find_elements_by_xpath("//div[@id='client-div']/div[2]/div/table/tbody/tr")
@@ -632,46 +635,49 @@ def test_VerifyAllClickables(test_setup):
                 # # ----------------------------------------------------------------------------------------------
 
                 # -------App access table-------------------------------------------------
-                AppAccess = driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr")
-                AppText =  driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr[1]/td").text
-                AppAccLength = len(AppAccess)
-                print(AppAccLength)
-                print(AppText)
-                for ac in range(1,AppAccLength):
-                    if "No Contacts Available" not in AppText:
-                        driver.find_element_by_xpath("//div[@id='add-access-div']/div/div/table/tbody//tr[" + str(i) + "]/td[8]/div/div/label[1]/input").click()
-                        time.sleep(TimeSpeed)
-                    if "No Contacts Available" in AppText:
-                        driver.find_element_by_xpath(
-                            "//div[@id='add-access-div']/div/div/table/tbody/tr[2]/td/a").click()
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[1]/div/input").send_keys(
-                            "Test First Name")
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[2]/div/input").send_keys(
-                            "Test Last Name")
-                        time.sleep(TimeSpeed)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[3]/div/select"))
-                        select.select_by_visible_text("Grandma")
-                        time.sleep(TimeSpeed)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[4]/div/select"))
-                        select.select_by_visible_text("sumreet SP")
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[5]/div/input").send_keys(
-                            "abc@test.com")
-                        time.sleep(TimeSpeed)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[6]/div/select"))
-                        select.select_by_visible_text("Account Nominee")
-                        driver.find_element_by_xpath(
-                            "//div[@id='AddClientAccess']/div/div/div[2]/form/div[last()]/button").click()
-                        time.sleep(TimeSpeed)
-                        print("App access added successfully")
+                try:
+                    AppAccess = driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr")
+                    AppText =  driver.find_elements_by_xpath("//div[@id='add-access-div']/div/div/table/tbody/tr[1]/td").text
+                    AppAccLength = len(AppAccess)
+                    print(AppAccLength)
+                    print(AppText)
+                    for ac in range(1,AppAccLength):
+                        if "No Contacts Available" not in AppText:
+                            driver.find_element_by_xpath("//div[@id='add-access-div']/div/div/table/tbody//tr[" + str(i) + "]/td[8]/div/div/label[1]/input").click()
+                            time.sleep(TimeSpeed)
+                        if "No Contacts Available" in AppText:
+                            driver.find_element_by_xpath(
+                                "//div[@id='add-access-div']/div/div/table/tbody/tr[2]/td/a").click()
+                            time.sleep(TimeSpeed)
+                            driver.find_element_by_xpath(
+                                "//div[@id='AddClientAccess']/div/div/div[2]/form/div[1]/div/input").send_keys(
+                                "Test First Name")
+                            time.sleep(TimeSpeed)
+                            driver.find_element_by_xpath(
+                                "//div[@id='AddClientAccess']/div/div/div[2]/form/div[2]/div/input").send_keys(
+                                "Test Last Name")
+                            time.sleep(TimeSpeed)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='AddClientAccess']/div/div/div[2]/form/div[3]/div/select"))
+                            select.select_by_visible_text("Grandma")
+                            time.sleep(TimeSpeed)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='AddClientAccess']/div/div/div[2]/form/div[4]/div/select"))
+                            select.select_by_visible_text("sumreet SP")
+                            time.sleep(TimeSpeed)
+                            driver.find_element_by_xpath(
+                                "//div[@id='AddClientAccess']/div/div/div[2]/form/div[5]/div/input").send_keys(
+                                "abc@test.com")
+                            time.sleep(TimeSpeed)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='AddClientAccess']/div/div/div[2]/form/div[6]/div/select"))
+                            select.select_by_visible_text("Account Nominee")
+                            driver.find_element_by_xpath(
+                                "//div[@id='AddClientAccess']/div/div/div[2]/form/div[last()]/button").click()
+                            time.sleep(TimeSpeed)
+                            print("App access added successfully")
+                except Exception:
+                 pass
 
                 # # -------Add Additional Contacts-------------------------------------------------
                 # # driver.find_element_by_xpath(

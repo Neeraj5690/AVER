@@ -218,11 +218,12 @@ def test_VerifyAllClickables(test_setup):
 
             #---------------------------Verify Top Search box-----------------------------
             PageName = "Top Search box"
-            Ptitle1 = "searchAll"
+            Ptitle1 = "Search here"
             try:
-                PageTitle1 = driver.find_element_by_xpath("//input[@id='search_global_new']").get_attribute('name')
+                PageTitle1 = driver.find_element_by_xpath("//li[@class='globallisrch']/div/form/input").get_attribute('placeholder')
+                print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                driver.find_element_by_xpath("//input[@id='search_global_new']").send_keys("test")
+                driver.find_element_by_xpath("//li[@class='globallisrch']/div/form/input").send_keys("test")
                 TestResult.append(PageName + "  is present and user is able to send inputs")
                 TestResultStatus.append("Pass")
             except Exception:
@@ -259,7 +260,6 @@ def test_VerifyAllClickables(test_setup):
             #---------------------------Verify My profile drop down-----------------------------
             time.sleep(2)
             PageName = "My profile drop down"
-            Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
                 driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
@@ -273,6 +273,7 @@ def test_VerifyAllClickables(test_setup):
                                   ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                 except TimeoutException:
                     pass
+
                 TestResult.append(PageName + "  is present and user is able to click")
                 TestResultStatus.append("Pass")
             except Exception as aq:
@@ -283,6 +284,7 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
             time.sleep(TimeSpeed)
+            driver.close()
             # ---------------------------------------------------------------------------------
             # ---------------------------Verify Pagination clicks-----------------------------
             try:

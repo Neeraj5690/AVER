@@ -262,6 +262,7 @@ def test_VerifyAllClickables(test_setup):
             PageName = "My profile drop down"
             try:
                 driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
+                time.sleep(2)
                 driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
                 time.sleep(2)
                 driver.find_element_by_xpath("//a[@href='https://averreplica.1wayit.com/admin-profile']").click()
@@ -273,18 +274,16 @@ def test_VerifyAllClickables(test_setup):
                                   ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                 except TimeoutException:
                     pass
-
                 TestResult.append(PageName + "  is present and user is able to click")
                 TestResultStatus.append("Pass")
-            except Exception as aq:
-                print(aq)
+            except Exception as aaq:
+                print(aaq)
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             time.sleep(2)
             time.sleep(TimeSpeed)
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
             time.sleep(TimeSpeed)
-            driver.close()
             # ---------------------------------------------------------------------------------
             # ---------------------------Verify Pagination clicks-----------------------------
             try:
@@ -349,9 +348,9 @@ def test_VerifyAllClickables(test_setup):
                         pass
             except Exception as aq:
                 print(aq)
-                TestResult.append(PageName + " is not present")
+                TestResult.append("Pagination is not working properly\n"+aq)
                 TestResultStatus.append("Fail")
-            # # ---------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)

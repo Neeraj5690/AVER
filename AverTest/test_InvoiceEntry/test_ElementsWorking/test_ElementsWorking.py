@@ -183,7 +183,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      driver.quit()
+      # driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -212,62 +212,62 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify working of Back button on Invoice entry page -----------------------------
-            # PageName = "Back button"
-            # Ptitle1 = "Rae"
-            # try:
-            #     driver.find_element_by_xpath("//a[text()='Back']").click()
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ----------------Verify Invoice entry icon click after verifying back--------
-            # PageName = "Invoice entry icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/a/i").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/ul/li[1]/a").click()
-            #     time.sleep(2)
-            #     TestResult.append(PageName + "  is opened again after verifying back button")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not opened again after verifying back button")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ---------------------------Verify working of XERO CSV button-----------------------------
-            # PageName = "XERO CSV button"
-            # Ptitle1 = "Generate Invoice Report"
-            # try:
-            #     driver.find_element_by_xpath("//button[text()='XERO CSV']").click()
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//div[@id='xeroReport']/div/div/div[1]/h4").text
-            #     time.sleep(2)
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # CloseButton = driver.find_element_by_xpath("// div[ @ id = 'xeroReport'] / div / div / div[1] / button").click()
+            # ---------------------------Verify working of Back button on Invoice entry page -----------------------------
+            PageName = "Back button"
+            Ptitle1 = "Rae"
+            try:
+                driver.find_element_by_xpath("//a[text()='Back']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
+
+            # ----------------Verify Invoice entry icon click after verifying back--------
+            PageName = "Invoice entry icon"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/a/i").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[5]/ul/li[1]/a").click()
+                time.sleep(2)
+                TestResult.append(PageName + "  is opened again after verifying back button")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not opened again after verifying back button")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify working of XERO CSV button-----------------------------
+            PageName = "XERO CSV button"
+            Ptitle1 = "Generate Invoice Report"
+            try:
+                driver.find_element_by_xpath("//button[text()='XERO CSV']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//div[@id='xeroReport']/div/div/div[1]/h4").text
+                time.sleep(2)
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            driver.find_element_by_xpath("// div[ @ id = 'xeroReport'] / div / div / div[1] / button").click()
+            #---------------------------------------------------------------------------------
 
             # ---------------------------Verify working of Create new button on Invoice entry page-----------------------------
             PageName = "Create new button"
@@ -289,104 +289,110 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
-            # l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-            # random.shuffle(l)
-            # if l[0] == 0:
-            #     pos = random.choice(range(1, len(l)))
-            #     l[0], l[pos] = l[pos], l[0]
-            # AccountBsb = ''.join(map(str, l[0:6]))
-            # print(AccountBsb)
-            # today = date.today()
-            # D1 = today.strftime("%d-%m-%Y")
-            #
-            # driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
-            # time.sleep(2)
-            # for rc in range(5):
-            #     letters = string.ascii_lowercase
-            #     returna = ''.join(random.choice(letters) for i in range(5))
-            #     Name = returna
-            # print(Name)
-            # Data = [Name, D1, AccountBsb,"@test.com"]
-            # for ii in range(1, 6):
-            #     driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]")
-            #     if ii==1:
-            #         for i1 in range(1,4):
-            #             driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div")
-            #             # -------------Name Field--------------------------------------------
-            #             if i1 == 1:
-            #                 time.sleep(1)
-            #                 driver.find_element_by_xpath(
-            #                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/input").send_keys(Data[0])
-            #
-            #             # -------------Status Dropdown--------------------------------------------
-            #             elif i1 == 2:
-            #                 time.sleep(1)
-            #                 select = Select(driver.find_element_by_xpath(
-            #                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/select"))
-            #                 select.select_by_visible_text("Active")
-            #             # -------------Set Up Date Field--------------------------------------------
-            #             elif i1 == 3:
-            #                 time.sleep(1)
-            #                 driver.find_element_by_xpath(
-            #                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
-            #                         i1) + "]/div/input").clear()
-            #                 time.sleep(1)
-            #                 driver.find_element_by_xpath(
-            #                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
-            #                         i1) + "]/div/input").send_keys(Data[1])
-            #                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-            #                 time.sleep(2)
-            #     # -------------Account Name Field--------------------------------------------
-            #     elif ii == 2:
-            #         for ii1 in range(1,4):
-            #             if ii1 ==1:
-            #                 time.sleep(1)
-            #                 driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div["+str(ii1)+"]/div/input").send_keys(
-            #                     Data[0])
-            #             # -------------Account BSB Field--------------------------------------------
-            #             elif ii1==2:
-            #                 time.sleep(1)
-            #                 driver.find_element_by_xpath(
-            #                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
-            #                         ii1) + "]/div/input").send_keys(
-            #                     Data[2])
-            #             # -------------Account Number Field--------------------------------------------
-            #             elif ii1 == 3:
-            #                 time.sleep(1)
-            #                 driver.find_element_by_xpath(
-            #                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
-            #                         ii1) + "]/div/input").send_keys(
-            #                     Data[2])
-            #     # -------------Send Remittance Email Check Box--------------------------------------------
-            #     elif ii == 3:
-            #         print(ii)
-            #         time.sleep(1)
-            #         driver.find_element_by_xpath(
-            #             "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
-            #                 ii) + "]/div/div/label/input").click()
-            #         time.sleep(1)
-            #         driver.find_element_by_xpath(
-            #             "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
-            #                 ii) + "]/div/div/label/input").click()
-            #         print(ii)
-            #     # -------------Remittance Email Address(s)--------------------------------------------
-            #     elif ii == 4:
-            #         print(ii)
-            #         time.sleep(1)
-            #         driver.find_element_by_xpath(
-            #             "//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]/div/input").send_keys(Data[0] + Data[3])
-            #         print(ii)
-            #     # -------------Save Button--------------------------------------------
-            #     elif ii == 5:
-            #         print(ii)
-            #         time.sleep(1)
-            #         driver.find_element_by_xpath(
-            #             "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(ii) + "]/button").click()
-            #         print(ii)
-            #
-            # # ---------------------------------------------------------------------------------
-            #
+            # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
+            try:
+                l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                random.shuffle(l)
+                if l[0] == 0:
+                    pos = random.choice(range(1, len(l)))
+                    l[0], l[pos] = l[pos], l[0]
+                AccountBsb = ''.join(map(str, l[0:6]))
+                print(AccountBsb)
+                today = date.today()
+                D1 = today.strftime("%d-%m-%Y")
+
+                driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
+                time.sleep(2)
+                for rc in range(5):
+                    letters = string.ascii_lowercase
+                    returna = ''.join(random.choice(letters) for i in range(5))
+                    Name = returna
+                print(Name)
+                Data = [Name, D1, AccountBsb,"@test.com"]
+                for ii in range(1, 6):
+                    driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]")
+                    if ii==1:
+                        for i1 in range(1,4):
+                            driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div")
+                            # -------------Name Field--------------------------------------------
+                            if i1 == 1:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/input").send_keys(Data[0])
+
+                            # -------------Status Dropdown--------------------------------------------
+                            elif i1 == 2:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/select"))
+                                select.select_by_visible_text("Active")
+                            # -------------Set Up Date Field--------------------------------------------
+                            elif i1 == 3:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
+                                        i1) + "]/div/input").clear()
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
+                                        i1) + "]/div/input").send_keys(Data[1])
+                                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                                time.sleep(2)
+                    # -------------Account Name Field--------------------------------------------
+                    elif ii == 2:
+                        for ii1 in range(1,4):
+                            if ii1 ==1:
+                                time.sleep(1)
+                                driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div["+str(ii1)+"]/div/input").send_keys(
+                                    Data[0])
+                            # -------------Account BSB Field--------------------------------------------
+                            elif ii1==2:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
+                                        ii1) + "]/div/input").send_keys(
+                                    Data[2])
+                            # -------------Account Number Field--------------------------------------------
+                            elif ii1 == 3:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
+                                        ii1) + "]/div/input").send_keys(
+                                    Data[2])
+                    # -------------Send Remittance Email Check Box--------------------------------------------
+                    elif ii == 3:
+                        print(ii)
+                        time.sleep(1)
+                        driver.find_element_by_xpath(
+                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                                ii) + "]/div/div/label/input").click()
+                        time.sleep(1)
+                        driver.find_element_by_xpath(
+                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                                ii) + "]/div/div/label/input").click()
+                        print(ii)
+                    # -------------Remittance Email Address(s)--------------------------------------------
+                    elif ii == 4:
+                        print(ii)
+                        time.sleep(1)
+                        driver.find_element_by_xpath(
+                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]/div/input").send_keys(Data[0] + Data[3])
+                        print(ii)
+                    # -------------Save Button--------------------------------------------
+                    elif ii == 5:
+                        print(ii)
+                        time.sleep(1)
+                        driver.find_element_by_xpath(
+                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(ii) + "]/button").click()
+                        print(ii)
+                TestResult.append("Create Reimburse Client process working correctly")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append("Create Reimburse Client process is not working")
+                TestResultStatus.append("Fail")
+
+            # ---------------------------------------------------------------------------------
+
             # # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
             # l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
             # random.shuffle(l)
@@ -399,7 +405,7 @@ def test_VerifyAllClickables(test_setup):
             # today = date.today()
             # D1 = today.strftime("%d-%m-%Y")
             #
-            # driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
+            # driver.find_element_by_xpath("//a[@title='Create Service Provider']").click()
             # time.sleep(2)
             #
             # for rc in range(5):
@@ -522,160 +528,166 @@ def test_VerifyAllClickables(test_setup):
             #                 driver.find_element_by_xpath("//div[@id='createnewsp']/div/div/div[2]/form/div[3]/div["+str(cc)+"]/div/input").send_keys(Data1[0])
             #             elif cc==2:
             #                 driver.find_element_by_xpath("//div[@id='createnewsp']/div/div/div[2]/form/div[3]/div["+str(cc)+"]/div/input").send_keys(Data1[2])
-            #     # -------------Remittance Email Address(s)--------------------------------------------
-            #     elif ii2 == 4:
-            #         print(ii)
-            #         time.sleep(1)
-            #         driver.find_element_by_xpath(
-            #             "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
-            #                 ii) + "]/div/input").send_keys(Data[0] + Data[3])
-            #         print(ii)
-            #     # -------------Save Button--------------------------------------------
-            #     elif ii2 == 5:
-            #         print(ii)
-            #         time.sleep(1)
-            #         driver.find_element_by_xpath(
-            #             "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
-            #                 ii) + "]/button").click()
-            #         print(ii)
+            #     # # -------------Remittance Email Address(s)--------------------------------------------
+            #     # elif ii2 == 4:
+            #     #     print(ii)
+            #     #     time.sleep(1)
+            #     #     driver.find_element_by_xpath(
+            #     #         "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+            #     #             ii) + "]/div/input").send_keys(Data[0] + Data[3])
+            #     #     print(ii)
+            #     # # -------------Save Button--------------------------------------------
+            #     # elif ii2 == 5:
+            #     #     print(ii)
+            #     #     time.sleep(1)
+            #     #     driver.find_element_by_xpath(
+            #     #         "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+            #     #             ii) + "]/button").click()
+            #     #     print(ii)
             #
             # # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify working of Create New Invoice form-----------------------------
-            ServiceProvider = "Blossom"
-            ClientPresentxl = "True"
-            xcelFileName = "RefData"
-            locx1 = (path + 'ReferenceData/' + xcelFileName + '.xlsx')
-            wbx1 = openpyxl.load_workbook(locx1)
-            sheetx1 = wbx1.active
-            for i_ref in range(1, 10):
-                if sheetx1.cell(i_ref, 1).value != None:
-                    FirstNamexl=sheetx1.cell(i_ref, 1).value
-                    LastNamexl = sheetx1.cell(i_ref, 2).value
-                    PlanEndDate = sheetx1.cell(i_ref, 3).value
-                    break
-
-                else:
-                    ClientPresentxl="False"
-                    pass
-
-            if ClientPresentxl=="False":
-                print("Client is not present in reference sheet, Invoice creation process terminated")
-                TestResult.append("Client is not present in reference sheet, Invoice creation process terminated\nFirst run the job for create client")
-                TestResultStatus.append("Fail")
-                driver.close()
-
-            PageName = "Create New Invoice form"
-            Ptitle1 = ""
-            l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-            random.shuffle(l)
-            if l[0] == 0:
-                pos = random.choice(range(1, len(l)))
-                l[0], l[pos] = l[pos], l[0]
-            InvoiceNumber = ''.join(map(str, l[0:4]))
-            print(InvoiceNumber)
             try:
-                driver.find_element_by_xpath("//input[@name='search_client_name']").send_keys(FirstNamexl)
-                time.sleep(1)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(1)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(1)
+                ServiceProvider = "Blossom"
+                ClientPresentxl = "True"
+                xcelFileName = "RefData"
+                locx1 = (path + 'ReferenceData/' + xcelFileName + '.xlsx')
+                wbx1 = openpyxl.load_workbook(locx1)
+                sheetx1 = wbx1.active
+                for i_ref in range(1, 10):
+                    if sheetx1.cell(i_ref, 1).value != None:
+                        FirstNamexl=sheetx1.cell(i_ref, 1).value
+                        LastNamexl = sheetx1.cell(i_ref, 2).value
+                        PlanEndDate = sheetx1.cell(i_ref, 3).value
+                        break
 
-                driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
-                time.sleep(2)
-                driver.find_element_by_xpath("//input[@name='search_service_provider_name']").send_keys(ServiceProvider)
-                time.sleep(1)
-                ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
-                time.sleep(1)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(1)
-                for inv in range(1, 10):
-                    try:
-                        InvoiceError = driver.find_element_by_xpath("//h2[text()='Error']").is_displayed()
-                        if InvoiceError == True:
-                            driver.find_element_by_xpath("//div[@class='jq-toast-wrap top-right']/div/button").click()
-                            time.sleep(2)
-                            driver.find_element_by_xpath("//input[@name='provider_invoice_number']").clear()
-                            time.sleep(2)
-                            driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
-                        elif InvoiceError == False:
-                            break
-                    except Exception:
+                    else:
+                        ClientPresentxl="False"
                         pass
 
-                today = date.today()
-                D1 = today.strftime("%d-%m-%Y")
-                driver.find_element_by_xpath("//input[@name='provider_invoice_date']").send_keys(D1)
-                time.sleep(1)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(1)
+                if ClientPresentxl=="False":
+                    print("Client is not present in reference sheet, Invoice creation process terminated")
+                    TestResult.append("Client is not present in reference sheet, Invoice creation process terminated\nFirst run the job for create client")
+                    TestResultStatus.append("Fail")
+                    driver.close()
 
-                select = Select(driver.find_element_by_xpath("//select[@id='approvedByClientText']"))
-                select.select_by_index(0)
-
-                ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
-                time.sleep(1)
-
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[1]/h3/div").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[1]/div/textarea").send_keys("Test Notes")
-                time.sleep(2)
-
-                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[3]/h3/div").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[3]/div/div/div[1]/label/input").click()
-                time.sleep(2)
-
-                ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
-                time.sleep(1)
+                PageName = "Create New Invoice form"
+                Ptitle1 = ""
+                l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                random.shuffle(l)
+                if l[0] == 0:
+                    pos = random.choice(range(1, len(l)))
+                    l[0], l[pos] = l[pos], l[0]
+                InvoiceNumber = ''.join(map(str, l[0:4]))
+                print(InvoiceNumber)
                 try:
-                    PlanEndDate = PlanEndDate.strftime("%d-%m-%Y")
-                except Exception:
+                    driver.find_element_by_xpath("//input[@name='search_client_name']").send_keys(FirstNamexl)
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    time.sleep(1)
+
+                    driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//input[@name='search_service_provider_name']").send_keys(ServiceProvider)
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    time.sleep(1)
+                    for inv in range(1, 10):
+                        try:
+                            InvoiceError = driver.find_element_by_xpath("//h2[text()='Error']").is_displayed()
+                            if InvoiceError == True:
+                                driver.find_element_by_xpath("//div[@class='jq-toast-wrap top-right']/div/button").click()
+                                time.sleep(2)
+                                driver.find_element_by_xpath("//input[@name='provider_invoice_number']").clear()
+                                time.sleep(2)
+                                driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
+                            elif InvoiceError == False:
+                                break
+                        except Exception:
+                            pass
+
+                    today = date.today()
+                    D1 = today.strftime("%d-%m-%Y")
+                    driver.find_element_by_xpath("//input[@name='provider_invoice_date']").send_keys(D1)
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    time.sleep(1)
+
+                    select = Select(driver.find_element_by_xpath("//select[@id='approvedByClientText']"))
+                    select.select_by_index(0)
+
+                    ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
+                    time.sleep(1)
+
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[1]/h3/div").click()
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[1]/div/textarea").send_keys("Test Notes")
+                    time.sleep(2)
+
+                    driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[3]/h3/div").click()
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//div[@id='search_client_data']/div[2]/div/div[3]/div/div/div[1]/label/input").click()
+                    time.sleep(2)
+
+                    ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
+                    time.sleep(1)
+                    try:
+                        PlanEndDate = PlanEndDate.strftime("%d-%m-%Y")
+                    except Exception:
+                        print(PlanEndDate)
                     print(PlanEndDate)
-                print(PlanEndDate)
-                driver.find_element_by_xpath("//input[@name='service_detail[2][delivered_date]']").send_keys(PlanEndDate)
-                time.sleep(1)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(1)
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    driver.find_element_by_xpath("//input[@name='service_detail[2][delivered_date]']").send_keys(PlanEndDate)
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    time.sleep(1)
+                    try:
+                        WebDriverWait(driver, SHORT_TIMEOUT
+                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(
-                        EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-                time.sleep(2)
+                        WebDriverWait(driver, LONG_TIMEOUT
+                                      ).until(
+                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    except TimeoutException:
+                        pass
+                    time.sleep(2)
 
-                select = Select(driver.find_element_by_xpath(
-                                        "//select[@name='service_detail[2][category]']"))
-                select.select_by_index(1)
-                time.sleep(1)
+                    select = Select(driver.find_element_by_xpath(
+                                            "//select[@name='service_detail[2][category]']"))
+                    select.select_by_index(1)
+                    time.sleep(1)
 
-                select = Select(driver.find_element_by_xpath(
-                    "//select[@name='service_detail[2][line_item]']"))
-                select.select_by_index(1)
-                time.sleep(1)
+                    select = Select(driver.find_element_by_xpath(
+                        "//select[@name='service_detail[2][line_item]']"))
+                    select.select_by_index(1)
+                    time.sleep(1)
 
-                driver.find_element_by_xpath("//input[@name='service_detail[2][qty]']").send_keys("1")
-                time.sleep(2)
+                    driver.find_element_by_xpath("//input[@name='service_detail[2][qty]']").send_keys("1")
+                    time.sleep(2)
 
-                driver.find_element_by_xpath("//input[@name='service_detail[2][price]']").send_keys("5")
-                time.sleep(2)
+                    driver.find_element_by_xpath("//input[@name='service_detail[2][price]']").send_keys("5")
+                    time.sleep(2)
 
-                driver.find_element_by_xpath("//button[@id='submitButton']").click()
+                    driver.find_element_by_xpath("//button[@id='submitButton']").click()
 
-                TestResult.append(PageName + " on Invoice entry page is working")
+                    TestResult.append(PageName + " on Invoice entry page is working")
+                    TestResultStatus.append("Pass")
+                except Exception as ed:
+                    print(ed)
+                    TestResult.append(PageName + " on Invoice entry page is not working")
+                    TestResultStatus.append("Fail")
+                print()
+                time.sleep(TimeSpeed)
+                TestResult.append("Create New Invoice process working correctly")
                 TestResultStatus.append("Pass")
-            except Exception as ed:
-                print(ed)
-                TestResult.append(PageName + " on Invoice entry page is not working")
+            except Exception:
+                TestResult.append("Create New Invoice process is not working")
                 TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
         except Exception as err:

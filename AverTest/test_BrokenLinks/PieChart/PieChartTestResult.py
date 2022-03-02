@@ -11,7 +11,7 @@ def test_PieChartTestResult():
     if platform == "linux" or platform == "linux2":
         path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
     elif platform == "win32" or platform == "win64":
-        path = 'C:/AVER/AverTest/' + Directory
+        path = 'D:/AVER/AverTest/' + Directory
 
     #-------------------To read content to send in e-Mail--------------------
     ExcelFileName = "FileName"

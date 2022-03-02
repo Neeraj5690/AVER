@@ -23,7 +23,7 @@ def test_ReportSendSmokeAll():
     if platform == "linux" or platform == "linux2":
         PDFpath = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
     elif platform == "win32" or platform == "win64":
-        PDFpath = 'C:/AVER/AverTest/' + Directory
+        PDFpath = 'D:/AVER/AverTest/' + Directory
 
     #-------------------To read content to send in e-Mail--------------------
     ExcelFileName = "FileName"
@@ -78,8 +78,8 @@ def test_ReportSendSmokeAll():
         msg.attach(file_attachment)
 
     email_from = 'Aver Planning Test Automation Team'
-    email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com']
-    #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
+    #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
+    email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
     SenderEmail="neeraj.kumar@bitsinglass.com"
     User = "AxBCsrijkltwxysHIJMhijodefhhij@bcd2yzA8qrs4zAB0EFG8fgh2zAB8"

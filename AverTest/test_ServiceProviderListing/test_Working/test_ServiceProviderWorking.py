@@ -1,25 +1,11 @@
 import datetime
-import math
-import re
 import time
 import openpyxl
-from datetime import datetime,date
-import datetime as datetime
 from fpdf import FPDF
 import pytest
 from selenium import webdriver
 import allure
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.select import Select
 from sys import platform
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-import pyperclip
-import random
-import string
 
 
 @allure.step("Entering username ")
@@ -40,20 +26,20 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_ElementsWorking"
-  description = "This test scenario is to verify all the Working of Elements at Invoice Entry page"
+  TestName = "test_LoginPageWorking"
+  description = "This test scenario is to verify working of Login Process"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
   FailStatus="Pass"
-  TestDirectoryName = "test_ElementsWorking"
+  TestDirectoryName = "test_Working"
   global Exe
   Exe="Yes"
-  Directory = 'test_InvoiceEntry/'
+  Directory = 'test_LoginPage/'
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
-      path = 'C:/AVER/AverTest/' + Directory
+      path = 'D:/AVER/AverTest/' + Directory
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -72,16 +58,12 @@ def test_setup():
 
   if Exe=="Yes":
       if platform == "linux" or platform == "linux2":
-          driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
+          driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
-
+          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
-      enter_username("admin@averplanning.com")
-      enter_password("admin786")
-      driver.find_element_by_xpath("//button[@type='submit']").click()
 
   yield
   if Exe == "Yes":
@@ -189,42 +171,70 @@ def test_setup():
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
         TimeSpeed = 2
-        SHORT_TIMEOUT = 3
-        LONG_TIMEOUT = 60
-        LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
+        SHORT_TIMEOUT = 5
+        LONG_TIMEOUT = 400
+        LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
+        UName="admin@averplanning.com"
+        PName="admin786"
         try:
-            # ---------------------------Verify Invoice Entry icon click-----------------------------
-            PageName = "Invoice Entry icon"
-            Ptitle1 = ""
+
+            # ---------------------------Verify Username Field-----------------------------
+            PageName = "Username Data"
             try:
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@class='row client_listing_box']/div[3]/input").send_keys("Sunil")
-                time.sleep(2)
-                act = ActionChains(driver)
-                act.send_keys(Keys.ENTER).perform()
-                Status = driver.find_element_by_xpath("//table[@class='table datatable-sorting dataTable']/tbody/tr/td[last()]").text
-                print(Status)
-                time.sleep(2)
-                if Status == "Active":
-                    driver.find_element_by_xpath("//table[@class='table datatable-sorting dataTable']/tbody/tr/td[2]/a").click()
-                elif Status != "Active" :
-                    driver.find_element_by_xpath("//div[@class='row client_listing_box']/div[3]/input").send_keys("Sumreet")
-                    time.sleep(2)
-                TestResult.append(PageName + " is present in left menu and able to click")
+                driver.find_element_by_xpath("//div[@class='card-body']/div[2]/input").send_keys(UName)
+                TestResult.append(PageName + " entered successfully")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not able to enter")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Password Field-----------------------------
+            PageName = "Password Data"
+            try:
+                driver.find_element_by_xpath("//div[@class='card-body']/div[3]/input").send_keys(PName)
+                TestResult.append(PageName + " entered successfully")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not able to enter")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify SignIn Button-----------------------------
+            PageName = "Sign In Button"
+            try:
+                driver.find_element_by_xpath("//div[@class='card-body']/div[4]/button").click()
+                TestResult.append(PageName + " clicked successfully")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not click")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Lost Password Link-----------------------------
+            PageName = "Login process"
+            Ptitle1 = "Dashboard"
+            try:
+                PageTitle1 = driver.title
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " is not perform"
+                TestResult.append(PageName + " performed successfully")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not perform")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
 
-        except Exception as err:
-            print(err)
-            TestResult.append("Invoice entry is not working correctly. Below error found\n"+str(err))
-            TestResultStatus.append("Fail")
+        except Exception:
             pass
 
     else:

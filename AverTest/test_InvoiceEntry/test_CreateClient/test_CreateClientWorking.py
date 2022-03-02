@@ -53,7 +53,7 @@ def test_setup():
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
-      path = 'C:/AVER/AverTest/' + Directory
+      path = 'D:/AVER/AverTest/' + Directory
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -74,7 +74,7 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
       driver.maximize_window()
@@ -786,7 +786,7 @@ def test_VerifyAllClickables(test_setup):
             PlanEndDate = "17-02-2022"
 
             try:
-                PlanStatus = driver.find_element_by_xpath("//tbody/tr[1]/td[2]").text
+                PlanStatus = driver.find_element_by_xpath("//tbody/tr[@class='MagentaColorTR']/td[2]").text
             except Exception:
                 PlanStatus = "No Plan Found"
 
@@ -847,44 +847,125 @@ def test_VerifyAllClickables(test_setup):
                 PlanStatus = "Active"
 
             print("Once plan status is set / found Active, now checking plan remianing amount")
-            try:
-                Remaining = driver.find_element_by_xpath(
-                    "//table[@class='table datatable-sorting']/tbody/tr[1]/td[6]").text
-                print(Remaining)
-
-                BalanceAmt = Remaining
-                rem = 0
+            if PlanStatus == "Active":
                 try:
-                    ind = BalanceAmt.index('.')
+                    PlanPresent = driver.find_element_by_xpath(
+                        "//td[@class='ServiceBookingTdCol']/table/tbody/tr/td[1]/p/a").text
+                    print(PlanPresent)
+                except Exception:
                     try:
-                        if BalanceAmt[ind + 1] and BalanceAmt[ind + 2] == "0":
-                            rem = 1
-                    except Exception as qq:
-                        print(qq)
-                        if BalanceAmt[ind + 1] == "0":
-                            rem = 1
+                        # --------------clicking on Add Plan Managed Service Booking-----------
+                        l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        random.shuffle(l)
+                        if l[0] == 0:
+                            pos = random.choice(range(1, len(l)))
+                            l[0], l[pos] = l[pos], l[0]
+                        BookingNumber = ''.join(map(str, l[0:4]))
+                        AllocatedAmount = "1000"
+
+                        driver.find_element_by_xpath("//tbody/tr/td[@class='TrButtonAdd']/button[2]").click()
+                        for pm in range(1, 8):
+                            # ----------Booking number field on plan managed service booking page--------------------
+                            if pm == 1:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
+                                        pm) + "]/div/div[2]/ul/li/span[1]/input").send_keys(BookingNumber)
+                            # ----------Support Budget dropdown on plan managed service booking page--------------------
+                            elif pm == 3:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
+                                        pm) + "]/div[1]/div/select"))
+                                select.select_by_index(4)
+                            # ----------Allocated Amount (Unit Price) field on plan managed service booking page--------------------
+                            elif pm == 5:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
+                                        pm) + "]/div/input").send_keys(AllocatedAmount)
+
+                        for pm1 in range(1, 10):
+                            # ----------Add button on plan managed service booking page--------------------
+                            driver.find_element_by_xpath("//button[text()='Add']").click()
+                            try:
+                                WebDriverWait(driver, SHORT_TIMEOUT
+                                              ).until(
+                                    EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                                WebDriverWait(driver, LONG_TIMEOUT
+                                              ).until(
+                                    EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                            except TimeoutException:
+                                pass
+
+                            try:
+                                BookingNumberError = driver.find_element_by_xpath(
+                                    "//span[@id='error_booking_number']").is_displayed()
+                                if BookingNumberError == True:
+                                    time.sleep(1)
+                                    BookingNumber = BookingNumber + 1
+                                    driver.find_element_by_xpath(
+                                        "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[1]/div/div[2]/ul/li/span[1]/input").clear()
+                                    driver.find_element_by_xpath(
+                                        "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[1]/div/div[2]/ul/li/span[1]/input").send_keys(
+                                        BookingNumber)
+                                elif BookingNumberError == False:
+                                    break
+                            except Exception:
+                                pass
+
+                        driver.find_element_by_xpath("//button[@class='upload_btn_plan btn_clr_gr']").click()
+                        try:
+                            WebDriverWait(driver, SHORT_TIMEOUT
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                            WebDriverWait(driver, LONG_TIMEOUT
+                                          ).until(
+                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        except TimeoutException:
+                            pass
+                    except Exception:
                         pass
-                    ab = re.findall('[^A-Za-z0-9]+', BalanceAmt)
-                    ab = int(len(ab))
-                    ab = ab - 1
-                    BalanceAmt = re.sub('[^A-Za-z0-9]+', '', BalanceAmt)
-                    if BalanceAmt=="000":
-                        BalanceAmt="0"
-                    else:
-                        BalanceAmt = BalanceAmt[:ind - ab] + "." + BalanceAmt[ind - ab:]
-                        if rem == 1:
-                            BalanceAmt = BalanceAmt.strip('.').strip('0').strip('0')
-                            BalanceAmt = BalanceAmt.strip('.')
-                            BalanceAmt = int(BalanceAmt)
+                try:
+                    Remaining = driver.find_element_by_xpath(
+                        "//td[@class='ServiceBookingTdCol']/table/tbody/tr/td[3]").text
+                    print(Remaining)
+
+                    BalanceAmt = Remaining
+                    rem = 0
+                    try:
+                        ind = BalanceAmt.index('.')
+                        try:
+                            if BalanceAmt[ind + 1] and BalanceAmt[ind + 2] == "0":
+                                rem = 1
+                        except Exception as qq:
+                            print(qq)
+                            if BalanceAmt[ind + 1] == "0":
+                                rem = 1
+                            pass
+                        ab = re.findall('[^A-Za-z0-9]+', BalanceAmt)
+                        ab = int(len(ab))
+                        ab = ab - 1
+                        BalanceAmt = re.sub('[^A-Za-z0-9]+', '', BalanceAmt)
+                        if BalanceAmt=="000":
+                            BalanceAmt="0"
+                        else:
+                            BalanceAmt = BalanceAmt[:ind - ab] + "." + BalanceAmt[ind - ab:]
+                            if rem == 1:
+                                BalanceAmt = BalanceAmt.strip('.').strip('0').strip('0')
+                                BalanceAmt = BalanceAmt.strip('.')
+                                BalanceAmt = int(BalanceAmt)
+                            print(BalanceAmt)
+                    except Exception as rr:
+                        BalanceAmt = re.sub('[^A-Za-z0-9]+', '', BalanceAmt)
+                        BalanceAmt = int(BalanceAmt)
                         print(BalanceAmt)
-                except Exception as rr:
-                    BalanceAmt = re.sub('[^A-Za-z0-9]+', '', BalanceAmt)
-                    print(BalanceAmt)
-            except Exception:
-                pass
+                except Exception:
+                    pass
 
             print(float(BalanceAmt))
-            if PlanStatus == "Active" and float(BalanceAmt) < float(RemainingAmountLimit):
+            if float(BalanceAmt) < float(RemainingAmountLimit):
                 print("Inside " + PlanStatus+" and float(BalanceAmt) less than RemainingAmountLimit")
                 try:
                     driver.find_element_by_xpath("//td[@class='ServiceBookingTHwidth']/p/a").click()
@@ -902,99 +983,45 @@ def test_VerifyAllClickables(test_setup):
                         time.sleep(2)
                         AmtToEdit = driver.find_element_by_xpath(
                             "//input[@name='booking[0][amount]']").get_attribute('value')
-                        AmtToEdit = int(AmtToEdit)
+                        AmtToEdit = float(AmtToEdit)
                         print(AmtToEdit)
-                    except Exception:
-                        print(AmtToEdit + "not found")
 
-                    if BalanceAmt < RemainingAmountLimit:
-                        AmtNeedToAdd = RemainingAmountLimit - BalanceAmt
-                        AmtNeedToAdd = int(AmtNeedToAdd)
+                        AmtNeedToAdd = float(RemainingAmountLimit) - float(BalanceAmt)
+                        AmtNeedToAdd = float(AmtNeedToAdd)
                         print(AmtNeedToAdd)
 
                         NewAmount = AmtToEdit + AmtNeedToAdd
-                        NewAmount = int(NewAmount)
+                        NewAmount = float(NewAmount)
                         print(NewAmount)
                         driver.find_element_by_xpath("//input[@name='booking[0][amount]']").clear()
                         time.sleep(2)
                         driver.find_element_by_xpath("//input[@name='booking[0][amount]']").send_keys(NewAmount)
-                except Exception:
-                    pass
-
-                try:
-                    #--------------clicking on Add Plan Managed Service Booking-----------
-                    l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-                    random.shuffle(l)
-                    if l[0] == 0:
-                        pos = random.choice(range(1, len(l)))
-                        l[0], l[pos] = l[pos], l[0]
-                    BookingNumber = ''.join(map(str, l[0:4]))
-                    AllocatedAmount = "1000"
-
-                    driver.find_element_by_xpath("//tbody/tr/td[@class='TrButtonAdd']/button[2]").click()
-                    for pm in range(1, 8):
-                        # ----------Booking number field on plan managed service booking page--------------------
-                        if pm == 1:
-                            time.sleep(1)
-                            driver.find_element_by_xpath(
-                                "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
-                                    pm) + "]/div/div[2]/ul/li/span[1]/input").send_keys(BookingNumber)
-                        # ----------Support Budget dropdown on plan managed service booking page--------------------
-                        elif pm == 3:
-                            time.sleep(1)
-                            select = Select(driver.find_element_by_xpath(
-                                "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
-                                    pm) + "]/div[1]/div/select"))
-                            select.select_by_index(4)
-                        # ----------Allocated Amount (Unit Price) field on plan managed service booking page--------------------
-                        elif pm == 5:
-                            time.sleep(1)
-                            driver.find_element_by_xpath(
-                                "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
-                                    pm) + "]/div/input").send_keys(AllocatedAmount)
-
-                    for pm1 in range(1, 10):
-                        # ----------Add button on plan managed service booking page--------------------
-                        driver.find_element_by_xpath("//button[text()='Add']").click()
+                        driver.find_element_by_xpath("//button[@id='updateAllocationSubmitBtn']").click()
                         try:
                             WebDriverWait(driver, SHORT_TIMEOUT
-                                          ).until(
-                                EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
                             WebDriverWait(driver, LONG_TIMEOUT
                                           ).until(
                                 EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                         except TimeoutException:
                             pass
-
+                        driver.find_element_by_xpath("//button[@class='btn btn-primary checkOverBudgetBtnEvent']").click()
                         try:
-                            BookingNumberError = driver.find_element_by_xpath(
-                                "//span[@id='error_booking_number']").is_displayed()
-                            if BookingNumberError == True:
-                                time.sleep(1)
-                                BookingNumber=BookingNumber+1
-                                driver.find_element_by_xpath(
-                                    "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[1]/div/div[2]/ul/li/span[1]/input").clear()
-                                driver.find_element_by_xpath(
-                                    "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[1]/div/div[2]/ul/li/span[1]/input").send_keys(
-                                    BookingNumber)
-                            elif BookingNumberError == False:
-                                break
-                        except Exception :
+                            WebDriverWait(driver, SHORT_TIMEOUT
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                            WebDriverWait(driver, LONG_TIMEOUT
+                                          ).until(
+                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        except TimeoutException:
                             pass
+                    except Exception:
+                        print(AmtToEdit + "not found")
 
-                    driver.find_element_by_xpath("//button[@class='upload_btn_plan btn_clr_gr']").click()
-                    try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(
-                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
-                        pass
                 except Exception:
                     pass
+
             sheetx1.cell(1, 3).value = PlanEndDate
             wbx1.save(locx1)
             # -----------------Upload new plan button-------------------------------------------

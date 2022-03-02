@@ -23,7 +23,7 @@ def test_ReportSendSmokeAll():
     if platform == "linux" or platform == "linux2":
         PDFpath = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
     elif platform == "win32" or platform == "win64":
-        PDFpath = 'C:/AVER/AverTest/' + Directory
+        PDFpath = 'D:/AVER/AverTest/' + Directory
 
     #-------------------To read content to send in e-Mail--------------------
     ExcelFileName = "FileName"

@@ -53,7 +53,7 @@ def test_setup():
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
-      path = 'C:/AVER/AverTest/' + Directory
+      path = 'D:/AVER/AverTest/' + Directory
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -74,7 +74,7 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
       driver.maximize_window()
@@ -539,130 +539,6 @@ def test_VerifyAllClickables(test_setup):
             #                 ii) + "]/button").click()
             #         print(ii)
             #
-            # # ---------------------------------------------------------------------------------
-
-            # # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
-            # PageName = "Create Reimburse Client button"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
-            #     time.sleep(2)
-            #     for aa in range(5):
-            #         letters = string.ascii_lowercase
-            #         returna = ''.join(random.choice(letters) for i in range(5))
-            #         EmailID = returna + "@gmail.com"
-            #
-            #         letters1 = string.ascii_lowercase
-            #         returna1 = ''.join(random.choice(letters1) for i in range(5))
-            #         Name = returna1
-            #     driver.find_element_by_xpath("//input[@name='re_service_name']").send_keys(Name)
-            #     time.sleep(2)
-            #     print(PageTitle1)
-            #     # select = Select(driver.find_element_by_xpath("//select[@name='re_service_status']"))
-            #     # select.select_by_visible_text("Active")
-            #     # time.sleep(2)
-            #     SetUpDate = driver.find_element_by_xpath("//input[@name='re_set_up_data']")
-            #     SetUpDate.clear()
-            #     SetUpDate.send_keys("16-02-2022")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='re_account_name']").send_keys(Name)
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='re_bsb']").send_keys("123456")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='re_account_number']").send_keys("12345678")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='re_send_remittance_email']").click()
-            #     driver.find_element_by_xpath("//input[@name='re_send_remittance_email']").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='re_remittance_email']").send_keys(EmailID)
-            #     driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[last()]/button").click()
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + "on create new invoice page is clickable and user able to create reimburse client ")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-
-            # # ---------------------------Verify working of Create Service Provider button on Create new page-----------------------------
-            # PageName = "Create Service Provider button"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//a[@title='Create Service Provider']").click()
-            #     time.sleep(2)
-            #     for aa in range(5):
-            #         letters = string.ascii_lowercase
-            #         returna = ''.join(random.choice(letters) for i in range(5))
-            #         EmailID = returna + "@gmail.com"
-            #
-            #         letters1 = string.ascii_lowercase
-            #         returna1 = ''.join(random.choice(letters1) for i in range(5))
-            #         Name = returna1
-            #     driver.find_element_by_xpath("//input[@name='service_name']").send_keys(Name)
-            #     time.sleep(2)
-            #     print(PageTitle1)
-            #     # select = Select(driver.find_element_by_xpath("//select[@name='re_service_status']"))
-            #     # select.select_by_visible_text("Active")
-            #     # time.sleep(2)
-            #     SetUpDate = driver.find_element_by_xpath("//input[@name='set_up_data']")
-            #     SetUpDate.clear()
-            #     SetUpDate.send_keys("16-02-2022")
-            #     # act = ActionChains(driver)
-            #     # act.send_keys(Keys.ENTER).perform()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='abn']").send_keys("123678")
-            #     select = Select(driver.find_element_by_xpath("//select[@name='franchise']"))
-            #     select.select_by_index(1)
-            #     time.sleep(2)
-            #     # select = Select(driver.find_element_by_xpath("//select[@name='related_franchise']"))
-            #     # select.select_by_index(0)
-            #     select = Select(driver.find_element_by_xpath("//select[@id='service_type']"))
-            #     select.select_by_index(4)
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='office_number']").send_keys("1234567890")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='mobile_number']").send_keys("1122334455")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='service_email']").send_keys("test@abc.com")
-            #     select = Select(driver.find_element_by_xpath("//select[@name='address_country']"))
-            #     select.select_by_index(5)
-            #     time.sleep(2)
-            #     select = Select(driver.find_element_by_xpath("//select[@name='address_state']"))
-            #     select.select_by_index(5)
-            #     time.sleep(2)
-            #     select = Select(driver.find_element_by_xpath("//select[@name='address_city']"))
-            #     select.select_by_index(5)
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='address_street']").send_keys("XYZ")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='postcode']").send_keys("225588")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='suburb']").send_keys("147258")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='account_name']").send_keys(Name)
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='bsb']").send_keys("123456")
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='account_number']").send_keys("12345678")
-            #     time.sleep(2)
-            #     CheckBox = driver.find_element_by_xpath("//input[@name='remittance_email']")
-            #     CheckBox.clear()
-            #     CheckBox.click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//input[@name='remittance_email']").send_keys(EmailID)
-            #     driver.find_element_by_xpath(
-            #         "//div[@id='createnewsplatest']/div/div/div[2]/form/div[last()]/button").click()
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(
-            #         PageName + "on create new invoice page is clickable and user able to create reimburse client ")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
             # # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify working of Create New Invoice form-----------------------------

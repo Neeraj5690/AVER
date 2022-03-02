@@ -542,6 +542,7 @@ def test_VerifyAllClickables(test_setup):
             # # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify working of Create New Invoice form-----------------------------
+            ServiceProvider = "Blossom"
             ClientPresentxl = "True"
             xcelFileName = "RefData"
             locx1 = (path + 'ReferenceData/' + xcelFileName + '.xlsx')
@@ -581,13 +582,25 @@ def test_VerifyAllClickables(test_setup):
 
                 driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
                 time.sleep(2)
-
-                driver.find_element_by_xpath("//input[@name='search_service_provider_name']").send_keys("Blossom")
+                driver.find_element_by_xpath("//input[@name='search_service_provider_name']").send_keys(ServiceProvider)
                 time.sleep(1)
                 ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
                 time.sleep(1)
                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
                 time.sleep(1)
+                for inv in range(1, 10):
+                    try:
+                        InvoiceError = driver.find_element_by_xpath("//h2[text()='Error']").is_displayed()
+                        if InvoiceError == True:
+                            driver.find_element_by_xpath("//div[@class='jq-toast-wrap top-right']/div/button").click()
+                            time.sleep(2)
+                            driver.find_element_by_xpath("//input[@name='provider_invoice_number']").clear()
+                            time.sleep(2)
+                            driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
+                        elif InvoiceError == False:
+                            break
+                    except Exception:
+                        pass
 
                 today = date.today()
                 D1 = today.strftime("%d-%m-%Y")

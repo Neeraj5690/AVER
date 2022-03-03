@@ -219,6 +219,9 @@ def test_VerifyAllClickables(test_setup):
 
             if ClientPresentxl=="False":
                 print("Client is not present in reference sheet, we need to add client first in application")
+                TestResult.append(
+                    "Client is not present in reference sheet, we need to add client first in application")
+                TestResultStatus.append("Pass")
                 # ---------------------------adding new client in application-----------------------------
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
                 time.sleep(2)
@@ -246,292 +249,9 @@ def test_VerifyAllClickables(test_setup):
                         EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                 except TimeoutException:
                     pass
-
-                Data = [FName, LName, "TReferTo", "01-02-1990", "2464", D1, "1122334455", "TStreet", "123", "TSuburb",
-                        "@test.com", "213243", "1000", "TestSupport", "TestCommunication"]
-                for i2 in range(1, 29):
-                    # -------------Client Status dropdown--------------------------------------------
-                    if i2 == 1:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[1]/div/select"))
-                        select.select_by_visible_text("Active")
-                    # -------------First Name--------------------------------------------
-                    elif i2 == 2:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[0])
-                    # -------------Last Name--------------------------------------------
-                    elif i2 == 3:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[1])
-                    # -------------Referred To By--------------------------------------------
-                    elif i2 == 4:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[2])
-                    # -------------DOB--------------------------------------------
-                    elif i2 == 5:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[3])
-                        ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                    # -------------Gender--------------------------------------------
-                    elif i2 == 6:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[6]/div/select"))
-                        select.select_by_visible_text("Male")
-                    # -------------NDIS Number--------------------------------------------
-                    elif i2 == 9:
-                        time.sleep(1)
-                        NDISNumToUSe = int(Data[4])
-                        for NDISNum in range(10):
-                            driver.find_element_by_xpath(
-                                "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                    i2) + "]/div/input").send_keys(
-                                str(NDISNumToUSe))
-                            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                            try:
-                                WebDriverWait(driver, SHORT_TIMEOUT
-                                              ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                                WebDriverWait(driver, LONG_TIMEOUT
-                                              ).until(
-                                    EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                            except TimeoutException:
-                                pass
-                            time.sleep(1)
-                            NdisError = driver.find_element_by_xpath(
-                                "//span[@id='error_ndIs']").is_displayed()
-                            if NdisError == True:
-                                driver.find_element_by_xpath(
-                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                        i2) + "]/div/input").clear()
-                                pass
-                            elif NdisError == False:
-                                break
-                            NDISNumToUSe = NDISNumToUSe + 1
-                    # -------------Sign Up Date--------------------------------------------
-                    elif i2 == 10:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[5])
-                        ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                    # -------------Mobile Number--------------------------------------------
-                    elif i2 == 11:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[6])
-                    # -------------Street Address--------------------------------------------
-                    elif i2 == 12:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[7])
-                    # -------------Home Number--------------------------------------------
-                    elif i2 == 13:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[8])
-                    # -------------Suburb--------------------------------------------
-                    elif i2 == 14:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[9])
-                    # -------------Email Address--------------------------------------------
-                    elif i2 == 15:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(Data[0] +
-                                                               Data[10])
-                    # -------------State--------------------------------------------
-                    elif i2 == 16:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
-                        select.select_by_visible_text("SA")
-                    # -------------Access to App--------------------------------------------
-                    elif i2 == 17:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
-                        select.select_by_visible_text("Yes")
-                    # -------------Postcode--------------------------------------------
-                    elif i2 == 18:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[11])
-                    # -------------Profile Type--------------------------------------------
-                    elif i2 == 19:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
-                        select.select_by_visible_text("Plan Managed")
-                    # -------------Monthly Fee Rate ($)--------------------------------------------
-                    elif i2 == 20:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[12])
-                    # -------------Support Coordinator--------------------------------------------
-                    elif i2 == 21:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/input").send_keys(
-                            Data[13])
-                    # -------------Main Profile Contact--------------------------------------------
-                    elif i2 == 22:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
-                        select.select_by_visible_text("Yes")
-                    # -------------Receive Payment Updates--------------------------------------------
-                    elif i2 == 23:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
-                        select.select_by_visible_text("Yes")
-                    # -------------Statement Preference--------------------------------------------
-                    elif i2 == 24:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
-                        select.select_by_visible_text("No")
-                    # -------------Communication Preferences--------------------------------------------
-                    elif i2 == 26:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                i2) + "]/div/textarea").send_keys(
-                            Data[14])
-                    # -------------NDIS Rate--------------------------------------------
-                    elif i2 == 27:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
-                        select.select_by_visible_text("National Remote")
-                    # -------------Save button--------------------------------------------
-                    elif i2 == 28:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(
-                            "//div[@id='createnewclient']/div/div/div[2]/form/div[28]/button").click()
-                        try:
-                            WebDriverWait(driver, SHORT_TIMEOUT
-                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                            WebDriverWait(driver, LONG_TIMEOUT
-                                          ).until(
-                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                        except TimeoutException:
-                            pass
-                        time.sleep(2)
-                        try:
-                            EmailError = driver.find_element_by_xpath(
-                                "//span[@id='error_email_address']").is_displayed()
-                            if EmailError == True:
-                                time.sleep(1)
-                                driver.find_element_by_xpath(
-                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                        15) + "]/div/input").clear()
-                                driver.find_element_by_xpath(
-                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
-                                        15) + "]/div/input").send_keys(Data[0] + Data[1] + Data[10])
-                        except Exception as ec:
-                            pass
-
-                # --------Saving client details in reference sheet------------
-                sheetx1.cell(1, 1).value = FName
-                sheetx1.cell(1, 2).value = LName
-                wbx1.save(locx1)
-
-                #------------Going back to client listing after creating client---------
-                driver.find_element_by_xpath("//a[text()='Back']").click()
                 try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(
-                        EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-
-                driver.find_element_by_xpath("//td[text()='"+FName+"']/a").click()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(
-                        EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-
-            elif ClientPresentxl=="True":
-                print("Client is already present in reference doc. Here is the details")
-                print("First name is: "+FirstNamexl)
-                print("Last name is: " + LastNamexl)
-                try:
-                    driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
-                    time.sleep(2)
-                    driver.find_element_by_xpath("//td[text()='"+FirstNamexl+"']/a").click()
-                except Exception:
-                    print("Client is present in reference excel but not found in application. We need to add new client")
-
-                    #------------Adding new client in application------------
-                    driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
-                    time.sleep(2)
-                    Records = driver.find_elements_by_xpath("//div[@class='datatable-scroll']/table/tbody/tr")
-                    RowsLength = len(Records)
-                    if RowsLength > 50:
-                        print("We need to add code for Pagination")
-
-                    for aa in range(5):
-                        letters = string.ascii_lowercase
-                        returna = ''.join(random.choice(letters) for i in range(5))
-                        FName = returna
-                    print(FName)
-
-                    LName = "test"
-                    print(LName)
-
-                    driver.find_element_by_xpath("//a[@data-target='#createnewclient']").click()
-                    try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(
-                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
-                        pass
-
-                    Data = [FName, LName, "TReferTo", "01-02-1990", "2464", D1, "1122334455", "TStreet", "123",
-                            "TSuburb",
+                    print()
+                    Data = [FName, LName, "TReferTo", "01-02-1990", "2474", D1, "1122334455", "TStreet", "123", "TSuburb",
                             "@test.com", "213243", "1000", "TestSupport", "TestCommunication"]
                     for i2 in range(1, 29):
                         # -------------Client Status dropdown--------------------------------------------
@@ -587,8 +307,7 @@ def test_VerifyAllClickables(test_setup):
                                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
                                 try:
                                     WebDriverWait(driver, SHORT_TIMEOUT
-                                                  ).until(
-                                        EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
                                     WebDriverWait(driver, LONG_TIMEOUT
                                                   ).until(
@@ -747,6 +466,306 @@ def test_VerifyAllClickables(test_setup):
                                             15) + "]/div/input").send_keys(Data[0] + Data[1] + Data[10])
                             except Exception as ec:
                                 pass
+                    TestResult.append("Create Client process working correctly")
+                    TestResultStatus.append("Pass")
+                except Exception:
+                    TestResult.append("Create Client process is not working")
+                TestResultStatus.append("Fail")
+                # --------Saving client details in reference sheet------------
+                sheetx1.cell(1, 1).value = FName
+                sheetx1.cell(1, 2).value = LName
+                wbx1.save(locx1)
+
+                #------------Going back to client listing after creating client---------
+                driver.find_element_by_xpath("//a[text()='Back']").click()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(
+                        EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+
+                driver.find_element_by_xpath("//td[text()='"+FName+"']/a").click()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(
+                        EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+
+            elif ClientPresentxl=="True":
+                print("Client is already present in reference doc. Here is the details")
+                print("First name is: "+FirstNamexl)
+                print("Last name is: " + LastNamexl)
+                TestResult.append("Client is already present in reference doc. Here is the details\nFirst name is: "+FirstNamexl+", Last name is: "+LastNamexl)
+                TestResultStatus.append("Pass")
+                try:
+                    driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//td[text()='"+FirstNamexl+"']/a").click()
+                except Exception:
+                    print("Client is present in reference excel but not found in application. We need to add new client")
+                    TestResult.append(
+                        "Client is present in reference excel but not found in application. We need to add new client")
+                    TestResultStatus.append("Pass")
+
+                    #------------Adding new client in application------------
+                    try:
+                        driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
+                        time.sleep(2)
+                        Records = driver.find_elements_by_xpath("//div[@class='datatable-scroll']/table/tbody/tr")
+                        RowsLength = len(Records)
+                        if RowsLength > 50:
+                            print("We need to add code for Pagination")
+
+                        for aa in range(5):
+                            letters = string.ascii_lowercase
+                            returna = ''.join(random.choice(letters) for i in range(5))
+                            FName = returna
+                        print(FName)
+
+                        LName = "test"
+                        print(LName)
+
+                        driver.find_element_by_xpath("//a[@data-target='#createnewclient']").click()
+                        try:
+                            WebDriverWait(driver, SHORT_TIMEOUT
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                            WebDriverWait(driver, LONG_TIMEOUT
+                                          ).until(
+                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        except TimeoutException:
+                            pass
+
+                        Data = [FName, LName, "TReferTo", "01-02-1990", "2474", D1, "1122334455", "TStreet", "123",
+                                "TSuburb",
+                                "@test.com", "213243", "1000", "TestSupport", "TestCommunication"]
+                        for i2 in range(1, 29):
+                            # -------------Client Status dropdown--------------------------------------------
+                            if i2 == 1:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[1]/div/select"))
+                                select.select_by_visible_text("Active")
+                            # -------------First Name--------------------------------------------
+                            elif i2 == 2:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[0])
+                            # -------------Last Name--------------------------------------------
+                            elif i2 == 3:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[1])
+                            # -------------Referred To By--------------------------------------------
+                            elif i2 == 4:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[2])
+                            # -------------DOB--------------------------------------------
+                            elif i2 == 5:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[3])
+                                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            # -------------Gender--------------------------------------------
+                            elif i2 == 6:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[6]/div/select"))
+                                select.select_by_visible_text("Male")
+                            # -------------NDIS Number--------------------------------------------
+                            elif i2 == 9:
+                                time.sleep(1)
+                                NDISNumToUSe = int(Data[4])
+                                for NDISNum in range(1000):
+                                    driver.find_element_by_xpath(
+                                        "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                            i2) + "]/div/input").send_keys(
+                                        str(NDISNumToUSe))
+                                    ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                                    try:
+                                        WebDriverWait(driver, SHORT_TIMEOUT
+                                                      ).until(
+                                            EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                                        WebDriverWait(driver, LONG_TIMEOUT
+                                                      ).until(
+                                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                                    except TimeoutException:
+                                        pass
+                                    time.sleep(1)
+                                    NdisError = driver.find_element_by_xpath(
+                                        "//span[@id='error_ndIs']").is_displayed()
+                                    if NdisError == True:
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                                i2) + "]/div/input").clear()
+                                        pass
+                                    elif NdisError == False:
+                                        break
+                                    NDISNumToUSe = NDISNumToUSe + 1
+                            # -------------Sign Up Date--------------------------------------------
+                            elif i2 == 10:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[5])
+                                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            # -------------Mobile Number--------------------------------------------
+                            elif i2 == 11:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[6])
+                            # -------------Street Address--------------------------------------------
+                            elif i2 == 12:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[7])
+                            # -------------Home Number--------------------------------------------
+                            elif i2 == 13:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[8])
+                            # -------------Suburb--------------------------------------------
+                            elif i2 == 14:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[9])
+                            # -------------Email Address--------------------------------------------
+                            elif i2 == 15:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(Data[0] +
+                                                                       Data[10])
+                            # -------------State--------------------------------------------
+                            elif i2 == 16:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
+                                select.select_by_visible_text("SA")
+                            # -------------Access to App--------------------------------------------
+                            elif i2 == 17:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
+                                select.select_by_visible_text("Yes")
+                            # -------------Postcode--------------------------------------------
+                            elif i2 == 18:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[11])
+                            # -------------Profile Type--------------------------------------------
+                            elif i2 == 19:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
+                                select.select_by_visible_text("Plan Managed")
+                            # -------------Monthly Fee Rate ($)--------------------------------------------
+                            elif i2 == 20:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[12])
+                            # -------------Support Coordinator--------------------------------------------
+                            elif i2 == 21:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/input").send_keys(
+                                    Data[13])
+                            # -------------Main Profile Contact--------------------------------------------
+                            elif i2 == 22:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
+                                select.select_by_visible_text("Yes")
+                            # -------------Receive Payment Updates--------------------------------------------
+                            elif i2 == 23:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
+                                select.select_by_visible_text("Yes")
+                            # -------------Statement Preference--------------------------------------------
+                            elif i2 == 24:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
+                                select.select_by_visible_text("No")
+                            # -------------Communication Preferences--------------------------------------------
+                            elif i2 == 26:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                        i2) + "]/div/textarea").send_keys(
+                                    Data[14])
+                            # -------------NDIS Rate--------------------------------------------
+                            elif i2 == 27:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
+                                select.select_by_visible_text("National Remote")
+                            # -------------Save button--------------------------------------------
+                            elif i2 == 28:
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewclient']/div/div/div[2]/form/div[28]/button").click()
+                                try:
+                                    WebDriverWait(driver, SHORT_TIMEOUT
+                                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                                    WebDriverWait(driver, LONG_TIMEOUT
+                                                  ).until(
+                                        EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                                except TimeoutException:
+                                    pass
+                                time.sleep(2)
+                                try:
+                                    EmailError = driver.find_element_by_xpath(
+                                        "//span[@id='error_email_address']").is_displayed()
+                                    if EmailError == True:
+                                        time.sleep(1)
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                                15) + "]/div/input").clear()
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
+                                                15) + "]/div/input").send_keys(Data[0] + Data[1] + Data[10])
+                                except Exception as ec:
+                                    pass
+                        TestResult.append("Create new client process is working correctly")
+                        TestResultStatus.append("Pass")
+                    except Exception:
+                        TestResult.append("Create new client process is not working")
+                        TestResultStatus.append("Fail")
 
                     # --------Saving client details in reference sheet------------
                     sheetx1.cell(1, 1).value = FName
@@ -757,28 +776,30 @@ def test_VerifyAllClickables(test_setup):
                     print("New client Last name is: " + LName)
 
                     # ------------Going back to client listing after creating client---------
-                    driver.find_element_by_xpath("//a[text()='Back']").click()
                     try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        driver.find_element_by_xpath("//a[text()='Back']").click()
+                        try:
+                            WebDriverWait(driver, SHORT_TIMEOUT
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(
-                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
+                            WebDriverWait(driver, LONG_TIMEOUT
+                                          ).until(
+                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        except TimeoutException:
+                            pass
+
+                        driver.find_element_by_xpath("//td[text()='" + FName + "']/a").click()
+                        try:
+                            WebDriverWait(driver, SHORT_TIMEOUT
+                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                            WebDriverWait(driver, LONG_TIMEOUT
+                                          ).until(
+                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                        except TimeoutException:
+                            pass
+                    except Exception:
                         pass
-
-                    driver.find_element_by_xpath("//td[text()='" + FName + "']/a").click()
-                    try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(
-                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
-                        pass
-
 
             #------------Checking plan details once Client found in application--------------
             RemainingAmountLimit = 500
@@ -791,50 +812,62 @@ def test_VerifyAllClickables(test_setup):
                 PlanStatus = "No Plan Found"
 
             if PlanStatus == "No Plan Found":
+                # TestResult.append(
+                #     "No Plan Found, creating new plan")
+                # TestResultStatus.append("Pass")
                 print("Inside " + PlanStatus)
                 driver.find_element_by_xpath("//a[@id='addNewServicePlan']").click()
-
-                for np in range(1, 9):
-                    driver.find_element_by_xpath(
-                        "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]")
-                    # -----------------Plan start date-------------------------------------------
-                    if np == 5:
-                        time.sleep(1)
-                        driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(
-                            np) + "]/div/input[1]").send_keys(PlanStartDate)
-                        ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                    # -----------------Plan end date-------------------------------------------
-                    elif np == 6:
-                        time.sleep(1)
-                        driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(
-                            np) + "]/div/input[1]").send_keys(PlanEndDate)
-                        ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                    # -----------------Status dropdown-------------------------------------------
-                    elif np == 7:
-                        time.sleep(1)
-                        select = Select(driver.find_element_by_xpath(
-                            "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]/div/select"))
-                        select.select_by_visible_text("Active")
-                    # -----------------Create button-------------------------------------------
-                    elif np == 8:
-                        time.sleep(1)
+                try:
+                    for np in range(1, 9):
                         driver.find_element_by_xpath(
-                            "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]/button").click()
-                        try:
-                            WebDriverWait(driver, SHORT_TIMEOUT
-                                          ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                            "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]")
+                        # -----------------Plan start date-------------------------------------------
+                        if np == 5:
+                            time.sleep(1)
+                            driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(
+                                np) + "]/div/input[1]").send_keys(PlanStartDate)
+                            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                        # -----------------Plan end date-------------------------------------------
+                        elif np == 6:
+                            time.sleep(1)
+                            driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(
+                                np) + "]/div/input[1]").send_keys(PlanEndDate)
+                            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                        # -----------------Status dropdown-------------------------------------------
+                        elif np == 7:
+                            time.sleep(1)
+                            select = Select(driver.find_element_by_xpath(
+                                "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]/div/select"))
+                            select.select_by_visible_text("Active")
+                        # -----------------Create button-------------------------------------------
+                        elif np == 8:
+                            time.sleep(1)
+                            driver.find_element_by_xpath(
+                                "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]/button").click()
+                            try:
+                                WebDriverWait(driver, SHORT_TIMEOUT
+                                              ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
-                            WebDriverWait(driver, LONG_TIMEOUT
-                                          ).until(
-                                EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                        except TimeoutException:
-                            pass
+                                WebDriverWait(driver, LONG_TIMEOUT
+                                              ).until(
+                                    EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                            except TimeoutException:
+                                pass
+                    TestResult.append("Adding new plan process is working correctly")
+                    TestResultStatus.append("Pass")
+                except Exception:
+                    TestResult.append("Adding new plan process is not working")
+                    TestResultStatus.append("Fail")
+
 
                 PlanStatus = "Active"
 
             if PlanStatus == "InActive":
                 print("Inside " + PlanStatus)
                 print("We need to edit existing plan")
+                TestResult.append(
+                    "Plan Found inactive, activating the plan")
+                TestResultStatus.append("Pass")
                 try:
                     driver.find_element_by_xpath("//tbody/tr/td[@class='text-right']/a[2]").click()
                     select = Select(driver.find_element_by_xpath(
@@ -842,12 +875,17 @@ def test_VerifyAllClickables(test_setup):
                     select.select_by_visible_text("Active")
                     driver.find_element_by_xpath(
                         "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[10]/button").click()
+                    TestResult.append("Plan is activated successfully")
+                    TestResultStatus.append("Pass")
                 except Exception:
-                    pass
+                    TestResult.append("User not able to activate plan")
+                    TestResultStatus.append("Fail")
                 PlanStatus = "Active"
 
             print("Once plan status is set / found Active, now checking plan remianing amount")
             if PlanStatus == "Active":
+                TestResult.append("Plan status found activated")
+                TestResultStatus.append("Pass")
                 try:
                     PlanPresent = driver.find_element_by_xpath(
                         "//td[@class='ServiceBookingTdCol']/table/tbody/tr/td[1]/p/a").text
@@ -925,8 +963,11 @@ def test_VerifyAllClickables(test_setup):
                                 EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                         except TimeoutException:
                             pass
+                        TestResult.append("Add Plan Managed Service Booking process is working correctly")
+                        TestResultStatus.append("Pass")
                     except Exception:
-                        pass
+                        TestResult.append("Add Plan Managed Service Booking process is not working")
+                        TestResultStatus.append("Fail")
                 try:
                     Remaining = driver.find_element_by_xpath(
                         "//td[@class='ServiceBookingTdCol']/table/tbody/tr/td[3]").text
@@ -966,7 +1007,7 @@ def test_VerifyAllClickables(test_setup):
 
             print(float(BalanceAmt))
             if float(BalanceAmt) < float(RemainingAmountLimit):
-                print("Inside " + PlanStatus+" and float(BalanceAmt) less than RemainingAmountLimit")
+                print("Inside " + PlanStatus+ " and Balance Amt less than Remaining Amount Limit")
                 try:
                     driver.find_element_by_xpath("//td[@class='ServiceBookingTHwidth']/p/a").click()
                     try:
@@ -1016,15 +1057,18 @@ def test_VerifyAllClickables(test_setup):
                                 EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                         except TimeoutException:
                             pass
+                        TestResult.append("Amount added successfully when remaining amount is low")
+                        TestResultStatus.append("Pass")
                     except Exception:
-                        print(AmtToEdit + "not found")
+                        TestResult.append("Not able to add amount in low remaining amount")
+                        TestResultStatus.append("Fail")
 
                 except Exception:
                     pass
 
             sheetx1.cell(1, 3).value = PlanEndDate
             wbx1.save(locx1)
-            # -----------------Upload new plan button-------------------------------------------
+            # -------------------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)

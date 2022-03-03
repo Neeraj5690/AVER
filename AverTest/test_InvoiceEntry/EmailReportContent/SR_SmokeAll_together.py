@@ -77,9 +77,9 @@ def test_ReportSendSmokeAll():
                 file_attachment.add_header(name, value)
         msg.attach(file_attachment)
 
-    email_from = 'Aver Planning Test Automation Team'
-    #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
-    email_to = ['neeraj1wayitsol@gmail.com', 'avneet.kumar@bitsinglass.com', 'sumreet.kaur@bitsinglass.com', 'gagandeep.singh@bitsinglass.com']
+    email_from = 'Rae CRM Test Automation Team'
+    email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
+    #email_to = ['neeraj1wayitsol@gmail.com', 'avneet.kumar@bitsinglass.com', 'sumreet.kaur@bitsinglass.com', 'gagandeep.singh@bitsinglass.com']
     #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
     SenderEmail="neeraj.kumar@bitsinglass.com"
@@ -93,7 +93,7 @@ def test_ReportSendSmokeAll():
 
     date_str = pd.Timestamp.today().strftime('%m-%d-%Y')
     msg = MIMEMultipart()
-    msg['Subject']='[Test Suite 4 (Invoice Entry)]-Test Automation Report-Env [Test] '+date_str
+    msg['Subject']='[Test Suite 4 (Invoice Entry)]-Rae CRM Test Automation Report '+date_str
     msg['From'] = email_from
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))

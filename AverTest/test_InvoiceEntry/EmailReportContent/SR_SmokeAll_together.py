@@ -77,10 +77,11 @@ def test_ReportSendSmokeAll():
                 file_attachment.add_header(name, value)
         msg.attach(file_attachment)
 
+
     email_from = 'Rae CRM Test Automation Team'
-    #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
+    email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
     #email_to = ['neeraj1wayitsol@gmail.com', 'avneet.kumar@bitsinglass.com', 'sumreet.kaur@bitsinglass.com', 'gagandeep.singh@bitsinglass.com']
-    email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
+    #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
     SenderEmail="neeraj.kumar@bitsinglass.com"
     User = "AxBCsrijkltwxysHIJMhijodefhhij@bcd2yzA8qrs4zAB0EFG8fgh2zAB8"
@@ -90,6 +91,7 @@ def test_ReportSendSmokeAll():
                    int(int(ord('f')) / 3)] + User[int(int(ord('r')) / 3)] + \
                User[int(int(ord('T')) / 2)] + User[int((int(ord('Z')) + 2) / 2)] + User[int((int(ord('b')) + 2) / 2)] + \
                User[int((int(ord('k')) + 2) / 2)] + User[int((int(ord('s')) + 2) / 2)]
+
 
     date_str = pd.Timestamp.today().strftime('%m-%d-%Y')
     msg = MIMEMultipart()

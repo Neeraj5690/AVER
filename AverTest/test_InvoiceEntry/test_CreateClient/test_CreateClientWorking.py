@@ -251,7 +251,7 @@ def test_VerifyAllClickables(test_setup):
                     pass
                 try:
                     print()
-                    Data = [FName, LName, "TReferTo", "01-02-1990", "2474", D1, "1122334455", "TStreet", "123", "TSuburb",
+                    Data = [FName, LName, "TReferTo", "01-02-1990", "2480", D1, "1122334455", "TStreet", "123", "TSuburb",
                             "@test.com", "213243", "1000", "TestSupport", "TestCommunication"]
                     for i2 in range(1, 29):
                         # -------------Client Status dropdown--------------------------------------------
@@ -260,6 +260,9 @@ def test_VerifyAllClickables(test_setup):
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[1]/div/select"))
                             select.select_by_visible_text("Active")
+                            TestResult.append(
+                                "Client 'Status' is selected from dropdown")
+                            TestResultStatus.append("Pass")
                         # -------------First Name--------------------------------------------
                         elif i2 == 2:
                             time.sleep(1)
@@ -267,6 +270,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[0])
+                            TestResult.append(
+                                "Client 'first name' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Last Name--------------------------------------------
                         elif i2 == 3:
                             time.sleep(1)
@@ -274,6 +280,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[1])
+                            TestResult.append(
+                                "Client 'last name' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Referred To By--------------------------------------------
                         elif i2 == 4:
                             time.sleep(1)
@@ -281,6 +290,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[2])
+                            TestResult.append(
+                                "'Referred to by' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------DOB--------------------------------------------
                         elif i2 == 5:
                             time.sleep(1)
@@ -289,12 +301,17 @@ def test_VerifyAllClickables(test_setup):
                                     i2) + "]/div/input").send_keys(
                                 Data[3])
                             ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            TestResult.append("'DOB' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Gender--------------------------------------------
                         elif i2 == 6:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[6]/div/select"))
                             select.select_by_visible_text("Male")
+                            TestResult.append(
+                                "'Gender' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------NDIS Number--------------------------------------------
                         elif i2 == 9:
                             time.sleep(1)
@@ -325,6 +342,9 @@ def test_VerifyAllClickables(test_setup):
                                 elif NdisError == False:
                                     break
                                 NDISNumToUSe = NDISNumToUSe + 1
+                            TestResult.append(
+                                "'NDIS number' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Sign Up Date--------------------------------------------
                         elif i2 == 10:
                             time.sleep(1)
@@ -333,6 +353,9 @@ def test_VerifyAllClickables(test_setup):
                                     i2) + "]/div/input").send_keys(
                                 Data[5])
                             ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            TestResult.append(
+                                "'Sign up date' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Mobile Number--------------------------------------------
                         elif i2 == 11:
                             time.sleep(1)
@@ -340,6 +363,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[6])
+                            TestResult.append(
+                                "'Mobile number' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Street Address--------------------------------------------
                         elif i2 == 12:
                             time.sleep(1)
@@ -347,6 +373,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[7])
+                            TestResult.append(
+                                "'Street address' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Home Number--------------------------------------------
                         elif i2 == 13:
                             time.sleep(1)
@@ -354,6 +383,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[8])
+                            TestResult.append(
+                                "'Home Number' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Suburb--------------------------------------------
                         elif i2 == 14:
                             time.sleep(1)
@@ -361,6 +393,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[9])
+                            TestResult.append(
+                                "'Suburb' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Email Address--------------------------------------------
                         elif i2 == 15:
                             time.sleep(1)
@@ -368,18 +403,27 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(Data[0] +
                                                                    Data[10])
+                            TestResult.append(
+                                "'Email Address' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------State--------------------------------------------
                         elif i2 == 16:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                             select.select_by_visible_text("SA")
+                            TestResult.append(
+                                "'State' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Access to App--------------------------------------------
                         elif i2 == 17:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                             select.select_by_visible_text("Yes")
+                            TestResult.append(
+                                "'Access to app' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Postcode--------------------------------------------
                         elif i2 == 18:
                             time.sleep(1)
@@ -387,12 +431,18 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[11])
+                            TestResult.append(
+                                "'Postcode' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Profile Type--------------------------------------------
                         elif i2 == 19:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                             select.select_by_visible_text("Plan Managed")
+                            TestResult.append(
+                                "'Profile Type' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Monthly Fee Rate ($)--------------------------------------------
                         elif i2 == 20:
                             time.sleep(1)
@@ -400,6 +450,9 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[12])
+                            TestResult.append(
+                                "'Monthly Fee Rate ($)' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Support Coordinator--------------------------------------------
                         elif i2 == 21:
                             time.sleep(1)
@@ -407,24 +460,36 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/input").send_keys(
                                 Data[13])
+                            TestResult.append(
+                                "'Support Coordinator' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Main Profile Contact--------------------------------------------
                         elif i2 == 22:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                             select.select_by_visible_text("Yes")
+                            TestResult.append(
+                                "'Main Profile Contact' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Receive Payment Updates--------------------------------------------
                         elif i2 == 23:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                             select.select_by_visible_text("Yes")
+                            TestResult.append(
+                                "'Receive Payment Updates' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Statement Preference--------------------------------------------
                         elif i2 == 24:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                             select.select_by_visible_text("No")
+                            TestResult.append(
+                                "'Statement Preference' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Communication Preferences--------------------------------------------
                         elif i2 == 26:
                             time.sleep(1)
@@ -432,17 +497,26 @@ def test_VerifyAllClickables(test_setup):
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                     i2) + "]/div/textarea").send_keys(
                                 Data[14])
+                            TestResult.append(
+                                "'Communication Preferences' is entered successfully")
+                            TestResultStatus.append("Pass")
                         # -------------NDIS Rate--------------------------------------------
                         elif i2 == 27:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                             select.select_by_visible_text("National Remote")
+                            TestResult.append(
+                                "'NDIS Rate' is selected successfully")
+                            TestResultStatus.append("Pass")
                         # -------------Save button--------------------------------------------
                         elif i2 == 28:
                             time.sleep(1)
                             driver.find_element_by_xpath(
                                 "//div[@id='createnewclient']/div/div/div[2]/form/div[28]/button").click()
+                            TestResult.append(
+                                "Save button is clicked")
+                            TestResultStatus.append("Pass")
                             try:
                                 WebDriverWait(driver, SHORT_TIMEOUT
                                               ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
@@ -544,7 +618,7 @@ def test_VerifyAllClickables(test_setup):
                         except TimeoutException:
                             pass
 
-                        Data = [FName, LName, "TReferTo", "01-02-1990", "2474", D1, "1122334455", "TStreet", "123",
+                        Data = [FName, LName, "TReferTo", "01-02-1990", "2480", D1, "1122334455", "TStreet", "123",
                                 "TSuburb",
                                 "@test.com", "213243", "1000", "TestSupport", "TestCommunication"]
                         for i2 in range(1, 29):
@@ -554,6 +628,9 @@ def test_VerifyAllClickables(test_setup):
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[1]/div/select"))
                                 select.select_by_visible_text("Active")
+                                TestResult.append(
+                                    "Client 'status' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------First Name--------------------------------------------
                             elif i2 == 2:
                                 time.sleep(1)
@@ -561,6 +638,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[0])
+                                TestResult.append(
+                                    "Client 'first name' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Last Name--------------------------------------------
                             elif i2 == 3:
                                 time.sleep(1)
@@ -568,6 +648,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[1])
+                                TestResult.append(
+                                    "Client 'last name' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Referred To By--------------------------------------------
                             elif i2 == 4:
                                 time.sleep(1)
@@ -575,6 +658,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[2])
+                                TestResult.append(
+                                    "'Referred to by' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------DOB--------------------------------------------
                             elif i2 == 5:
                                 time.sleep(1)
@@ -583,12 +669,17 @@ def test_VerifyAllClickables(test_setup):
                                         i2) + "]/div/input").send_keys(
                                     Data[3])
                                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                                TestResult.append("'DOB' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Gender--------------------------------------------
                             elif i2 == 6:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[6]/div/select"))
                                 select.select_by_visible_text("Male")
+                                TestResult.append(
+                                    "'Gender' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------NDIS Number--------------------------------------------
                             elif i2 == 9:
                                 time.sleep(1)
@@ -620,6 +711,9 @@ def test_VerifyAllClickables(test_setup):
                                     elif NdisError == False:
                                         break
                                     NDISNumToUSe = NDISNumToUSe + 1
+                                TestResult.append(
+                                    "'NDIS number' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Sign Up Date--------------------------------------------
                             elif i2 == 10:
                                 time.sleep(1)
@@ -628,6 +722,9 @@ def test_VerifyAllClickables(test_setup):
                                         i2) + "]/div/input").send_keys(
                                     Data[5])
                                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                                TestResult.append(
+                                    "'Sign up date' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Mobile Number--------------------------------------------
                             elif i2 == 11:
                                 time.sleep(1)
@@ -635,6 +732,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[6])
+                                TestResult.append(
+                                    "'Mobile number' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Street Address--------------------------------------------
                             elif i2 == 12:
                                 time.sleep(1)
@@ -642,6 +742,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[7])
+                                TestResult.append(
+                                    "'Street address' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Home Number--------------------------------------------
                             elif i2 == 13:
                                 time.sleep(1)
@@ -649,6 +752,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[8])
+                                TestResult.append(
+                                    "'Home Number' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Suburb--------------------------------------------
                             elif i2 == 14:
                                 time.sleep(1)
@@ -656,6 +762,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[9])
+                                TestResult.append(
+                                    "'Suburb' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Email Address--------------------------------------------
                             elif i2 == 15:
                                 time.sleep(1)
@@ -663,18 +772,27 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(Data[0] +
                                                                        Data[10])
+                                TestResult.append(
+                                    "'Email Address' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------State--------------------------------------------
                             elif i2 == 16:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                                 select.select_by_visible_text("SA")
+                                TestResult.append(
+                                    "'State' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Access to App--------------------------------------------
                             elif i2 == 17:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                                 select.select_by_visible_text("Yes")
+                                TestResult.append(
+                                    "'Access to app' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Postcode--------------------------------------------
                             elif i2 == 18:
                                 time.sleep(1)
@@ -682,12 +800,18 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[11])
+                                TestResult.append(
+                                    "'Postcode' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Profile Type--------------------------------------------
                             elif i2 == 19:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                                 select.select_by_visible_text("Plan Managed")
+                                TestResult.append(
+                                    "'Profile Type' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Monthly Fee Rate ($)--------------------------------------------
                             elif i2 == 20:
                                 time.sleep(1)
@@ -695,6 +819,9 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[12])
+                                TestResult.append(
+                                    "'Monthly Fee Rate ($)' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Support Coordinator--------------------------------------------
                             elif i2 == 21:
                                 time.sleep(1)
@@ -702,24 +829,36 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/input").send_keys(
                                     Data[13])
+                                TestResult.append(
+                                    "'Support Coordinator' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Main Profile Contact--------------------------------------------
                             elif i2 == 22:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                                 select.select_by_visible_text("Yes")
+                                TestResult.append(
+                                    "'Main Profile Contact' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Receive Payment Updates--------------------------------------------
                             elif i2 == 23:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                                 select.select_by_visible_text("Yes")
+                                TestResult.append(
+                                    "'Receive Payment Updates' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Statement Preference--------------------------------------------
                             elif i2 == 24:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                                 select.select_by_visible_text("No")
+                                TestResult.append(
+                                    "'Statement Preference' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Communication Preferences--------------------------------------------
                             elif i2 == 26:
                                 time.sleep(1)
@@ -727,17 +866,26 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(
                                         i2) + "]/div/textarea").send_keys(
                                     Data[14])
+                                TestResult.append(
+                                    "'Communication Preferences' is entered successfully")
+                                TestResultStatus.append("Pass")
                             # -------------NDIS Rate--------------------------------------------
                             elif i2 == 27:
                                 time.sleep(1)
                                 select = Select(driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(i2) + "]/div/select"))
                                 select.select_by_visible_text("National Remote")
+                                TestResult.append(
+                                    "'NDIS Rate' is selected successfully")
+                                TestResultStatus.append("Pass")
                             # -------------Save button--------------------------------------------
                             elif i2 == 28:
                                 time.sleep(1)
                                 driver.find_element_by_xpath(
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[28]/button").click()
+                                TestResult.append(
+                                    "Save button clicked")
+                                TestResultStatus.append("Pass")
                                 try:
                                     WebDriverWait(driver, SHORT_TIMEOUT
                                                   ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
@@ -812,10 +960,9 @@ def test_VerifyAllClickables(test_setup):
                 PlanStatus = "No Plan Found"
 
             if PlanStatus == "No Plan Found":
-                # TestResult.append(
-                #     "No Plan Found, creating new plan")
-                # TestResultStatus.append("Pass")
                 print("Inside " + PlanStatus)
+                TestResult.append("No Plan Found, creating new plan")
+                TestResultStatus.append("Pass")
                 driver.find_element_by_xpath("//a[@id='addNewServicePlan']").click()
                 try:
                     for np in range(1, 9):
@@ -827,23 +974,35 @@ def test_VerifyAllClickables(test_setup):
                             driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(
                                 np) + "]/div/input[1]").send_keys(PlanStartDate)
                             ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            TestResult.append(
+                                "Plan start date is selected")
+                            TestResultStatus.append("Pass")
                         # -----------------Plan end date-------------------------------------------
                         elif np == 6:
                             time.sleep(1)
                             driver.find_element_by_xpath("//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(
                                 np) + "]/div/input[1]").send_keys(PlanEndDate)
                             ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                            TestResult.append(
+                                "Plan end date is selected")
+                            TestResultStatus.append("Pass")
                         # -----------------Status dropdown-------------------------------------------
                         elif np == 7:
                             time.sleep(1)
                             select = Select(driver.find_element_by_xpath(
                                 "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]/div/select"))
                             select.select_by_visible_text("Active")
+                            TestResult.append(
+                                "Plan status is selected")
+                            TestResultStatus.append("Pass")
                         # -----------------Create button-------------------------------------------
                         elif np == 8:
                             time.sleep(1)
                             driver.find_element_by_xpath(
                                 "//div[@id='UploadNewPlan']/div/div/div[2]/form/div[" + str(np) + "]/button").click()
+                            TestResult.append(
+                                "Create button is clicked")
+                            TestResultStatus.append("Pass")
                             try:
                                 WebDriverWait(driver, SHORT_TIMEOUT
                                               ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
@@ -878,13 +1037,15 @@ def test_VerifyAllClickables(test_setup):
                     TestResult.append("Plan is activated successfully")
                     TestResultStatus.append("Pass")
                 except Exception:
-                    TestResult.append("User not able to activate plan")
+                    TestResult.append("Not able to activate plan")
                     TestResultStatus.append("Fail")
                 PlanStatus = "Active"
 
             print("Once plan status is set / found Active, now checking plan remianing amount")
+            TestResult.append("Once plan status is set / found Active, now checking plan remianing amount")
+            TestResultStatus.append("Pass")
             if PlanStatus == "Active":
-                TestResult.append("Plan status found activated")
+                TestResult.append("Plan status found active, No need to add new plan")
                 TestResultStatus.append("Pass")
                 try:
                     PlanPresent = driver.find_element_by_xpath(
@@ -902,6 +1063,8 @@ def test_VerifyAllClickables(test_setup):
                         AllocatedAmount = "1000"
 
                         driver.find_element_by_xpath("//tbody/tr/td[@class='TrButtonAdd']/button[2]").click()
+                        TestResult.append("Add Plan Managed Service Booking is clicked")
+                        TestResultStatus.append("Pass")
                         for pm in range(1, 8):
                             # ----------Booking number field on plan managed service booking page--------------------
                             if pm == 1:
@@ -909,6 +1072,8 @@ def test_VerifyAllClickables(test_setup):
                                 driver.find_element_by_xpath(
                                     "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
                                         pm) + "]/div/div[2]/ul/li/span[1]/input").send_keys(BookingNumber)
+                                TestResult.append("Booking number is entered")
+                                TestResultStatus.append("Pass")
                             # ----------Support Budget dropdown on plan managed service booking page--------------------
                             elif pm == 3:
                                 time.sleep(1)
@@ -916,16 +1081,22 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
                                         pm) + "]/div[1]/div/select"))
                                 select.select_by_index(4)
+                                TestResult.append("Support Budget is selected")
+                                TestResultStatus.append("Pass")
                             # ----------Allocated Amount (Unit Price) field on plan managed service booking page--------------------
                             elif pm == 5:
                                 time.sleep(1)
                                 driver.find_element_by_xpath(
                                     "//div[@id='AddServiceBooking']/div/div/div[2]/form[1]/div[" + str(
                                         pm) + "]/div/input").send_keys(AllocatedAmount)
+                                TestResult.append("Allocated Amount (Unit Price) is entered")
+                                TestResultStatus.append("Pass")
 
                         for pm1 in range(1, 10):
                             # ----------Add button on plan managed service booking page--------------------
                             driver.find_element_by_xpath("//button[text()='Add']").click()
+                            TestResult.append("Add button is clicked")
+                            TestResultStatus.append("Pass")
                             try:
                                 WebDriverWait(driver, SHORT_TIMEOUT
                                               ).until(
@@ -1008,6 +1179,8 @@ def test_VerifyAllClickables(test_setup):
             print(float(BalanceAmt))
             if float(BalanceAmt) < float(RemainingAmountLimit):
                 print("Inside " + PlanStatus+ " and Balance Amt less than Remaining Amount Limit")
+                TestResult.append("Remaining amount found less than remaining amount limit\n Need to add some amount in allocated amount to maintain remaining amount")
+                TestResultStatus.append("Pass")
                 try:
                     driver.find_element_by_xpath("//td[@class='ServiceBookingTHwidth']/p/a").click()
                     try:
@@ -1057,10 +1230,10 @@ def test_VerifyAllClickables(test_setup):
                                 EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
                         except TimeoutException:
                             pass
-                        TestResult.append("Amount added successfully when remaining amount is low")
+                        TestResult.append("Amount added in allocated amount to maintain remaining amount")
                         TestResultStatus.append("Pass")
                     except Exception:
-                        TestResult.append("Not able to add amount in low remaining amount")
+                        TestResult.append("Not able to add amount in allocated amount to maintain remaining amount")
                         TestResultStatus.append("Fail")
 
                 except Exception:

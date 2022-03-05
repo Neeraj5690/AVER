@@ -80,7 +80,10 @@ def test_setup():
   yield
   if Exe == "Yes":
       ct = datetime.datetime.now().strftime("%d_%B_%Y_%I_%M%p")
-      ctReportHeader = datetime.datetime.now().strftime("%d %B %Y %I %M%p")
+      time_change = datetime.timedelta(hours=5)
+      new_time = datetime.datetime.now() + time_change
+      ctReportHeader = new_time.strftime("%d %B %Y %I %M%p")
+      ct1 = new_time.strftime("%d_%B_%Y_%I_%M%p")
 
       class PDF(FPDF):
           def header(self):
@@ -117,7 +120,7 @@ def test_setup():
          TestName1 = TestResult[i1].encode('latin-1', 'ignore').decode('latin-1')
          pdf.multi_cell(0, 7,str(i1+1)+")  "+TestName1, 0, 1,fill=True)
          TestFailStatus.append("Pass")
-      pdf.output(TestName+"_" + ct + ".pdf", 'F')
+      pdf.output(TestName+"_" + ct1 + ".pdf", 'F')
 
       #-----------To check if any failed Test case present-------------------
       for io in range(len(TestResult)):
@@ -346,71 +349,6 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Pagination clicks-----------------------------
-            PageName = "Service provider listing table"
-            try:
-                TotalItem = driver.find_element_by_xpath("//div[@id='table_data_wrapper']/div[3]/div[1]").text
-                substr = "of"
-                x = TotalItem.split(substr)
-                string_name = x[0]
-                TotalItemAfterOf = x[1]
-                abc = ""
-                countspace = 0
-                for element in range(0, len(string_name)):
-                    if string_name[(len(string_name) - 1) - element] == " ":
-                        countspace = countspace + 1
-                        if countspace == 2:
-                            break
-                    else:
-                        abc = abc + string_name[(len(string_name) - 1) - element]
-                abc = abc[::-1]
-                TotalItemBeforeOf = abc
-                TotalItemAfterOf = TotalItemAfterOf.split(" ")
-                TotalItemAfterOf = TotalItemAfterOf[1]
-                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-
-                TotalItemAfterOf = int(TotalItemAfterOf)
-                RecordsPerPage = 50
-                TotalPages = TotalItemAfterOf / RecordsPerPage
-                NumberOfPages = math.ceil(float(TotalPages))
-
-                for i in range(NumberOfPages):
-                    if i < 1:
-                        if i == NumberOfPages - 1:
-                            TestResult.append("No Pagination found for [ " + str(
-                                RecordsPerPage) + " ] no. of records under Service Provider Listing table")
-                            TestResultStatus.append("Pass")
-                            break
-                    try:
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='table_data_paginate']/a[2]").click()
-                        time.sleep(1)
-                        ClickCounter = ClickCounter + 1
-                        TestResult.append("Pagination verified for [ " + str(
-                            TotalItemAfterOf) + " ] no. of records under Service Provider Listing table")
-                        TestResultStatus.append("Pass")
-                    except Exception as cc:
-                        pass
-                if i != ClickCounter:
-                    TestResult.append(
-                        "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
-                    TestResultStatus.append("Fail")
-                driver.refresh()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-            except Exception as aq:
-                print(aq)
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-                # # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Franchise Listing table header-----------------------------
             PageName = "Franchise Listing table header"

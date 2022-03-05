@@ -1,11 +1,19 @@
 import datetime
+import math
+import re
 import time
+from telnetlib import EC
+
 import openpyxl
 from fpdf import FPDF
 import pytest
 from selenium import webdriver
 import allure
 from sys import platform
+
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 @allure.step("Entering username ")
@@ -68,7 +76,10 @@ def test_setup():
   yield
   if Exe == "Yes":
       ct = datetime.datetime.now().strftime("%d_%B_%Y_%I_%M%p")
-      ctReportHeader = datetime.datetime.now().strftime("%d %B %Y %I %M%p")
+      time_change = datetime.timedelta(hours=5)
+      new_time = datetime.datetime.now() + time_change
+      ctReportHeader = new_time.strftime("%d %B %Y %I %M%p")
+      ct1 = new_time.strftime("%d_%B_%Y_%I_%M%p")
 
       class PDF(FPDF):
           def header(self):
@@ -105,7 +116,7 @@ def test_setup():
          TestName1 = TestResult[i1].encode('latin-1', 'ignore').decode('latin-1')
          pdf.multi_cell(0, 7,str(i1+1)+")  "+TestName1, 0, 1,fill=True)
          TestFailStatus.append("Pass")
-      pdf.output(TestName+"_" + ct + ".pdf", 'F')
+      pdf.output(TestName+"_" + ct1 + ".pdf", 'F')
 
       #-----------To check if any failed Test case present-------------------
       for io in range(len(TestResult)):
@@ -178,60 +189,255 @@ def test_VerifyAllClickables(test_setup):
         PName="admin786"
         try:
 
-            # ---------------------------Verify Username Field-----------------------------
-            PageName = "Username Data"
+            # ---------------------------Verify Service provider listing icon click-----------------------------
+            PageName = "Servive provider listing icon"
+            Ptitle1 = ""
             try:
-                driver.find_element_by_xpath("//div[@class='card-body']/div[2]/input").send_keys(UName)
-                TestResult.append(PageName + " entered successfully")
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
+                time.sleep(2)
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+                TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not able to enter")
+                TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Password Field-----------------------------
-            PageName = "Password Data"
+            # ---------------------------Verify working of Back button on Service provider listing page -----------------------------
+            PageName = "Back button"
+            Ptitle1 = "Rae"
             try:
-                driver.find_element_by_xpath("//div[@class='card-body']/div[3]/input").send_keys(PName)
-                TestResult.append(PageName + " entered successfully")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not able to enter")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
+                driver.find_element_by_xpath("//a[text()='Back']").click()
+                time.sleep(2)
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
-            # ---------------------------Verify SignIn Button-----------------------------
-            PageName = "Sign In Button"
-            try:
-                driver.find_element_by_xpath("//div[@class='card-body']/div[4]/button").click()
-                TestResult.append(PageName + " clicked successfully")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not click")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Lost Password Link-----------------------------
-            PageName = "Login process"
-            Ptitle1 = "Dashboard"
-            try:
-                PageTitle1 = driver.title
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
                 print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " is not perform"
-                TestResult.append(PageName + " performed successfully")
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is clickable")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not perform")
+                TestResult.append(PageName + " is not clickable")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
+
+            # ----------------Verify Service provider icon click after verifying back--------
+            PageName = "Service provider icon"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
+                time.sleep(2)
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+                TestResult.append(PageName + "  is opened again after verifying back button")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not opened again after verifying back button")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ----------------Verify working of import button-----------------------------------
+            PageName = "Import button"
+            Ptitle1 = "Import Service Provider"
+            try:
+                driver.find_element_by_xpath("//a[text()='Import']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Import Service Provider']").text
+                time.sleep(2)
+                driver.find_element_by_xpath("//a[@class='sbmt_btn close-from']").click()
+                time.sleep(2)
+                assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                TestResult.append(PageName + "  is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ----------------Verify working of create new button-----------------------------------
+            PageName = "Create new button"
+            Ptitle1 = "Import Service Provider"
+            try:
+                driver.find_element_by_xpath("//a[text()='Create New']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Service Provider']").text
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@id='createnewclient']/div/div/div/button").click()
+                time.sleep(2)
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+                assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                TestResult.append(PageName + "  is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ----------------Verify working of create reimburse button-----------------------------------
+            PageName = "Create new button"
+            Ptitle1 = "Create Reimburse Client"
+            try:
+                driver.find_element_by_xpath("//a[text()='Create Reimburse']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Reimburse Client']").text
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[5]/a").click()
+                time.sleep(2)
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+                assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                TestResult.append(PageName + "  is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Pagination clicks-----------------------------
+            PageName = "Service provider listing table"
+            try:
+                TotalItem = driver.find_element_by_xpath("//div[@id='table_data_wrapper']/div[3]/div[1]").text
+                substr = "of"
+                x = TotalItem.split(substr)
+                string_name = x[0]
+                TotalItemAfterOf = x[1]
+                abc = ""
+                countspace = 0
+                for element in range(0, len(string_name)):
+                    if string_name[(len(string_name) - 1) - element] == " ":
+                        countspace = countspace + 1
+                        if countspace == 2:
+                            break
+                    else:
+                        abc = abc + string_name[(len(string_name) - 1) - element]
+                abc = abc[::-1]
+                TotalItemBeforeOf = abc
+                TotalItemAfterOf = TotalItemAfterOf.split(" ")
+                TotalItemAfterOf = TotalItemAfterOf[1]
+                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+
+                TotalItemAfterOf = int(TotalItemAfterOf)
+                RecordsPerPage = 50
+                TotalPages = TotalItemAfterOf / RecordsPerPage
+                NumberOfPages = math.ceil(float(TotalPages))
+
+                for i in range(NumberOfPages):
+                    if i < 1:
+                        if i == NumberOfPages - 1:
+                            TestResult.append("No Pagination found for [ " + str(
+                                RecordsPerPage) + " ] no. of records under Service Provider Listing table")
+                            TestResultStatus.append("Pass")
+                            break
+                    try:
+                        time.sleep(TimeSpeed)
+                        driver.find_element_by_xpath(
+                            "//div[@id='table_data_paginate']/a[2]").click()
+                        time.sleep(1)
+                        ClickCounter = ClickCounter + 1
+                        TestResult.append("Pagination verified for [ " + str(
+                            TotalItemAfterOf) + " ] no. of records under Service Provider Listing table")
+                        TestResultStatus.append("Pass")
+                    except Exception as cc:
+                        pass
+                if i != ClickCounter:
+                    TestResult.append(
+                        "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
+                    TestResultStatus.append("Fail")
+                driver.refresh()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+            except Exception as aq:
+                print(aq)
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+                # # ---------------------------------------------------------------------------------
+
+                # ----------------Verify working of create franchise button-----------------------------------
+                PageName = "Create franchise button"
+                Ptitle1 = "Create Franchise"
+                try:
+                    driver.find_element_by_xpath("//a[text()='Create Reimburse']").click()
+                    time.sleep(2)
+                    PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Franchise']").text
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//div[@id='createfranchise']/div/div/div/button").click()
+                    time.sleep(2)
+                    try:
+                        WebDriverWait(driver, SHORT_TIMEOUT
+                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                        WebDriverWait(driver, LONG_TIMEOUT
+                                      ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    except TimeoutException:
+                        pass
+                    assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                    TestResult.append(PageName + "  is clickable")
+                    TestResultStatus.append("Pass")
+                except Exception:
+                    TestResult.append(PageName + " is not clickable")
+                    TestResultStatus.append("Fail")
+                print()
+                time.sleep(TimeSpeed)
+                # ---------------------------------------------------------------------------------
+
 
 
         except Exception:

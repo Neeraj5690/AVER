@@ -83,19 +83,10 @@ def test_ReportSendSmokeAll():
     #email_to = ['neeraj1wayitsol@gmail.com', 'avneet.kumar@bitsinglass.com', 'sumreet.kaur@bitsinglass.com', 'gagandeep.singh@bitsinglass.com']
     #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
-    SenderEmail="neeraj.kumar@bitsinglass.com"
-    User = "AxBCsrijkltwxysHIJMhijodefhhij@bcd2yzA8qrs4zAB0EFG8fgh2zAB8"
-    RandmStr = User[int(int(ord('b')) / 49)] + User[int(int(ord('c')) / 16.5)] + User[int(int(ord('c')) / 9.9)] + User[
-        int(int(ord('b')) / 7)] + User[int((int(ord('Z')) / 5))] + \
-               User[int(int(ord('X')) / 4)] + User[int(int(ord('N')) / 3)] + User[int(int(ord('Z')) / 3)] + User[
-                   int(int(ord('f')) / 3)] + User[int(int(ord('r')) / 3)] + \
-               User[int(int(ord('T')) / 2)] + User[int((int(ord('Z')) + 2) / 2)] + User[int((int(ord('b')) + 2) / 2)] + \
-               User[int((int(ord('k')) + 2) / 2)] + User[int((int(ord('s')) + 2) / 2)]
-
-
-    date_str = pd.Timestamp.today().strftime('%m-%d-%Y')
+    SenderEmail = "teamqa59@gmail.com"
+    RandmStr = "Gagan@0309"
     msg = MIMEMultipart()
-    msg['Subject']='[Test Suite 4 (Invoice Entry)]-Rae CRM Test Automation Report '+date_str
+    msg['Subject']='[Test Suite 4 (Invoice Entry)]-Rae CRM Test Automation Report'
     msg['From'] = email_from
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))

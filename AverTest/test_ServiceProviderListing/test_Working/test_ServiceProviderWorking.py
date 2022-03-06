@@ -72,6 +72,9 @@ def test_setup():
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
+      enter_username("admin@averplanning.com")
+      enter_password("admin786")
+      driver.find_element_by_xpath("//button[@type='submit']").click()
 
   yield
   if Exe == "Yes":
@@ -190,7 +193,7 @@ def test_VerifyAllClickables(test_setup):
         try:
 
             # ---------------------------Verify Service provider listing icon click-----------------------------
-            PageName = "Servive provider listing icon"
+            PageName = "Service provider listing icon"
             Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()

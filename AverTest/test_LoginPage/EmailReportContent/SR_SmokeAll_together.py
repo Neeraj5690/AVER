@@ -62,7 +62,7 @@ def test_ReportSendSmokeAll():
                 <p></p>
                 <img src='cid:myimageid' width="500" align="center">
                 <p>Please find attached PDFs of test scenarios results<br />Note: Attachments are only for FAILED test cases<br /></p>
-                <p>Many Thanks <br/>Neeraj</p>
+                <p>Many Thanks <br/>Rae automation team</p>
             </body>
         </html>
         '''

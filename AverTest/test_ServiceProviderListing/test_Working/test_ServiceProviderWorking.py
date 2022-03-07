@@ -184,15 +184,15 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      driver.quit()
+      #driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
     if Exe == "Yes":
         TimeSpeed = 2
-        SHORT_TIMEOUT = 5
-        LONG_TIMEOUT = 400
-        LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
+        SHORT_TIMEOUT = 1
+        LONG_TIMEOUT = 200
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         UName="admin@averplanning.com"
         PName="admin786"
         try:
@@ -206,11 +206,20 @@ def test_VerifyAllClickables(test_setup):
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/a").click()
                 time.sleep(2)
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
-                time.sleep(2)
+
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
+                            print("Loader present")
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+
                 time.sleep(2)
                 TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
-            except Exception:
+            except Exception as ee:
+                print(ee)
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
@@ -223,6 +232,13 @@ def test_VerifyAllClickables(test_setup):
             try:
                 driver.find_element_by_xpath("//a[text()='Back']").click()
                 time.sleep(2)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
+                            print("Loader present")
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not present"
@@ -245,6 +261,13 @@ def test_VerifyAllClickables(test_setup):
                 time.sleep(2)
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
                 time.sleep(2)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            print("Loader present")
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 TestResult.append(PageName + "  is opened again after verifying back button")
                 TestResultStatus.append("Pass")
             except Exception:
@@ -264,6 +287,13 @@ def test_VerifyAllClickables(test_setup):
                 time.sleep(2)
                 driver.find_element_by_xpath("//a[@class='sbmt_btn close-from']").click()
                 time.sleep(2)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            print("Loader present")
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 assert PageTitle1 in Ptitle1, PageName + " not able to click"
                 TestResult.append(PageName + "  is clickable")
                 TestResultStatus.append("Pass")
@@ -273,7 +303,6 @@ def test_VerifyAllClickables(test_setup):
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
-
 
             try:
                 print()
@@ -369,6 +398,15 @@ def test_VerifyAllClickables(test_setup):
                                         select = Select(driver.find_element_by_xpath(
                                             "//div[@id='createnewclient']/div/div/div[2]/form/div[1]/div["+str(i2)+"]/div/select"))
                                         select.select_by_visible_text("Yes")
+                                        TestResult.append("Franchise is selected successfully")
+                                        TestResultStatus.append("Pass")
+                                    # -------------Franchise Dropdown--------------------------------------------
+                                    elif i2 == 6:
+                                        time.sleep(1)
+                                        select = Select(driver.find_element_by_xpath(
+                                            "//div[@id='createnewclient']/div/div/div[2]/form/div[1]/div[" + str(
+                                                i2) + "]/div/select"))
+                                        select.select_by_index(1)
                                         TestResult.append("Franchise is selected successfully")
                                         TestResultStatus.append("Pass")
                                     # # -------------Service Type Dropdown--------------------------------------------
@@ -472,10 +510,18 @@ def test_VerifyAllClickables(test_setup):
                                     "//div[@id='createnewclient']/div/div/div[2]/form/div[" + str(ii2) + "]/button").click()
                                 TestResult.append("Save Button is clicked successfully")
                                 TestResultStatus.append("Pass")
+                                for load in range(LONG_TIMEOUT):
+                                    try:
+                                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                            print("Loader present")
+                                            time.sleep(0.5)
+                                    except Exception:
+                                        break
                         TestResult.append("Create new service provider process is working correctly")
                         TestResultStatus.append("Pass")
                     except Exception:
-                        pass
+                        TestResult.append("Create new service provider process is not working correctly")
+                        TestResultStatus.append("Fail")
 
                 # ---------------------------------------------------------------------------------
                     # --------Saving service provider details in reference sheet------------
@@ -489,13 +535,101 @@ def test_VerifyAllClickables(test_setup):
                     TestResultStatus.append("Pass")
 
             except Exception:
-                TestResult.append("Create new service provider process is not working correctly")
+                pass
+            #---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Pagination clicks-----------------------------
+            PageName = "Service provider listing table"
+            try:
+                TotalItem = driver.find_element_by_xpath("//div[@id='table_data_wrapper']/div[3]/div[1]").text
+                print(TotalItem)
+                substr = "of"
+                x = TotalItem.split(substr)
+                string_name = x[0]
+                TotalItemAfterOf = x[1]
+                abc = ""
+                countspace = 0
+                for element in range(0, len(string_name)):
+                    if string_name[(len(string_name) - 1) - element] == " ":
+                        countspace = countspace + 1
+                        if countspace == 2:
+                            break
+                    else:
+                        abc = abc + string_name[(len(string_name) - 1) - element]
+                abc = abc[::-1]
+                TotalItemBeforeOf = abc
+                TotalItemAfterOf = TotalItemAfterOf.split(" ")
+                TotalItemAfterOf = TotalItemAfterOf[1]
+                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+                print(TotalItemAfterOf)
+
+                TotalItemAfterOf = int(TotalItemAfterOf)
+                RecordsPerPage = 50
+                TotalPages = TotalItemAfterOf / RecordsPerPage
+                print(TotalPages)
+                NumberOfPages = math.ceil(float(TotalPages))
+                print(NumberOfPages)
+
+                for i in range(NumberOfPages):
+                    if i < 1:
+                        if i == NumberOfPages - 1:
+                            TestResult.append("No Pagination found for [ " + str(
+                                RecordsPerPage) + " ] no. of records under Service Provider Listing table")
+                            TestResultStatus.append("Pass")
+                            break
+                    try:
+                        time.sleep(TimeSpeed)
+                        driver.find_element_by_xpath(
+                            "//div[@id='table_data_paginate']/a[2]").click()
+                        time.sleep(1)
+                        ClickCounter = ClickCounter + 1
+                        TestResult.append("Pagination verified for [ " + str(
+                            TotalItemAfterOf) + " ] no. of records under Service Provider Listing table")
+                        TestResultStatus.append("Pass")
+                    except Exception:
+                        pass
+                if i != ClickCounter:
+                    TestResult.append(
+                        "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
+                    TestResultStatus.append("Fail")
+                driver.refresh()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+            except Exception as aq:
+                print(aq)
+                TestResult.append(PageName + " pagination is not working correctly")
                 TestResultStatus.append("Fail")
-            # ---------------------------------------------------------------------------------
+                # # ---------------------------------------------------------------------------------
+
+                # ----------------Verify working of create franchise button-----------------------------------
+                PageName = "Create franchise button"
+                Ptitle1 = "Create Franchise"
+                try:
+                    driver.find_element_by_xpath("//a[text()='Create Franchise']").click()
+                    time.sleep(2)
+                    PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Franchise']").text
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//div[@id='createfranchise']/div/div/div/button").click()
+                    time.sleep(2)
+                    assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                    TestResult.append(PageName + "  is clickable")
+                    TestResultStatus.append("Pass")
+                except Exception:
+                    TestResult.append(PageName + " is not clickable")
+                    TestResultStatus.append("Fail")
+                print()
+                time.sleep(TimeSpeed)
+                # ---------------------------------------------------------------------------------
 
             try:
                 print()
-                # ---------------------------To check we have existing test reimburse client in excel-----------------------------
+                # ---------------------------To check we have existing test franchise in excel-----------------------------
                 ReimbursePresentxl = "False"
                 xcelFileName = "ReimburseClientRefData"
                 locx2 = (path + 'ReimburseRefData/' + xcelFileName + '.xlsx')
@@ -548,6 +682,8 @@ def test_VerifyAllClickables(test_setup):
                                         time.sleep(1)
                                         driver.find_element_by_xpath(
                                             "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/input").send_keys(Data2[0])
+                                        TestResult.append("Name is entered successfully")
+                                        TestResultStatus.append("Pass")
 
                                     # -------------Status Dropdown--------------------------------------------
                                     elif i1 == 2:
@@ -555,6 +691,8 @@ def test_VerifyAllClickables(test_setup):
                                         select = Select(driver.find_element_by_xpath(
                                             "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/select"))
                                         select.select_by_visible_text("Active")
+                                        TestResult.append("Status is selected successfully")
+                                        TestResultStatus.append("Pass")
                                     # -------------Set Up Date Field--------------------------------------------
                                     elif i1 == 3:
                                         time.sleep(1)
@@ -567,6 +705,8 @@ def test_VerifyAllClickables(test_setup):
                                                 i1) + "]/div/input").send_keys(Data2[1])
                                         ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
                                         time.sleep(2)
+                                        TestResult.append("Set Up Date is entered successfully")
+                                        TestResultStatus.append("Pass")
                             # -------------Account Name Field--------------------------------------------
                             elif ii == 2:
                                 for ii1 in range(1,4):
@@ -614,10 +754,11 @@ def test_VerifyAllClickables(test_setup):
                                 driver.find_element_by_xpath(
                                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(ii) + "]/button").click()
                                 print(ii)
-                        TestResult.append("Create Reimburse Client process working is correctly")
+                        TestResult.append("Create Reimburse Client process is working correctly")
                         TestResultStatus.append("Pass")
                     except Exception:
-                       pass
+                        TestResult.append("Create Reimburse Client process is not working")
+                        TestResultStatus.append("Fail")
 
                     # --------Saving service provider details in reference sheet------------
                     sheetx2.cell(1, 1).value = Name
@@ -629,98 +770,98 @@ def test_VerifyAllClickables(test_setup):
                         "Reimburse client is already present in reference doc. Here is the details\nFirst name is: " + Namexl1)
                     TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append("Create Reimburse Client process is not working")
-                TestResultStatus.append("Fail")
+                pass
+
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify Pagination clicks-----------------------------
-            # PageName = "Service provider listing table"
-            # try:
-            #     TotalItem = driver.find_element_by_xpath("//div[@id='table_data_wrapper']/div[3]/div[1]").text
-            #     print(TotalItem)
-            #     substr = "of"
-            #     x = TotalItem.split(substr)
-            #     string_name = x[0]
-            #     TotalItemAfterOf = x[1]
-            #     abc = ""
-            #     countspace = 0
-            #     for element in range(0, len(string_name)):
-            #         if string_name[(len(string_name) - 1) - element] == " ":
-            #             countspace = countspace + 1
-            #             if countspace == 2:
-            #                 break
-            #         else:
-            #             abc = abc + string_name[(len(string_name) - 1) - element]
-            #     abc = abc[::-1]
-            #     TotalItemBeforeOf = abc
-            #     TotalItemAfterOf = TotalItemAfterOf.split(" ")
-            #     TotalItemAfterOf = TotalItemAfterOf[1]
-            #     TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-            #     print(TotalItemAfterOf)
-            #
-            #     TotalItemAfterOf = int(TotalItemAfterOf)
-            #     RecordsPerPage = 50
-            #     TotalPages = TotalItemAfterOf / RecordsPerPage
-            #     print(TotalPages)
-            #     NumberOfPages = math.ceil(float(TotalPages))
-            #     print(NumberOfPages)
-            #
-            #     for i in range(NumberOfPages):
-            #         if i < 1:
-            #             if i == NumberOfPages - 1:
-            #                 TestResult.append("No Pagination found for [ " + str(
-            #                     RecordsPerPage) + " ] no. of records under Service Provider Listing table")
-            #                 TestResultStatus.append("Pass")
-            #                 break
-            #         try:
-            #             time.sleep(TimeSpeed)
-            #             driver.find_element_by_xpath(
-            #                 "//div[@id='table_data_paginate']/a[2]").click()
-            #             time.sleep(1)
-            #             ClickCounter = ClickCounter + 1
-            #             TestResult.append("Pagination verified for [ " + str(
-            #                 TotalItemAfterOf) + " ] no. of records under Service Provider Listing table")
-            #             TestResultStatus.append("Pass")
-            #         except Exception:
-            #             pass
-            #     if i != ClickCounter:
-            #         TestResult.append(
-            #             "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
-            #         TestResultStatus.append("Fail")
-            #     driver.refresh()
-            #     try:
-            #         WebDriverWait(driver, SHORT_TIMEOUT
-            #                       ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #
-            #         WebDriverWait(driver, LONG_TIMEOUT
-            #                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #     except TimeoutException:
-            #         pass
-            # except Exception as aq:
-            #     print(aq)
-            #     TestResult.append(PageName + " pagination is not working correctly")
-            #     TestResultStatus.append("Fail")
-            #     # # ---------------------------------------------------------------------------------
-            #
-            #     # ----------------Verify working of create franchise button-----------------------------------
-            #     PageName = "Create franchise button"
-            #     Ptitle1 = "Create Franchise"
-            #     try:
-            #         driver.find_element_by_xpath("//a[text()='Create Franchise']").click()
-            #         time.sleep(2)
-            #         PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Franchise']").text
-            #         time.sleep(2)
-            #         driver.find_element_by_xpath("//div[@id='createfranchise']/div/div/div/button").click()
-            #         time.sleep(2)
-            #         assert PageTitle1 in Ptitle1, PageName + " not able to click"
-            #         TestResult.append(PageName + "  is clickable")
-            #         TestResultStatus.append("Pass")
-            #     except Exception:
-            #         TestResult.append(PageName + " is not clickable")
-            #         TestResultStatus.append("Fail")
-            #     print()
-            #     time.sleep(TimeSpeed)
-            #     # ---------------------------------------------------------------------------------
+            try:
+                print()
+                # ---------------------------To check we have existing test reimburse client in excel-----------------------------
+                FranchisePresentxl = "False"
+                xcelFileName = "FranchiseRefData"
+                locx3 = (path + 'FranchiseReferenceData/' + xcelFileName + '.xlsx')
+                wbx3 = openpyxl.load_workbook(locx3)
+                sheetx3 = wbx3.active
+
+                for i_ref in range(1, 10):
+                    if sheetx3.cell(i_ref, 1).value != None:
+                        Namexl2 = sheetx3.cell(i_ref, 1).value
+                        FranchisePresentxl = "True"
+                        break
+
+                    else:
+                        FranchisePresentxl = "False"
+                        pass
+
+                if FranchisePresentxl == "False":
+                    print("Franchise is not present in reference sheet, we need to add Franchise first in application")
+                    TestResult.append(
+                        "Franchise is not present in reference sheet, we need to add Franchise first in application")
+                    TestResultStatus.append("Pass")
+
+                    # ---------------------------Verify working of Create franchise process-----------------------------
+                    try:
+                        today = datetime.date.today()
+                        D1 = today.strftime("%d-%m-%Y")
+
+                        driver.find_element_by_xpath("//a[text()='Create Franchise']").click()
+                        time.sleep(2)
+                        for rc in range(5):
+                            letters = string.ascii_lowercase
+                            returna = ''.join(random.choice(letters) for i in range(5))
+                            Name = returna
+                        print(Name)
+                        Data3 = [Name, D1,]
+                        for i4 in range(1, 4):
+                            driver.find_element_by_xpath(
+                                "//div[@id='createfranchise']/div/div/div[2]/form/div[1]/div[" + str(i4) + "]")
+                            # -------------Name Field--------------------------------------------
+                            if i4 == 1:
+                                    driver.find_element_by_xpath(
+                                        "//div[@id='createfranchise']/div/div/div[2]/form/div[1]/div[" + str(i4) + "]/div/input").send_keys(Data3[0])
+                                    TestResult.append("Name is entered successfully")
+                                    TestResultStatus.append("Pass")
+                            # -------------Status Dropdown--------------------------------------------
+                            elif i4 == 2:
+                                time.sleep(1)
+                                select = Select(driver.find_element_by_xpath(
+                                    "//div[@id='createfranchise']/div/div/div[2]/form/div[1]/div[" + str(i4) + "]/div/select"))
+                                select.select_by_visible_text("Active")
+                                TestResult.append("Status is selected successfully")
+                                TestResultStatus.append("Pass")
+                            # -------------Set Up Date Field--------------------------------------------
+                            elif i4 == 3:
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createfranchise']/div/div/div[2]/form/div[1]/div[" + str(
+                                        i4) + "]/div/input").send_keys(Data3[1])
+                                TestResult.append("Set Up Date is entered successfully")
+                                TestResultStatus.append("Pass")
+                        time.sleep(2)
+                        driver.find_element_by_xpath("//div[@id='createfranchise']/div/div/div[2]/form/div[2]/button").click()
+                        TestResult.append("Create franchise process is working correctly")
+                        TestResultStatus.append("Pass")
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    print("Loader present")
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
+                    except Exception:
+                        TestResult.append("Create franchise process is not working")
+                        TestResultStatus.append("Fail")
+                    # --------Saving franchise details in reference sheet------------
+                    sheetx3.cell(1, 1).value = Name
+                    wbx3.save(locx3)
+                elif FranchisePresentxl == "True":
+                    print("Franchise is already present in reference doc. Here is the details")
+                    print("First name is: " + Namexl2)
+                    TestResult.append(
+                        "Franchise is already present in reference doc. Here is the details\nFirst name is: " + Namexl2)
+                    TestResultStatus.append("Pass")
+            except Exception:
+               pass
+            # ---------------------------------------------------------------------------------
 
 
 

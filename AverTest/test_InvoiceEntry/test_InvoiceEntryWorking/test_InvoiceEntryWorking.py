@@ -787,22 +787,24 @@ def test_VerifyAllClickables(test_setup):
                     time.sleep(2)
 
                     driver.find_element_by_xpath("//button[@id='submitButton']").click()
-                    TestResult.append("Create New Invoice process working is correctly")
-                    TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         print(load)
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
 
                                 time.sleep(0.5)
-                        except Exception:
-                            if load>59:
-                                TestResult.append(
-                                    "After Invoice creation process Loader on the page keeps on loading infinitely")
-                                TestResultStatus.append("Fail")
-                                driver.close()
+                        except Exception as ws:
+                            print(ws)
                             break
                         pass
+                    if load > 58:
+                        TestResult.append(
+                            "After Invoice creation process Loader on the page keeps on loading infinitely")
+                        TestResultStatus.append("Fail")
+                        driver.close()
+                    else:
+                        TestResult.append("Create New Invoice process working is correctly")
+                        TestResultStatus.append("Pass")
                 except Exception as ws:
                     print(ws)
                     TestResult.append("Create New Invoice process is not working")

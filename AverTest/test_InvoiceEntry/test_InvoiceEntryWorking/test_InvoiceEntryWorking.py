@@ -19,7 +19,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import pyperclip
 import random
-import string
+import os
 
 
 @allure.step("Entering username ")
@@ -40,13 +40,13 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_ElementsWorking"
+  TestName = "test_InvoiceEntryWorking"
   description = "This test scenario is to verify all the Working of Elements at Invoice Entry page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
   FailStatus="Pass"
-  TestDirectoryName = "test_ElementsWorking"
+  TestDirectoryName = "test_InvoiceEntryWorking"
   global Exe
   Exe="Yes"
   Directory = 'test_InvoiceEntry/'
@@ -54,6 +54,10 @@ def test_setup():
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
       path = 'D:/AVER/AverTest/' + Directory
+
+  MachineName = os.getenv('COMPUTERNAME')
+  if MachineName == "DESKTOP-JLLTS65":
+      path = path.replace('D:', 'C:')
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -74,7 +78,10 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+          if MachineName == "DESKTOP-JLLTS65":
+              driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          else:
+              driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
       driver.maximize_window()
@@ -186,7 +193,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      driver.quit()
+      #driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -194,7 +201,7 @@ def test_VerifyAllClickables(test_setup):
         TimeSpeed = 2
         SHORT_TIMEOUT = 3
         LONG_TIMEOUT = 60
-        LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             # ---------------------------Verify Invoice Entry icon click-----------------------------
             PageName = "Invoice Entry icon"
@@ -213,6 +220,13 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
+            for load in range(LONG_TIMEOUT):
+                try:
+                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                        time.sleep(0.5)
+                except Exception:
+                    break
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify working of Back button on Invoice entry page -----------------------------
@@ -220,6 +234,13 @@ def test_VerifyAllClickables(test_setup):
             Ptitle1 = "Rae"
             try:
                 driver.find_element_by_xpath("//a[text()='Back']").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 time.sleep(2)
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
                 print(PageTitle1)
@@ -250,6 +271,13 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
+            for load in range(LONG_TIMEOUT):
+                try:
+                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                        time.sleep(0.5)
+                except Exception:
+                    break
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify working of XERO CSV button-----------------------------
@@ -257,6 +285,13 @@ def test_VerifyAllClickables(test_setup):
             Ptitle1 = "Generate Invoice Report"
             try:
                 driver.find_element_by_xpath("//button[text()='XERO CSV']").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 time.sleep(2)
                 PageTitle1 = driver.find_element_by_xpath("//div[@id='xeroReport']/div/div/div[1]/h4").text
                 time.sleep(2)
@@ -277,6 +312,13 @@ def test_VerifyAllClickables(test_setup):
             Ptitle1 = "Create New Invoice"
             try:
                 driver.find_element_by_xpath("//a[text()='Create New']").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 time.sleep(2)
                 PageTitle1 = driver.find_element_by_xpath("//h2[text()='Create New Invoice']").text
                 time.sleep(2)
@@ -305,6 +347,13 @@ def test_VerifyAllClickables(test_setup):
             #     D1 = today.strftime("%d-%m-%Y")
             #
             #     driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
+            # for load in range(LONG_TIMEOUT):
+            #     try:
+            #         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #
+            #             time.sleep(0.5)
+            #     except Exception:
+            #         break
             #     time.sleep(2)
             #     for rc in range(5):
             #         letters = string.ascii_lowercase
@@ -396,7 +445,7 @@ def test_VerifyAllClickables(test_setup):
             #
             # # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify working of Create Reimburse Client button on Create new page-----------------------------
+            # # ---------------------------Verify working of Create Service Provider button on Create new page-----------------------------
             # l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
             # random.shuffle(l)
             # if l[0] == 0:
@@ -409,6 +458,13 @@ def test_VerifyAllClickables(test_setup):
             # D1 = today.strftime("%d-%m-%Y")
             #
             # driver.find_element_by_xpath("//a[@title='Create Service Provider']").click()
+            # for load in range(LONG_TIMEOUT):
+            #     try:
+            #         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #
+            #             time.sleep(0.5)
+            #     except Exception:
+            #         break
             # time.sleep(2)
             #
             # for rc in range(5):
@@ -588,6 +644,13 @@ def test_VerifyAllClickables(test_setup):
                     ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
                     time.sleep(1)
                     ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                                time.sleep(0.5)
+                        except Exception:
+                            break
                     time.sleep(1)
 
                     driver.find_element_by_xpath("//input[@name='provider_invoice_number']").send_keys(InvoiceNumber)
@@ -597,6 +660,13 @@ def test_VerifyAllClickables(test_setup):
                     ActionChains(driver).key_down(Keys.DOWN).key_up(Keys.DOWN).perform()
                     time.sleep(1)
                     ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                                time.sleep(0.5)
+                        except Exception:
+                            break
                     time.sleep(1)
 
                     try:
@@ -618,6 +688,13 @@ def test_VerifyAllClickables(test_setup):
                     driver.find_element_by_xpath("//input[@name='provider_invoice_date']").send_keys(D1)
                     time.sleep(1)
                     ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                                time.sleep(0.5)
+                        except Exception:
+                            break
                     time.sleep(1)
 
                     select = Select(driver.find_element_by_xpath("//select[@id='approvedByClientText']"))
@@ -648,15 +725,13 @@ def test_VerifyAllClickables(test_setup):
                     time.sleep(1)
                     ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
                     time.sleep(1)
-                    try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
 
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(
-                            EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
-                        pass
+                                time.sleep(0.5)
+                        except Exception:
+                            break
                     time.sleep(2)
 
                     select = Select(driver.find_element_by_xpath(
@@ -708,13 +783,28 @@ def test_VerifyAllClickables(test_setup):
                     driver.find_element_by_xpath("//input[@name='service_detail[2][qty]']").send_keys("1")
                     time.sleep(2)
 
-                    driver.find_element_by_xpath("//input[@name='service_detail[2][price]']").send_keys(InvoiceRate)
+                    driver.find_element_by_xpath("//input[@name='service_detail[2][price]']").send_keys(str(InvoiceRate))
                     time.sleep(2)
 
                     driver.find_element_by_xpath("//button[@id='submitButton']").click()
                     TestResult.append("Create New Invoice process working is correctly")
                     TestResultStatus.append("Pass")
-                except Exception:
+                    for load in range(LONG_TIMEOUT):
+                        print(load)
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+
+                                time.sleep(0.5)
+                        except Exception:
+                            if load>59:
+                                TestResult.append(
+                                    "After Invoice creation process Loader on the page keeps on loading infinitely")
+                                TestResultStatus.append("Fail")
+                                driver.close()
+                            break
+                        pass
+                except Exception as ws:
+                    print(ws)
                     TestResult.append("Create New Invoice process is not working")
                     TestResultStatus.append("Fail")
                 print()

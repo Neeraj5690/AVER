@@ -217,62 +217,62 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify working of Back button on Service provider listing page -----------------------------
-            # PageName = "Back button"
-            # Ptitle1 = "Rae"
-            # try:
-            #     driver.find_element_by_xpath("//a[text()='Back']").click()
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ----------------Verify Service provider icon click after verifying back--------
-            # PageName = "Service provider icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/a").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
-            #     time.sleep(2)
-            #     TestResult.append(PageName + "  is opened again after verifying back button")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not opened again after verifying back button")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ----------------Verify working of import button-----------------------------------
-            # PageName = "Import button"
-            # Ptitle1 = "Import Service Provider"
-            # try:
-            #     driver.find_element_by_xpath("//a[text()='Import']").click()
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//h4[text()='Import Service Provider']").text
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//a[@class='sbmt_btn close-from']").click()
-            #     time.sleep(2)
-            #     assert PageTitle1 in Ptitle1, PageName + " not able to click"
-            #     TestResult.append(PageName + "  is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
+            # ---------------------------Verify working of Back button on Service provider listing page -----------------------------
+            PageName = "Back button"
+            Ptitle1 = "Rae"
+            try:
+                driver.find_element_by_xpath("//a[text()='Back']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ----------------Verify Service provider icon click after verifying back--------
+            PageName = "Service provider icon"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
+                time.sleep(2)
+                TestResult.append(PageName + "  is opened again after verifying back button")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not opened again after verifying back button")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ----------------Verify working of import button-----------------------------------
+            PageName = "Import button"
+            Ptitle1 = "Import Service Provider"
+            try:
+                driver.find_element_by_xpath("//a[text()='Import']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Import Service Provider']").text
+                time.sleep(2)
+                driver.find_element_by_xpath("//a[@class='sbmt_btn close-from']").click()
+                time.sleep(2)
+                assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                TestResult.append(PageName + "  is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
 
 
             try:
@@ -492,26 +492,26 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append("Create new service provider process is not working correctly")
                 TestResultStatus.append("Fail")
 
-            # # ----------------Verify working of create reimburse button-----------------------------------
-            # PageName = "Create reimburse button"
-            # Ptitle1 = "Create Reimburse Client"
-            # try:
-            #     driver.find_element_by_xpath("//a[text()='Create Reimburse']").click()
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Reimburse Client']").text
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[5]/a").click()
-            #     time.sleep(2)
-            #     assert PageTitle1 in Ptitle1, PageName + " not able to click"
-            #     TestResult.append(PageName + "  is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-            #
+            # ----------------Verify working of create reimburse button-----------------------------------
+            PageName = "Create reimburse button"
+            Ptitle1 = "Create Reimburse Client"
+            try:
+                driver.find_element_by_xpath("//a[text()='Create Reimburse']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Reimburse Client']").text
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[5]/a").click()
+                time.sleep(2)
+                assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                TestResult.append(PageName + "  is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
             # # ---------------------------Verify Pagination clicks-----------------------------
             # PageName = "Service provider listing table"
             # try:

@@ -17,7 +17,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import pyperclip
+import os
 import random
 import string
 
@@ -46,14 +46,22 @@ def test_setup():
   TestResultStatus = []
   TestFailStatus = []
   FailStatus="Pass"
-  TestDirectoryName = "test_CreateClient"
+  TestDirectoryName = "test_CreateClientWorking"
   global Exe
   Exe="Yes"
-  Directory = 'test_InvoiceEntry/'
+  Directory = 'test_ClientListing/'
+
+
+
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
       path = 'D:/AVER/AverTest/' + Directory
+
+  MachineName = os.getenv('COMPUTERNAME')
+  print(MachineName)
+  if MachineName=="DESKTOP-JLLTS65":
+      path=path.replace('D:', 'C:')
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -74,7 +82,10 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+          if MachineName == "DESKTOP-JLLTS65":
+              driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          else:
+            driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
       driver.maximize_window()
@@ -202,7 +213,14 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------To check we have existing test client in excel-----------------------------
             ClientPresentxl = "False"
             xcelFileName = "RefData"
-            locx1 = (path + 'ReferenceData/' + xcelFileName + '.xlsx')
+
+            InvoicePath=path
+            InvoicePath = os.path.abspath(os.path.join(InvoicePath, '..'))
+            InvoicePath = InvoicePath.replace('\\', '/')
+            InvoicePath = InvoicePath + "/test_InvoiceEntry/"
+            print(InvoicePath)
+
+            locx1 = (InvoicePath + 'ReferenceData/' + xcelFileName + '.xlsx')
             wbx1 = openpyxl.load_workbook(locx1)
             sheetx1 = wbx1.active
 
@@ -544,7 +562,7 @@ def test_VerifyAllClickables(test_setup):
                     TestResultStatus.append("Pass")
                 except Exception:
                     TestResult.append("Create Client process is not working")
-                TestResultStatus.append("Fail")
+                    TestResultStatus.append("Fail")
                 # --------Saving client details in reference sheet------------
                 sheetx1.cell(1, 1).value = FName
                 sheetx1.cell(1, 2).value = LName

@@ -491,25 +491,146 @@ def test_VerifyAllClickables(test_setup):
             except Exception:
                 TestResult.append("Create new service provider process is not working correctly")
                 TestResultStatus.append("Fail")
+            # ---------------------------------------------------------------------------------
 
-            # ----------------Verify working of create reimburse button-----------------------------------
-            PageName = "Create reimburse button"
-            Ptitle1 = "Create Reimburse Client"
             try:
-                driver.find_element_by_xpath("//a[text()='Create Reimburse']").click()
-                time.sleep(2)
-                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Reimburse Client']").text
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[5]/a").click()
-                time.sleep(2)
-                assert PageTitle1 in Ptitle1, PageName + " not able to click"
-                TestResult.append(PageName + "  is clickable")
-                TestResultStatus.append("Pass")
+                print()
+                # ---------------------------To check we have existing test reimburse client in excel-----------------------------
+                ReimbursePresentxl = "False"
+                xcelFileName = "ReimburseClientRefData"
+                locx2 = (path + 'ReimburseRefData/' + xcelFileName + '.xlsx')
+                wbx2 = openpyxl.load_workbook(locx2)
+                sheetx2 = wbx2.active
+
+                for i_ref in range(1, 10):
+                    if sheetx2.cell(i_ref, 1).value != None:
+                        Namexl1 = sheetx2.cell(i_ref, 1).value
+                        ReimbursePresentxl = "True"
+                        break
+
+                    else:
+                        ReimbursePresentxl = "False"
+                        pass
+
+                if ReimbursePresentxl == "False":
+                    print("Reimburse client is not present in reference sheet, we need to add reimburse client first in application")
+                    TestResult.append(
+                        "Reimburse client is not present in reference sheet, we need to add reimburse client first in application")
+                    TestResultStatus.append("Pass")
+
+                    # ---------------------------Verify working of Create reimburse client process-----------------------------
+                    try:
+                        l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        random.shuffle(l)
+                        if l[0] == 0:
+                            pos = random.choice(range(1, len(l)))
+                            l[0], l[pos] = l[pos], l[0]
+                        Number = ''.join(map(str, l[0:6]))
+                        print(Number)
+                        today = datetime.date.today()
+                        D1 = today.strftime("%d-%m-%Y")
+
+                        driver.find_element_by_xpath("//a[@title='Create Reimburse Client']").click()
+                        time.sleep(2)
+                        for rc in range(5):
+                            letters = string.ascii_lowercase
+                            returna = ''.join(random.choice(letters) for i in range(5))
+                            Name = returna
+                        print(Name)
+                        Data2 = [Name, D1, Number,"@test.com"]
+                        for ii in range(1, 6):
+                            driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]")
+                            if ii==1:
+                                for i1 in range(1,4):
+                                    driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div")
+                                    # -------------Name Field--------------------------------------------
+                                    if i1 == 1:
+                                        time.sleep(1)
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/input").send_keys(Data2[0])
+
+                                    # -------------Status Dropdown--------------------------------------------
+                                    elif i1 == 2:
+                                        time.sleep(1)
+                                        select = Select(driver.find_element_by_xpath(
+                                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div["+str(i1)+"]/div/select"))
+                                        select.select_by_visible_text("Active")
+                                    # -------------Set Up Date Field--------------------------------------------
+                                    elif i1 == 3:
+                                        time.sleep(1)
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
+                                                i1) + "]/div/input").clear()
+                                        time.sleep(1)
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[1]/div[" + str(
+                                                i1) + "]/div/input").send_keys(Data2[1])
+                                        ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                                        time.sleep(2)
+                            # -------------Account Name Field--------------------------------------------
+                            elif ii == 2:
+                                for ii1 in range(1,4):
+                                    if ii1 ==1:
+                                        time.sleep(1)
+                                        driver.find_element_by_xpath("//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div["+str(ii1)+"]/div/input").send_keys(
+                                            Data2[0])
+                                    # -------------Account BSB Field--------------------------------------------
+                                    elif ii1==2:
+                                        time.sleep(1)
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
+                                                ii1) + "]/div/input").send_keys(
+                                            Data2[2])
+                                    # -------------Account Number Field--------------------------------------------
+                                    elif ii1 == 3:
+                                        time.sleep(1)
+                                        driver.find_element_by_xpath(
+                                            "//div[@id='createnewsplatest']/div/div/div[2]/form/div[2]/div[" + str(
+                                                ii1) + "]/div/input").send_keys(
+                                            Data2[2])
+                            # -------------Send Remittance Email Check Box--------------------------------------------
+                            elif ii == 3:
+                                print(ii)
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                                        ii) + "]/div/div/label/input").click()
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(
+                                        ii) + "]/div/div/label/input").click()
+                                print(ii)
+                            # -------------Remittance Email Address(s)--------------------------------------------
+                            elif ii == 4:
+                                print(ii)
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div["+str(ii)+"]/div/input").send_keys(Data2[0] + Data2[3])
+                                print(ii)
+                            # -------------Save Button--------------------------------------------
+                            elif ii == 5:
+                                print(ii)
+                                time.sleep(1)
+                                driver.find_element_by_xpath(
+                                    "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(ii) + "]/button").click()
+                                print(ii)
+                        TestResult.append("Create Reimburse Client process working is correctly")
+                        TestResultStatus.append("Pass")
+                    except Exception:
+                       pass
+
+                    # --------Saving service provider details in reference sheet------------
+                    sheetx2.cell(1, 1).value = Name
+                    wbx2.save(locx2)
+                elif ReimbursePresentxl == "True":
+                    print("Reimburse client is already present in reference doc. Here is the details")
+                    print("First name is: " + Namexl1)
+                    TestResult.append(
+                        "Reimburse client is already present in reference doc. Here is the details\nFirst name is: " + Namexl1)
+                    TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not clickable")
+                TestResult.append("Create Reimburse Client process is not working")
                 TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # # ---------------------------Verify Pagination clicks-----------------------------

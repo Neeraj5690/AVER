@@ -2,9 +2,8 @@ import datetime
 import math
 import random
 import re
-import string
+import os
 import time
-from telnetlib import EC
 
 import openpyxl
 from fpdf import FPDF
@@ -14,7 +13,7 @@ import allure
 from sys import platform
 
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
@@ -56,6 +55,10 @@ def test_setup():
     elif platform == "win32" or platform == "win64":
         path = 'D:/AVER/AverTest/' + Directory
 
+    MachineName = os.getenv('COMPUTERNAME')
+    if MachineName == "DESKTOP-JLLTS65":
+        path = path.replace('D:', 'C:')
+
     ExcelFileName = "Execution"
     locx = (path + 'Executiondir/' + ExcelFileName + '.xlsx')
     wbx = openpyxl.load_workbook(locx)
@@ -76,7 +79,11 @@ def test_setup():
             driver = webdriver.Chrome(
                 executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
         elif platform == "win32" or platform == "win64":
-            driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+            if MachineName == "DESKTOP-JLLTS65":
+                driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+            else:
+                driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+
         driver.implicitly_wait(10)
         driver.maximize_window()
         driver.get("https://averreplica.1wayit.com/login")
@@ -204,8 +211,6 @@ def test_VerifyAllClickables(test_setup):
         try:
 
             # ---------------------------Verify Service provider listing icon click-----------------------------
-            PageName = "Service provider listing icon"
-            Ptitle1 = ""
             try:
                 print()
                 # ---------------------------Service provider listing icon click-----------------------------
@@ -256,19 +261,19 @@ def test_VerifyAllClickables(test_setup):
                         TestResult.append("Service provider is not present in reference sheet, we need to run create service provider job")
                         TestResultStatus.append("Pass")
                     elif SpPresentxl == "True":
-                        print("Inside True sp present")
+                        #print("Inside True sp present")
                         for sp1 in range(3):
                             SpTableData = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr/td[2]/a")
                             LengthOfSpData = len(SpTableData)
                             print(LengthOfSpData)
                             for sp in range(1,LengthOfSpData+1):
-                                print(sp)
+                                #print(sp)
                                 SpName = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(sp)+"]/td[2]/a").text
-                                print(SpName)
+                                # print(SpName)
                                 try:
                                     if Namexl == SpName:
-                                        print(Namexl)
-                                        print(SpName)
+                                        # print(Namexl)
+                                        # print(SpName)
                                         try:
                                             text1=driver.find_element_by_xpath(
                                                         "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[2]/a").text
@@ -312,11 +317,11 @@ def test_VerifyAllClickables(test_setup):
                                         SpDict["Name"]=text1
                                         SpDict["Service Type"] = text2
                                         SpDict["Franchise"] = text3
-                                        SpDict["ABN"] = text4
+                                        SpDict["Abn"] = text4
                                         SpDict["Account Name"] = text5
-                                        SpDict["BSB"] = text6
+                                        SpDict["Bsb"] = text6
                                         SpDict["Account Number"] = text7
-                                        print(SpDict)
+                                        #print(SpDict)
 
                                         button = driver.find_element_by_xpath(
                                             "//a[text()='"+SpName+"']")
@@ -330,14 +335,46 @@ def test_VerifyAllClickables(test_setup):
                                             except Exception:
                                                 break
 
-                                        SpValues = driver.find_elements_by_xpath(
-                                            "//form[@class='frm_viw_data']/div/div/span")
-                                        SpValues = len(SpValues)
-                                        print(SpValues)
-                                        for SpVal in range(1, SpValues + 1):
-                                            print(SpVal)
-                                            SpText = driver.find_element_by_xpath("//form[@class='frm_viw_data']/div[" + str(SpVal) + "]/div/span").text
-                                        print(SpText)
+                                        Name = driver.find_element_by_xpath("//form[@class='frm_viw_data']/div[1]/div/span").text
+                                        print(Name)
+                                        print(SpDict["Name"])
+                                        print()
+                                        if Name != SpDict["Name"]:
+                                            print("Name does not match")
+                                        elif Name == SpDict["Name"]:
+                                            print("Name matched")
+
+
+                                        # Franchise = driver.find_element_by_xpath(
+                                        #     "//form[@class='frm_viw_data']/div[9]/div/span").text
+                                        # print(Franchise)
+                                        # print(SpDict["Franchise"])
+                                        # print()
+
+                                        Abn = driver.find_element_by_xpath(
+                                            "//form[@class='frm_viw_data']/div[3]/div/span").text
+                                        print(Abn)
+                                        print(SpDict["Abn"])
+                                        print()
+
+                                        AccountName = driver.find_element_by_xpath(
+                                            "//form[@class='frm_viw_data']/div[5]/div/span").text
+                                        print(AccountName)
+                                        print(SpDict["Account Name"])
+                                        print()
+
+                                        Bsb = driver.find_element_by_xpath(
+                                            "//form[@class='frm_viw_data']/div[4]/div/span").text
+                                        print(Bsb)
+                                        print(SpDict["Bsb"])
+                                        print()
+
+                                        AccountNumber = driver.find_element_by_xpath(
+                                            "//form[@class='frm_viw_data']/div[6]/div/span").text
+                                        print(AccountNumber)
+                                        print(SpDict["Account Number"])
+                                        print()
+
                                         break
                                 except Exception as q:
                                     print(q)

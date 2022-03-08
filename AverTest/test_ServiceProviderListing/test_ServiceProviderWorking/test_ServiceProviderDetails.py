@@ -187,7 +187,7 @@ def test_setup():
                         checkcount1 = 1
         # -----------------------------------------------------------------------------
 
-        driver.quit()
+        #driver.quit()
 
 
 @pytest.mark.smoke
@@ -199,6 +199,8 @@ def test_VerifyAllClickables(test_setup):
         LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         UName = "admin@averplanning.com"
         PName = "admin786"
+        SpDict = {}
+        SpDetailsDict = {}
         try:
 
             # ---------------------------Verify Service provider listing icon click-----------------------------
@@ -255,24 +257,93 @@ def test_VerifyAllClickables(test_setup):
                         TestResultStatus.append("Pass")
                     elif SpPresentxl == "True":
                         print("Inside True sp present")
-                        SpTableData = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr/td[2]/a")
-                        LengthOfSpData = len(SpTableData)
-                        print(LengthOfSpData)
-                        for sp in range(1,LengthOfSpData+1):
-                            SpName = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(sp)+"]/td[2]/a").text
-                            print(SpName)
-                            if Namexl == SpName:
-                                driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[2]/a").click()
-                                print("Sp name is clicked")
-                            elif Namexl != SpName and LengthOfSpData == 50:
+                        for sp1 in range(3):
+                            SpTableData = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr/td[2]/a")
+                            LengthOfSpData = len(SpTableData)
+                            print(LengthOfSpData)
+                            for sp in range(1,LengthOfSpData+1):
+                                print(sp)
+                                SpName = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(sp)+"]/td[2]/a").text
+                                print(SpName)
                                 try:
-                                    driver.find_element_by_xpath("//div[@id='table_data_paginate']/a[2]").click()
-                                    time.sleep(2)
-                                    actions = ActionChains(driver)
-                                    actions.move_to_element(Namexl).perform()
-                                except Exception:
-                                    pass
+                                    if Namexl == SpName:
+                                        print(Namexl)
+                                        print(SpName)
+                                        try:
+                                            text1=driver.find_element_by_xpath(
+                                                        "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[2]/a").text
+                                        except Exception:
+                                            text1 = "Blank"
 
+                                        try:
+                                            text2 = driver.find_element_by_xpath(
+                                                "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[3]").text
+                                        except Exception:
+                                            text2 = "Blank"
+
+                                        try:
+                                            text3 = driver.find_element_by_xpath(
+                                                "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[4]").text
+                                        except Exception:
+                                            text3 = "Blank"
+
+                                        try:
+                                            text4 = driver.find_element_by_xpath(
+                                                "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[5]").text
+                                        except Exception:
+                                            text4 = "Blank"
+                                        try:
+                                            text5 = driver.find_element_by_xpath(
+                                                "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[6]").text
+                                        except Exception:
+                                            text5 = "Blank"
+                                        try:
+                                            text6 = driver.find_element_by_xpath(
+                                                "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[7]").text
+                                        except Exception:
+                                            text6 = "Blank"
+
+                                        try:
+                                            text7 = driver.find_element_by_xpath(
+                                                "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[8]").text
+                                        except Exception:
+                                            text7 = "Blank"
+
+                                        SpDict["Name"]=text1
+                                        SpDict["Service Type"] = text2
+                                        SpDict["Franchise"] = text3
+                                        SpDict["ABN"] = text4
+                                        SpDict["Account Name"] = text5
+                                        SpDict["BSB"] = text6
+                                        SpDict["Account Number"] = text7
+                                        print(SpDict)
+
+                                        button = driver.find_element_by_xpath(
+                                            "//a[text()='"+SpName+"']")
+                                        driver.execute_script("arguments[0].click();", button)
+                                        print("Sp name is clicked")
+                                        for load in range(LONG_TIMEOUT):
+                                            try:
+                                                if driver.find_element_by_xpath(
+                                                        LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                                    time.sleep(0.5)
+                                            except Exception:
+                                                break
+
+                                        SpValues = driver.find_elements_by_xpath(
+                                            "//form[@class='frm_viw_data']/div/div/span")
+                                        SpValues = len(SpValues)
+                                        print(SpValues)
+                                        for SpVal in range(1, SpValues + 1):
+                                            print(SpVal)
+                                            SpText = driver.find_element_by_xpath("//form[@class='frm_viw_data']/div[" + str(SpVal) + "]/div/span").text
+                                        print(SpText)
+                                        break
+                                except Exception as q:
+                                    print(q)
+
+                            driver.find_element_by_xpath("//div[@id='table_data_paginate']/a[2]").click()
+                            time.sleep(2)
 
                         TestResult.append("Service provider is already present in reference doc. Here is the details\nName is: " + Namexl)
                         TestResultStatus.append("Pass")

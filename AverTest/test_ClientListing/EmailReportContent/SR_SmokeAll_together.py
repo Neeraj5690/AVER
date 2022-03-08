@@ -82,8 +82,8 @@ def test_ReportSendSmokeAll():
     #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
     #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
-    SenderEmail = "teamqa59@gmail.com"
-    RandmStr = "Gagan@0309"
+    SenderEmail = "Raeautomationbig@gmail.com"
+    RandmStr = "Raeautomationbig@786"
     msg = MIMEMultipart()
     msg['Subject']='[Test Suite 4 (Client Listing)]-Test Automation Report-Env [Test] '
     msg['From'] = email_from

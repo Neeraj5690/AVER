@@ -132,7 +132,7 @@ def test_ReportSendSmokeAll():
     for io1 in range(len(AttachmntAdded)):
         if AttachmntAdded[io1] == "Yes":
             print("Inside AttachmntAdded=Yes ")
-            server.sendemail(email_from, email_to, email_string)
+            server.sendmail(email_from, email_to, email_string)
             print("Test Report sent")
             break
     #-----------------------------------------------------------------------

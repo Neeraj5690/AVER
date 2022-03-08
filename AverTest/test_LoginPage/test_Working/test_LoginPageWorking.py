@@ -213,6 +213,12 @@ def test_VerifyAllClickables(test_setup):
             PageName = "Sign In Button"
             try:
                 driver.find_element_by_xpath("//div[@class='card-body']/div[4]/button").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 TestResult.append(PageName + " clicked successfully")
                 TestResultStatus.append("Pass")
             except Exception:

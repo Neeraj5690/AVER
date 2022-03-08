@@ -41,7 +41,7 @@ def test_setup():
   TestResultStatus = []
   TestFailStatus = []
   FailStatus="Pass"
-  TestDirectoryName = "test_ElementsPresent"
+  TestDirectoryName = "test_ServiceProviderElements"
   global Exe
   Exe="Yes"
   Directory = 'test_ServiceProviderListing/'

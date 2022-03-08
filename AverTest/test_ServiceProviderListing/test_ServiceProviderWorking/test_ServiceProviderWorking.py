@@ -40,7 +40,7 @@ def test_setup():
   global ClickCounter
 
   TestName = "test_ServiceProviderWorking"
-  description = "This test scenario is to verify working of Login Process"
+  description = "This test scenario is to verify working of service provider page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -184,7 +184,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      #driver.quit()
+      driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -210,7 +210,6 @@ def test_VerifyAllClickables(test_setup):
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
-                            print("Loader present")
                             time.sleep(0.5)
                     except Exception:
                         break
@@ -235,7 +234,6 @@ def test_VerifyAllClickables(test_setup):
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
-                            print("Loader present")
                             time.sleep(0.5)
                     except Exception:
                         break
@@ -264,7 +262,6 @@ def test_VerifyAllClickables(test_setup):
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            print("Loader present")
                             time.sleep(0.5)
                     except Exception:
                         break
@@ -290,7 +287,6 @@ def test_VerifyAllClickables(test_setup):
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            print("Loader present")
                             time.sleep(0.5)
                     except Exception:
                         break
@@ -513,7 +509,6 @@ def test_VerifyAllClickables(test_setup):
                                 for load in range(LONG_TIMEOUT):
                                     try:
                                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                                            print("Loader present")
                                             time.sleep(0.5)
                                     except Exception:
                                         break
@@ -529,16 +524,16 @@ def test_VerifyAllClickables(test_setup):
                     wbx1.save(locx1)
                 elif SpPresentxl == "True":
                     print("Service provider is already present in reference doc. Here is the details")
-                    print("First name is: " + Namexl)
+                    print("Name is: " + Namexl)
                     TestResult.append(
-                        "Service provider is already present in reference doc. Here is the details\nFirst name is: " + Namexl)
+                        "Service provider is already present in reference doc. Here is the details\nName is: " + Namexl)
                     TestResultStatus.append("Pass")
 
             except Exception:
                 pass
             #---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Pagination clicks-----------------------------
+            # ---------------------------Verify Pagination clicks for service provider table-----------------------------
             PageName = "Service provider listing table"
             try:
                 TotalItem = driver.find_element_by_xpath("//div[@id='table_data_wrapper']/div[3]/div[1]").text
@@ -593,14 +588,12 @@ def test_VerifyAllClickables(test_setup):
                         "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
                     TestResultStatus.append("Fail")
                 driver.refresh()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
             except Exception as aq:
                 print(aq)
                 TestResult.append(PageName + " pagination is not working correctly")
@@ -765,14 +758,16 @@ def test_VerifyAllClickables(test_setup):
                     wbx2.save(locx2)
                 elif ReimbursePresentxl == "True":
                     print("Reimburse client is already present in reference doc. Here is the details")
-                    print("First name is: " + Namexl1)
+                    print("Name is: " + Namexl1)
                     TestResult.append(
-                        "Reimburse client is already present in reference doc. Here is the details\nFirst name is: " + Namexl1)
+                        "Reimburse client is already present in reference doc. Here is the details\nName is: " + Namexl1)
                     TestResultStatus.append("Pass")
             except Exception:
                 pass
 
-            # ---------------------------------------------------------------------------------
+            # ----------------------------------------------------------------------------------------------
+
+            # ------------------------------------------------------------------------------------------------
 
             try:
                 print()
@@ -843,7 +838,6 @@ def test_VerifyAllClickables(test_setup):
                         for load in range(LONG_TIMEOUT):
                             try:
                                 if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                                    print("Loader present")
                                     time.sleep(0.5)
                             except Exception:
                                 break
@@ -855,14 +849,13 @@ def test_VerifyAllClickables(test_setup):
                     wbx3.save(locx3)
                 elif FranchisePresentxl == "True":
                     print("Franchise is already present in reference doc. Here is the details")
-                    print("First name is: " + Namexl2)
+                    print("Name is: " + Namexl2)
                     TestResult.append(
-                        "Franchise is already present in reference doc. Here is the details\nFirst name is: " + Namexl2)
+                        "Franchise is already present in reference doc. Here is the details\nName is: " + Namexl2)
                     TestResultStatus.append("Pass")
             except Exception:
                pass
             # ---------------------------------------------------------------------------------
-
 
 
         except Exception:

@@ -88,7 +88,10 @@ def test_setup():
   yield
   if Exe == "Yes":
       ct = datetime.datetime.now().strftime("%d_%B_%Y_%I_%M%p")
-      ctReportHeader = datetime.datetime.now().strftime("%d %B %Y %I %M%p")
+      time_change = datetime.timedelta(hours=5)
+      new_time = datetime.datetime.now() + time_change
+      ctReportHeader = new_time.strftime("%d %B %Y %I %M%p")
+      ct1 = new_time.strftime("%d_%B_%Y_%I_%M%p")
 
       class PDF(FPDF):
           def header(self):
@@ -125,7 +128,7 @@ def test_setup():
          TestName1 = TestResult[i1].encode('latin-1', 'ignore').decode('latin-1')
          pdf.multi_cell(0, 7,str(i1+1)+")  "+TestName1, 0, 1,fill=True)
          TestFailStatus.append("Pass")
-      pdf.output(TestName+"_" + ct + ".pdf", 'F')
+      pdf.output(TestName+"_" + ct1 + ".pdf", 'F')
 
       #-----------To check if any failed Test case present-------------------
       for io in range(len(TestResult)):
@@ -201,6 +204,12 @@ def test_VerifyAllClickables(test_setup):
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
                 time.sleep(2)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
             except Exception:
@@ -210,22 +219,22 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify Page title-----------------------------
-            # PageName = "Page title"
-            # Ptitle1 = "Client Listing"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//h2[text()='Client Listing']").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " (Client Listing) is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " (Client Listing) is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
-            #
+            # ---------------------------Verify Page title-----------------------------
+            PageName = "Page title"
+            Ptitle1 = "Client Listing"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//h2[text()='Client Listing']").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " (Client Listing) is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " (Client Listing) is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
             # ---------------------------Verify Presence of Total active participants tab -------------------------------------
             PageName = "Total active participants tab"
             Ptitle1 = "Total active participants "
@@ -266,103 +275,101 @@ def test_VerifyAllClickables(test_setup):
             print()
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify Presence of Back button -------------------------------------
-            # PageName = "Back button"
-            # Ptitle1 = "Back"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//a[text()='Back']").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ---------------------------Verify Presence of Create New Client button-------------------------------------
-            # PageName = "Create New Client button"
-            # Ptitle1 = "Create New Client"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//a[text()='Create New Client']").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ---------------------------Verify Presence of Import button-------------------------------------
-            # PageName = "Import button"
-            # Ptitle1 = "Import"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//a[text()='Import']").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ---------------------------Verify Presence of Download to CSV button-------------------------------------
-            # PageName = "Download to CSV button"
-            # Ptitle1 = "Download to CSV"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//a[text()='Download to CSV']").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ---------------------------Verify Presence of Create Report button-------------------------------------
-            # PageName = "Create Report button"
-            # Ptitle1 = "Create Report"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//a[text()='Create Report']").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ---------------------------Verify Presence of Filter Search for client table-------------------------------------
-            # PageName = "Filter Search for client table"
-            # Ptitle1 = "Create Report"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//div[@class='TableDataSearch form-group']/input").click()
-            #     print(PageTitle1)
-            #     PageTitle1 = driver.find_element_by_xpath(
-            #         "//div[@class='TableDataSearch form-group']/input").send_keys("Test search")
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is present and user is able to send inputs")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # # ---------------------------------------------------------------------------------
+            # ---------------------------Verify Presence of Back button -------------------------------------
+            PageName = "Back button"
+            Ptitle1 = "Back"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//a[text()='Back']").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Presence of Create New Client button-------------------------------------
+            PageName = "Create New Client button"
+            Ptitle1 = "Create New Client"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//a[text()='Create New Client']").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Presence of Import button-------------------------------------
+            PageName = "Import button"
+            Ptitle1 = "Import"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//a[text()='Import']").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Presence of Download to CSV button-------------------------------------
+            PageName = "Download to CSV button"
+            Ptitle1 = "Download to CSV"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//a[text()='Download to CSV']").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Presence of Create Report button-------------------------------------
+            PageName = "Create Report button"
+            Ptitle1 = "Create Report"
+            try:
+                PageTitle1 = driver.find_element_by_xpath(
+                    "//a[text()='Create Report']").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify Presence of search filter for client table-------------------------------------
+            PageName = "Search filter for client table"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath(
+                    "//input[@id='searchFilter']").clear()
+                driver.find_element_by_xpath(
+                    "//input[@id='searchFilter']").send_keys("Test search")
+                TestResult.append(PageName + " is present and user is able to send inputs")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            # ---------------------------------------------------------------------------------
 
 
 

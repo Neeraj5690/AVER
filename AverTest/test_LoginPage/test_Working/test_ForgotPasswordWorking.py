@@ -185,6 +185,12 @@ def test_VerifyAllClickables(test_setup):
         try:
             try:
                driver.find_element_by_xpath("//div[@class='card-body']/div[5]/a").click()
+               for load in range(LONG_TIMEOUT):
+                   try:
+                       if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                           time.sleep(0.5)
+                   except Exception:
+                       break
                TestResult.append("Forgot Password link text clicked")
                TestResultStatus.append("Pass")
             except Exception:
@@ -209,6 +215,12 @@ def test_VerifyAllClickables(test_setup):
             PageName = "Submit Button"
             try:
                 driver.find_element_by_xpath("//div[@class='card-body']/div[3]/button").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 TestResult.append(PageName + " clicked successfully")
                 TestResultStatus.append("Pass")
             except Exception:

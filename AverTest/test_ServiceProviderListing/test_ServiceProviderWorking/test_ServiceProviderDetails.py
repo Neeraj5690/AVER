@@ -207,7 +207,6 @@ def test_VerifyAllClickables(test_setup):
         UName = "admin@averplanning.com"
         PName = "admin786"
         SpDict = {}
-        SpDetailsDict = {}
         try:
 
             # ---------------------------Verify Service provider listing icon click-----------------------------
@@ -257,23 +256,21 @@ def test_VerifyAllClickables(test_setup):
                             pass
 
                     if SpPresentxl == "False":
-                        print("Inside False sp present")
                         TestResult.append("Service provider is not present in reference sheet, we need to run create service provider job")
                         TestResultStatus.append("Pass")
                     elif SpPresentxl == "True":
-                        #print("Inside True sp present")
+                        TestResult.append(
+                            "Service provider is present in reference sheet, searching it in service provider listing table in application")
+                        TestResultStatus.append("Pass")
                         for sp1 in range(3):
                             SpTableData = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr/td[2]/a")
                             LengthOfSpData = len(SpTableData)
                             print(LengthOfSpData)
                             for sp in range(1,LengthOfSpData+1):
-                                #print(sp)
                                 SpName = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(sp)+"]/td[2]/a").text
-                                # print(SpName)
                                 try:
                                     if Namexl == SpName:
-                                        # print(Namexl)
-                                        # print(SpName)
+
                                         try:
                                             text1=driver.find_element_by_xpath(
                                                         "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[2]/a").text
@@ -313,6 +310,9 @@ def test_VerifyAllClickables(test_setup):
                                                 "//table[@id='table_data']/tbody/tr[" + str(sp) + "]/td[8]").text
                                         except Exception:
                                             text7 = "Blank"
+                                        TestResult.append(
+                                            "Service provider is present in table in application. Here is the details\nName : "+text1+", Service Type : "+text2+", Abn : "+text4+", Account Name : "+text5+", Bsb : "+text6+", Account Number : "+text7)
+                                        TestResultStatus.append("Pass")
 
                                         SpDict["Name"]=text1
                                         SpDict["Service Type"] = text2
@@ -321,12 +321,10 @@ def test_VerifyAllClickables(test_setup):
                                         SpDict["Account Name"] = text5
                                         SpDict["Bsb"] = text6
                                         SpDict["Account Number"] = text7
-                                        #print(SpDict)
 
                                         button = driver.find_element_by_xpath(
                                             "//a[text()='"+SpName+"']")
                                         driver.execute_script("arguments[0].click();", button)
-                                        print("Sp name is clicked")
                                         for load in range(LONG_TIMEOUT):
                                             try:
                                                 if driver.find_element_by_xpath(
@@ -335,44 +333,82 @@ def test_VerifyAllClickables(test_setup):
                                             except Exception:
                                                 break
 
+                                        TestResult.append("Verifying below details of service provider")
+                                        TestResultStatus.append("Pass")
+                                        #-------Verifying Service provider name---------
                                         Name = driver.find_element_by_xpath("//form[@class='frm_viw_data']/div[1]/div/span").text
                                         print(Name)
                                         print(SpDict["Name"])
-                                        print()
                                         if Name != SpDict["Name"]:
                                             print("Name does not match")
+                                            TestResult.append("Name does not match")
+                                            TestResultStatus.append("Fail")
                                         elif Name == SpDict["Name"]:
                                             print("Name matched")
+                                            TestResult.append("Name matched")
+                                            TestResultStatus.append("Pass")
+                                        print()
 
-
-                                        # Franchise = driver.find_element_by_xpath(
-                                        #     "//form[@class='frm_viw_data']/div[9]/div/span").text
-                                        # print(Franchise)
-                                        # print(SpDict["Franchise"])
-                                        # print()
-
+                                        # -------Verifying Service provider Abn---------
                                         Abn = driver.find_element_by_xpath(
                                             "//form[@class='frm_viw_data']/div[3]/div/span").text
                                         print(Abn)
                                         print(SpDict["Abn"])
+                                        if Abn != SpDict["Abn"]:
+                                            print("Abn does not match")
+                                            TestResult.append("Abn does not match")
+                                            TestResultStatus.append("Fail")
+                                        elif Abn == SpDict["Abn"]:
+                                            print("Abn matched")
+                                            TestResult.append("Abn matched")
+                                            TestResultStatus.append("Pass")
                                         print()
 
+                                        # -------Verifying Service provider AccountName---------
                                         AccountName = driver.find_element_by_xpath(
                                             "//form[@class='frm_viw_data']/div[5]/div/span").text
                                         print(AccountName)
                                         print(SpDict["Account Name"])
+                                        if AccountName != SpDict["Account Name"]:
+                                            print("Account Name does not match")
+                                            TestResult.append("Account Name does not match")
+                                            TestResultStatus.append("Fail")
+                                        elif AccountName == SpDict["Account Name"]:
+                                            print("Account Name matched")
+                                            TestResult.append("Account Name matched")
+                                            TestResultStatus.append("Pass")
                                         print()
 
+                                        # -------Verifying Service provider Bsb---------
                                         Bsb = driver.find_element_by_xpath(
                                             "//form[@class='frm_viw_data']/div[4]/div/span").text
                                         print(Bsb)
                                         print(SpDict["Bsb"])
+                                        if Bsb != SpDict["Bsb"]:
+                                            print("Bsb does not match")
+                                            TestResult.append("Bsb does not match")
+                                            TestResultStatus.append("Fail")
+                                        elif Bsb == SpDict["Bsb"]:
+                                            print("Bsb matched")
+                                            TestResult.append("Bsb matched")
+                                            TestResultStatus.append("Pass")
                                         print()
 
+                                        # -------Verifying Service provider AccountNumber---------
                                         AccountNumber = driver.find_element_by_xpath(
                                             "//form[@class='frm_viw_data']/div[6]/div/span").text
                                         print(AccountNumber)
                                         print(SpDict["Account Number"])
+                                        if AccountNumber != SpDict["AccountNumber"]:
+                                            print("inside acc num not equal")
+                                            print("Account Number does not match")
+                                            TestResult.append("Account Number does not match")
+                                            TestResultStatus.append("Fail")
+                                        elif AccountNumber == SpDict["AccountNumber"]:
+                                            print("inside acc num equal")
+                                            print("------Account Number matched-------")
+                                            TestResult.append("Account Number matched")
+                                            TestResultStatus.append("Pass")
                                         print()
 
                                         break
@@ -386,11 +422,9 @@ def test_VerifyAllClickables(test_setup):
                         TestResultStatus.append("Pass")
                 except Exception:
                     pass
-
             except Exception:
-                pass
-
-
+                TestResult.append("Not able to verify service provider details")
+                TestResultStatus.append("Fail")
         except Exception:
             pass
 

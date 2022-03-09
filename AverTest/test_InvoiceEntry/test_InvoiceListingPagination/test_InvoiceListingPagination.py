@@ -297,7 +297,7 @@ def test_VerifyAllClickables(test_setup):
             totalClicks=int(totalClicks)
             print(totalClicks)
 
-            totalClicks=3
+            totalClicks = 5
             for l0 in range(totalClicks):
                 print()
                 print()
@@ -316,9 +316,12 @@ def test_VerifyAllClickables(test_setup):
                         #print(TotalAmountFound)
                         TotalAmountFound = re.sub('[^A-Za-z0-9.]+', '', TotalAmountFound)
                         TotalAmountFoundFloat=float(TotalAmountFound)
-                        print(TotalAmountFoundFloat)
+                        #print(TotalAmountFoundFloat)
                         TotalAmountFloatList.append(TotalAmountFoundFloat)
 
+                print(TotalAmountFoundFloat)
+                TestResult.append("On page no.["+str(l0+1)+"] total amount found is "+str(TotalAmountFoundFloat))
+                TestResultStatus.append("Pass")
 
                 print("--------------------------------------------------------------")
                 try:
@@ -339,12 +342,16 @@ def test_VerifyAllClickables(test_setup):
             if Count!=len(TotalAmountFloatList):
                 print("Total Count does not match")
                 print("Difference is "+str(len(TotalAmountFloatList)-Count))
+                TestResult.append("Total Count does not match\nDifference is "+str(len(TotalAmountFloatList)-Count))
+                TestResultStatus.append("Fail")
 
             if Amount!=sum(TotalAmountFloatList):
                 print("Total Amount does not match")
                 Diff=sum(TotalAmountFloatList)-Amount
                 print("Difference is " + str(round(sum(TotalAmountFloatList) - Amount,2)))
                 print("Difference is " + str(round(Diff, 2)))
+                TestResult.append("Total Amount does not match\nDifference is " + str(round(sum(TotalAmountFloatList) - Amount,2)))
+                TestResultStatus.append("Fail")
 
 
 

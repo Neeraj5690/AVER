@@ -19,7 +19,7 @@ def test_ReportSendSmokeAll():
     TestStatus = []
     SendStatus = []
     AttachmntAdded= []
-    Directory= 'test_PmNotifications/'
+    Directory= 'test_NDISRate/'
     if platform == "linux" or platform == "linux2":
         PDFpath = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
     elif platform == "win32" or platform == "win64":
@@ -53,7 +53,7 @@ def test_ReportSendSmokeAll():
     html = '''
         <html>
             <body>
-                <p>Hi Team <br />Here is the test summary report of Test Suite 7 ( PM Notifications ) <br />Below test scenarios are covered </p>
+                <p>Hi Team <br />Here is the test summary report of Test Suite 8 ( NDIS Rate ) <br />Below test scenarios are covered </p>
                 <p></p>
                 <p>'''+B+'''</p
                 <p></p>
@@ -84,7 +84,7 @@ def test_ReportSendSmokeAll():
     SenderEmail = "teamqa59@gmail.com"
     RandmStr = "Gagan@0309"
     msg = MIMEMultipart()
-    msg['Subject']='[Smoke Test 7 (PM Notifications)]-Test Automation Report-Env [Test]'
+    msg['Subject']='[Smoke Test 8 (NDIS Rate)]-Test Automation Report-Env [Test]'
     msg['From'] = email_from
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))

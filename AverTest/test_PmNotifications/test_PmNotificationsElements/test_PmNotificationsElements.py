@@ -283,7 +283,7 @@ def test_VerifyAllClickables(test_setup):
 
             # ---------------------------Verify Presence of elements in Notifications listing table-----------------------------
             inside = "Notifications listing"
-            # ---------------loop for Columns in table for Invoice entry draft----------
+            # ---------------loop for Columns in table for Notifications listing table----------
             ItemList = ["Checkbox", "Client Name", "Notification Type", "Information", "Plan End Date",
                         "Last Contact Date", "Number of Contact Attempts", "Date Created", "Status"]
             print(len(ItemList))
@@ -367,7 +367,7 @@ def test_VerifyAllClickables(test_setup):
 
             # ---------------------------Verify Presence of elements in Completed Notification Listing table-----------------------------
             inside = "Completed Notification Listing"
-            # ---------------loop for Columns in table for Invoice entry draft----------
+            # ---------------loop for Columns in table for Completed Notification Listing table----------
             ItemList = ["Client Name", "Notification Type", "Information", "Plan End Date",
                         "Last Contact Date", "Number of Contact Attempts", "Date Created", "Status"]
             print(len(ItemList))

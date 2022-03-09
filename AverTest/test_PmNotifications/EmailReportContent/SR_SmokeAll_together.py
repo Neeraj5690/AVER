@@ -19,7 +19,7 @@ def test_ReportSendSmokeAll():
     TestStatus = []
     SendStatus = []
     AttachmntAdded= []
-    Directory= 'test_ServiceProviderListing/'
+    Directory= 'test_PmNotifications/'
     if platform == "linux" or platform == "linux2":
         PDFpath = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
     elif platform == "win32" or platform == "win64":

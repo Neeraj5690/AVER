@@ -37,7 +37,7 @@ def test_setup():
   global path
 
   TestName = "test_ElementsWorking"
-  description = "This test scenario is to verify all the Working of Elements at Client Listing page"
+  description = "This test scenario is to verify all the Working of Elements at Communication log page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []

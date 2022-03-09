@@ -4,8 +4,7 @@ import random
 import re
 import string
 import time
-from telnetlib import EC
-
+import os
 import openpyxl
 from fpdf import FPDF
 import pytest
@@ -14,8 +13,9 @@ import allure
 from sys import platform
 
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -54,6 +54,10 @@ def test_setup():
   elif platform == "win32" or platform == "win64":
       path = 'D:/AVER/AverTest/' + Directory
 
+  MachineName = os.getenv('COMPUTERNAME')
+  if MachineName == "DESKTOP-JLLTS65":
+      path = path.replace('D:', 'C:')
+
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
   wbx = openpyxl.load_workbook(locx)
@@ -73,7 +77,11 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+          if MachineName == "DESKTOP-JLLTS65":
+              driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          else:
+              driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
@@ -565,6 +573,7 @@ def test_VerifyAllClickables(test_setup):
                 NumberOfPages = math.ceil(float(TotalPages))
                 print(NumberOfPages)
 
+                ClickCounter=0
                 for i in range(NumberOfPages):
                     if i < 1:
                         if i == NumberOfPages - 1:

@@ -210,7 +210,6 @@ def test_VerifyAllClickables(test_setup):
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            print("Loader present")
                             time.sleep(0.5)
                     except Exception:
                         break
@@ -291,6 +290,13 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------------------------------------------------------------
 
             #---------------Finding number of records on invoice listing page------------------
+            driver.find_element_by_xpath("//a[text()='Clear Filter']").click()
+            for load in range(LONG_TIMEOUT):
+                try:
+                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                        time.sleep(0.5)
+                except Exception:
+                    break
 
             TotalAmountFloatList=[]
             totalClicks=driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr[last()]/td/nav/ul/li[last()]/preceding-sibling::li[1]/a").text
@@ -298,6 +304,7 @@ def test_VerifyAllClickables(test_setup):
             print(totalClicks)
 
             totalClicks = 5
+            TotalPageAmount=0
             for l0 in range(totalClicks):
                 print()
                 print()
@@ -318,10 +325,12 @@ def test_VerifyAllClickables(test_setup):
                         TotalAmountFoundFloat=float(TotalAmountFound)
                         #print(TotalAmountFoundFloat)
                         TotalAmountFloatList.append(TotalAmountFoundFloat)
+                        TotalPageAmount=TotalPageAmount+TotalAmountFoundFloat
 
-                print(TotalAmountFoundFloat)
-                TestResult.append("On page no.["+str(l0+1)+"] total amount found is "+str(TotalAmountFoundFloat))
+                print(TotalPageAmount)
+                TestResult.append("On page no.["+str(l0+1)+"] total amount found is "+str(TotalPageAmount))
                 TestResultStatus.append("Pass")
+                TotalPageAmount=0
 
                 print("--------------------------------------------------------------")
                 try:

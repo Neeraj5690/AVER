@@ -70,6 +70,7 @@ def test_setup():
           driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
           driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
@@ -79,11 +80,11 @@ def test_setup():
 
   yield
   if Exe == "Yes":
-      ct = datetime.datetime.now().strftime("%d_%B_%Y_%I_%M%p")
       time_change = datetime.timedelta(hours=5)
       new_time = datetime.datetime.now() + time_change
       ctReportHeader = new_time.strftime("%d %B %Y %I %M%p")
-      ct1 = new_time.strftime("%d_%B_%Y_%I_%M%p")
+
+      ct = new_time.strftime("%d_%B_%Y_%I_%M%p")
 
       class PDF(FPDF):
           def header(self):
@@ -120,7 +121,7 @@ def test_setup():
          TestName1 = TestResult[i1].encode('latin-1', 'ignore').decode('latin-1')
          pdf.multi_cell(0, 7,str(i1+1)+")  "+TestName1, 0, 1,fill=True)
          TestFailStatus.append("Pass")
-      pdf.output(TestName+"_" + ct1 + ".pdf", 'F')
+      pdf.output(TestName+"_" + ct + ".pdf", 'F')
 
       #-----------To check if any failed Test case present-------------------
       for io in range(len(TestResult)):

@@ -36,7 +36,7 @@ def test_setup():
   global ClickCounter
 
   TestName = "test_ResourcesElements"
-  description = "This test scenario is to verify all the Elements present at Login Page"
+  description = "This test scenario is to verify all the Elements present at Resources Page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -283,7 +283,7 @@ def test_VerifyAllClickables(test_setup):
 
             # ---------------------------Verify Search filter-----------------------------
             PageName = "Search filter"
-            Ptitle1 = "Search"
+            Ptitle1 = "search"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//input[@placeholder='Type to filter...']").get_attribute(
                     'type')
@@ -309,12 +309,9 @@ def test_VerifyAllClickables(test_setup):
             for ii in range(len(ItemList)):
                 Text1 = ItemList[ii]
                 try:
-                    if ii == 0:
-                        print("Checkbox")
-                    else:
-                        Element1 = driver.find_element_by_xpath(
-                            "//table[@id='table_documents']/thead/tr/th[" + str(ii + 1) + "]").text
-                        time.sleep(0.5)
+                    Element1 = driver.find_element_by_xpath(
+                        "//table[@id='table_documents']/thead/tr/th[" + str(ii + 1) + "]").text
+                    time.sleep(0.5)
                 except Exception:
                     pass
                 try:

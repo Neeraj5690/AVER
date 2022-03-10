@@ -53,7 +53,7 @@ def test_ReportSendSmokeAll():
     html = '''
         <html>
             <body>
-                <p>Hi Team <br />Here is the test summary report of Test Suite 6 ( Broken Links ) <br />Below test scenarios are covered </p>
+                <p>Hi Team <br />Here is the test summary report of Test Suite 7 ( Broken Links ) <br />Below test scenarios are covered </p>
                 <p></p>
                 <p>'''+B+'''</p
                 <p></p>
@@ -92,7 +92,7 @@ def test_ReportSendSmokeAll():
 
     date_str = pd.Timestamp.today().strftime('%m-%d-%Y')
     msg = MIMEMultipart()
-    msg['Subject']='[Smoke Test 6 (Broken Links)]-Test Automation Report-Env [Test] '+date_str
+    msg['Subject']='[Smoke Test 7 (Broken Links)]-Test Automation Report-Env [Test] '+date_str
     msg['From'] = email_from
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))

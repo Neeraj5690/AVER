@@ -239,13 +239,13 @@ def test_VerifyAllClickables(test_setup):
                 except Exception as dd:
                     pass
 
-            for ad in range (len(Listb)):
-                try:
-                    print(Listb[ad])
-                    driver.get(Listb[ad])
-                except Exception as cl:
-                    print(cl)
-                    pass
+            # for ad in range (len(Listb)):
+            #     try:
+            #         print(Listb[ad])
+            #         driver.get(Listb[ad])
+            #     except Exception as cl:
+            #         print(cl)
+            #         pass
 
         except Exception:
             pass

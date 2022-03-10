@@ -188,7 +188,7 @@ def test_VerifyAllClickables(test_setup):
         TimeSpeed = 1
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 400
-        LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             # ---------------------------Verify Resources icon click-----------------------------
             PageName = "Resources icon"

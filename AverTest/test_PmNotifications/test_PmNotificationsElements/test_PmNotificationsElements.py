@@ -36,7 +36,7 @@ def test_setup():
   global ClickCounter
 
   TestName = "test_PmNotificationsElements"
-  description = "This test scenario is to verify all the Elements present at Login Page"
+  description = "This test scenario is to verify all the Elements present at PM Notifications Page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -188,7 +188,7 @@ def test_VerifyAllClickables(test_setup):
         TimeSpeed = 1
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 400
-        LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             # ---------------------------Verify PM Notification icon click-----------------------------
             PageName = "PM Notification icon"
@@ -217,86 +217,97 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Page title-----------------------------
-            PageName = "Page title"
-            Ptitle1 = "Notification Listing"
-            try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//h2[text()='Notification Listing']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " (Notification Listing) is present")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " (Notification Listing) is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of back button on PM Notifications page-----------------------------
-            PageName = "Back button"
-            Ptitle1 = "Back"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//a[text()='Back']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on PM Notifications page")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present on PM Notifications page")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of choose client button on notification listing table-----------------------------
-            PageName = "Choose client button"
-            Ptitle1 = "Choose Client"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on notification listing table")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present on notification listing table")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Choose Notification Type button on notification listing table-----------------------------
-            PageName = "Choose Notification Type button"
-            Ptitle1 = "Choose Notification Type"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on notification listing table")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present on notification listing table")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
+            # # ---------------------------Verify Page title-----------------------------
+            # PageName = "Page title"
+            # Ptitle1 = "Notification Listing"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath(
+            #         "//h2[text()='Notification Listing']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " (Notification Listing) is present")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " (Notification Listing) is not present")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of back button on PM Notifications page-----------------------------
+            # PageName = "Back button"
+            # Ptitle1 = "Back"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath("//a[text()='Back']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
+            #     TestResult.append(PageName + "  is present on PM Notifications page")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present on PM Notifications page")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of choose client button on notification listing table-----------------------------
+            # PageName = "Choose client button"
+            # Ptitle1 = "Choose Client"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
+            #     TestResult.append(PageName + "  is present on notification listing table")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present on notification listing table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Choose Notification Type button on notification listing table-----------------------------
+            # PageName = "Choose Notification Type button"
+            # Ptitle1 = "Choose Notification Type"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
+            #     TestResult.append(PageName + "  is present on notification listing table")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present on notification listing table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify Presence of elements in Notifications listing table-----------------------------
             inside = "Notifications listing"
             # ---------------loop for Columns in table for Notifications listing table----------
-            ItemList = ["Checkbox", "Client Name", "Notification Type", "Information", "Plan End Date",
+            ItemList = ["Client Name", "Notification Type", "Information", "Plan End Date",
                         "Last Contact Date", "Number of Contact Attempts", "Date Created", "Status"]
             print(len(ItemList))
             ItemPresent = []
             ItemNotPresent = []
-            for ii in range(len(ItemList)):
+            for ii in range(len(ItemList)+1):
                 Text1 = ItemList[ii]
+                print(Text1)
                 try:
                     if ii == 0:
-                        print("Checkbox")
+                        try:
+                            Element1 = driver.find_element_by_xpath(
+                                "//table[@id='notification_table_data']/thead/tr/th[" + str(ii + 1) + "]/input").is_displayed()
+                            print("Checkbox present")
+                            TestResult.append("Checkbox is present under [ " + inside + " ] table")
+                            TestResultStatus.append("Pass")
+                        except Exception:
+                            print("Checkbox not present")
+                            TestResult.append("Checkbox is not present under [ " + inside + " ] table")
+                            TestResultStatus.append("Fail")
                     else:
                         Element1 = driver.find_element_by_xpath(
                             "//table[@id='notification_table_data']/thead/tr/th[" + str(ii + 1) + "]").text
+                        print(Element1)
                         time.sleep(0.5)
                 except Exception:
                     pass
@@ -317,86 +328,86 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Presence of Completed Notifications Listing table header-----------------------------
-            PageName = "Completed notifications listing table header"
-            Ptitle1 = "Completed Notification Listing"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//h2[text()='Completed Notification Listing']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on PM notifications page")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present on PM notifications page")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of choose client button on completed notification listing table-----------------------------
-            PageName = "Choose client button"
-            Ptitle1 = "Choose Client"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='src_sec_hed']/span[1]/div/button/span").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on completed notification listing table")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present on completed notification listing table")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Choose Notification Type button on completed notification listing table-----------------------------
-            PageName = "Choose Notification Type button"
-            Ptitle1 = "Choose Notification Type"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='src_sec_hed']/span[2]/div/button/span").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on completed notification listing table")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present on completed notification listing table")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of elements in Completed Notification Listing table-----------------------------
-            inside = "Completed Notification Listing"
-            # ---------------loop for Columns in table for Completed Notification Listing table----------
-            ItemList = ["Client Name", "Notification Type", "Information", "Plan End Date",
-                        "Last Contact Date", "Number of Contact Attempts", "Date Created", "Status"]
-            print(len(ItemList))
-            ItemPresent = []
-            ItemNotPresent = []
-            for i1 in range(len(ItemList)):
-                Text1 = ItemList[i1]
-                try:
-                    Element1 = driver.find_element_by_xpath(
-                        "//table[@id='completed_notification_table_data']/thead/tr/th[" + str(i1 + 1) + "]").text
-                    time.sleep(0.5)
-                except Exception:
-                    pass
-                try:
-                    assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
-                    ItemPresent.append(Text1)
-                except Exception as e1:
-                    ItemNotPresent.append(Text1)
-            if ItemPresent:
-                print("ItemPresent list is not empty")
-                ListC = ', '.join(ItemPresent)
-                TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
-                TestResultStatus.append("Pass")
-            if ItemNotPresent:
-                print("ItemNotPresent list is not empty")
-                ListD = ', '.join(ItemNotPresent)
-                TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
-                TestResultStatus.append("Fail")
-            # ---------------------------------------------------------------------------------
+            # # ---------------------------Verify Presence of Completed Notifications Listing table header-----------------------------
+            # PageName = "Completed notifications listing table header"
+            # Ptitle1 = "Completed Notification Listing"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath("//h2[text()='Completed Notification Listing']").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
+            #     TestResult.append(PageName + "  is present on PM notifications page")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present on PM notifications page")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of choose client button on completed notification listing table-----------------------------
+            # PageName = "Choose client button"
+            # Ptitle1 = "Choose Client"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='src_sec_hed']/span[1]/div/button/span").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
+            #     TestResult.append(PageName + "  is present on completed notification listing table")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present on completed notification listing table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of Choose Notification Type button on completed notification listing table-----------------------------
+            # PageName = "Choose Notification Type button"
+            # Ptitle1 = "Choose Notification Type"
+            # try:
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='src_sec_hed']/span[2]/div/button/span").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
+            #     TestResult.append(PageName + "  is present on completed notification listing table")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not present on completed notification listing table")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify Presence of elements in Completed Notification Listing table-----------------------------
+            # inside = "Completed Notification Listing"
+            # # ---------------loop for Columns in table for Completed Notification Listing table----------
+            # ItemList = ["Client Name", "Notification Type", "Information", "Plan End Date",
+            #             "Last Contact Date", "Number of Contact Attempts", "Date Created", "Status"]
+            # print(len(ItemList))
+            # ItemPresent = []
+            # ItemNotPresent = []
+            # for i1 in range(len(ItemList)):
+            #     Text1 = ItemList[i1]
+            #     try:
+            #         Element1 = driver.find_element_by_xpath(
+            #             "//table[@id='completed_notification_table_data']/thead/tr/th[" + str(i1 + 1) + "]").text
+            #         time.sleep(0.5)
+            #     except Exception:
+            #         pass
+            #     try:
+            #         assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
+            #         ItemPresent.append(Text1)
+            #     except Exception as e1:
+            #         ItemNotPresent.append(Text1)
+            # if ItemPresent:
+            #     print("ItemPresent list is not empty")
+            #     ListC = ', '.join(ItemPresent)
+            #     TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
+            #     TestResultStatus.append("Pass")
+            # if ItemNotPresent:
+            #     print("ItemNotPresent list is not empty")
+            #     ListD = ', '.join(ItemNotPresent)
+            #     TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
+            #     TestResultStatus.append("Fail")
+            # # ---------------------------------------------------------------------------------
 
             # ---------------------------------------------------------------------------------
 

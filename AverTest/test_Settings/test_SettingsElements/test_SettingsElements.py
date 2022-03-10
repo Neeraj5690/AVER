@@ -36,7 +36,7 @@ def test_setup():
   global ClickCounter
 
   TestName = "test_SettingsElements"
-  description = "This test scenario is to verify all the Elements present at NDIS Rate page"
+  description = "This test scenario is to verify all the Elements present at Settings page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -188,7 +188,7 @@ def test_VerifyAllClickables(test_setup):
         TimeSpeed = 1
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 400
-        LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             # ---------------------------Verify Settings icon click-----------------------------
             PageName = "Settings icon"

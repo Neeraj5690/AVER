@@ -196,7 +196,7 @@ def test_VerifyAllClickables(test_setup):
         TimeSpeed = 2
         SHORT_TIMEOUT = 2
         LONG_TIMEOUT = 60
-        LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             # ---------------------------Verify Invoice Entry icon-----------------------------
             PageName = "Invoice Entry icon"

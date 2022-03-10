@@ -308,6 +308,7 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
+
             try:
                 print()
                 # ---------------------------To check we have existing test service provider in excel-----------------------------
@@ -522,14 +523,14 @@ def test_VerifyAllClickables(test_setup):
                                         break
                         TestResult.append("Create new service provider process is working correctly")
                         TestResultStatus.append("Pass")
-                    except Exception:
+                        sheetx1.cell(1, 1).value = Name
+                        wbx1.save(locx1)
+                    except Exception as nsp:
+                        print(nsp)
                         TestResult.append("Create new service provider process is not working correctly")
                         TestResultStatus.append("Fail")
 
                 # ---------------------------------------------------------------------------------
-                    # --------Saving service provider details in reference sheet------------
-                    sheetx1.cell(1, 1).value = Name
-                    wbx1.save(locx1)
                 elif SpPresentxl == "True":
                     print("Service provider is already present in reference doc. Here is the details")
                     print("Name is: " + Namexl)
@@ -609,29 +610,10 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
                 # # ---------------------------------------------------------------------------------
 
-                # ----------------Verify working of create franchise button-----------------------------------
-                PageName = "Create franchise button"
-                Ptitle1 = "Create Franchise"
-                try:
-                    driver.find_element_by_xpath("//a[text()='Create Franchise']").click()
-                    time.sleep(2)
-                    PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Franchise']").text
-                    time.sleep(2)
-                    driver.find_element_by_xpath("//div[@id='createfranchise']/div/div/div/button").click()
-                    time.sleep(2)
-                    assert PageTitle1 in Ptitle1, PageName + " not able to click"
-                    TestResult.append(PageName + "  is clickable")
-                    TestResultStatus.append("Pass")
-                except Exception:
-                    TestResult.append(PageName + " is not clickable")
-                    TestResultStatus.append("Fail")
-                print()
-                time.sleep(TimeSpeed)
-                # ---------------------------------------------------------------------------------
-
+            # ---------------------------------------------------------------------------------
             try:
                 print()
-                # ---------------------------To check we have existing test franchise in excel-----------------------------
+                # ---------------------------To check we have existing test Reimburse client in excel-----------------------------
                 ReimbursePresentxl = "False"
                 xcelFileName = "ReimburseClientRefData"
                 locx2 = (path + 'ReimburseRefData/' + xcelFileName + '.xlsx')
@@ -647,7 +629,6 @@ def test_VerifyAllClickables(test_setup):
                     else:
                         ReimbursePresentxl = "False"
                         pass
-
                 if ReimbursePresentxl == "False":
                     print("Reimburse client is not present in reference sheet, we need to add reimburse client first in application")
                     TestResult.append(
@@ -756,15 +737,21 @@ def test_VerifyAllClickables(test_setup):
                                 driver.find_element_by_xpath(
                                     "//div[@id='createnewsplatest']/div/div/div[2]/form/div[" + str(ii) + "]/button").click()
                                 print(ii)
+                                for load in range(LONG_TIMEOUT):
+                                    try:
+                                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                            time.sleep(0.5)
+                                    except Exception:
+                                        break
                         TestResult.append("Create Reimburse Client process is working correctly")
                         TestResultStatus.append("Pass")
-                    except Exception:
+                        sheetx2.cell(1, 1).value = Name
+                        wbx2.save(locx2)
+                    except Exception as nrc:
+                        print(nrc)
                         TestResult.append("Create Reimburse Client process is not working")
                         TestResultStatus.append("Fail")
 
-                    # --------Saving service provider details in reference sheet------------
-                    sheetx2.cell(1, 1).value = Name
-                    wbx2.save(locx2)
                 elif ReimbursePresentxl == "True":
                     print("Reimburse client is already present in reference doc. Here is the details")
                     print("Name is: " + Namexl1)
@@ -776,11 +763,38 @@ def test_VerifyAllClickables(test_setup):
 
             # ----------------------------------------------------------------------------------------------
 
+                # ----------------Verify working of create franchise button-----------------------------------
+                PageName = "Create franchise button"
+                Ptitle1 = "Create Franchise"
+                try:
+                    driver.find_element_by_xpath("//a[text()='Create Franchise']").click()
+                    time.sleep(2)
+                    PageTitle1 = driver.find_element_by_xpath("//h4[text()='Create Franchise']").text
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//div[@id='createfranchise']/div/div/div/button").click()
+                    time.sleep(2)
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                time.sleep(0.5)
+                        except Exception:
+                            break
+
+                    assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                    TestResult.append(PageName + "  is clickable")
+                    TestResultStatus.append("Pass")
+                except Exception:
+                    TestResult.append(PageName + " is not clickable")
+                    TestResultStatus.append("Fail")
+                print()
+                time.sleep(TimeSpeed)
+                # ---------------------------------------------------------------------------------
+
             # ------------------------------------------------------------------------------------------------
 
             try:
                 print()
-                # ---------------------------To check we have existing test reimburse client in excel-----------------------------
+                # ---------------------------To check we have existing test Franchise in excel-----------------------------
                 FranchisePresentxl = "False"
                 xcelFileName = "FranchiseRefData"
                 locx3 = (path + 'FranchiseReferenceData/' + xcelFileName + '.xlsx')
@@ -796,7 +810,6 @@ def test_VerifyAllClickables(test_setup):
                     else:
                         FranchisePresentxl = "False"
                         pass
-
                 if FranchisePresentxl == "False":
                     print("Franchise is not present in reference sheet, we need to add Franchise first in application")
                     TestResult.append(
@@ -850,12 +863,12 @@ def test_VerifyAllClickables(test_setup):
                                     time.sleep(0.5)
                             except Exception:
                                 break
+                        sheetx3.cell(1, 1).value = Name
+                        wbx3.save(locx3)
                     except Exception:
                         TestResult.append("Create franchise process is not working")
                         TestResultStatus.append("Fail")
-                    # --------Saving franchise details in reference sheet------------
-                    sheetx3.cell(1, 1).value = Name
-                    wbx3.save(locx3)
+
                 elif FranchisePresentxl == "True":
                     print("Franchise is already present in reference doc. Here is the details")
                     print("Name is: " + Namexl2)

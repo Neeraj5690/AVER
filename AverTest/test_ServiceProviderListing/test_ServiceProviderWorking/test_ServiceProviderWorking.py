@@ -610,6 +610,26 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
                 # # ---------------------------------------------------------------------------------
 
+            try:
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
+
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed()==True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+
+                time.sleep(2)
+            except Exception as ee:
+                print(ee)
+                TestResult.append("Below error occured while navigating to Service Provider Listing page\n"+str(ee))
+                TestResultStatus.append("Fail")
+
             # ---------------------------------------------------------------------------------
             try:
                 print()

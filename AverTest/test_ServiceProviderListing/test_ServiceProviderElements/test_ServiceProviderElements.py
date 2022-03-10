@@ -36,7 +36,7 @@ def test_setup():
   global ClickCounter
 
   TestName = "test_ServiceProviderElements"
-  description = "This test scenario is to verify all the Elements present at Login Page"
+  description = "This test scenario is to verify all the Elements present at service provider Page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []

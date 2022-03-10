@@ -31,8 +31,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_FindBrokenLinks.py"
-  description = "This test scenario is to verify Broken links"
+  TestName = "test_FindBrokenLinks"
+  description = "This test scenario is to verify Broken links in complete application"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -66,6 +66,7 @@ def test_setup():
           driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
           driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
@@ -75,8 +76,11 @@ def test_setup():
 
   yield
   if Exe == "Yes":
-      ct = datetime.datetime.now().strftime("%d_%B_%Y_%I_%M%p")
-      ctReportHeader = datetime.datetime.now().strftime("%d %B %Y %I %M%p")
+      time_change = datetime.timedelta(hours=5)
+      new_time = datetime.datetime.now() + time_change
+      ctReportHeader = new_time.strftime("%d %B %Y %I %M%p")
+
+      ct = new_time.strftime("%d_%B_%Y_%I_%M%p")
 
       class PDF(FPDF):
           def header(self):
@@ -181,25 +185,36 @@ def test_VerifyAllClickables(test_setup):
         TimeSpeed = 2
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 200
-        LOADING_ELEMENT_XPATH = "//div[@id='appian-working-indicator-hidden']"
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
 
         try:
             print()
             Listb = []
             elem = []
+            PageName=[]
 
             for ii in range(14):
                 try:
                     elem.clear()
+                    PageName1 = driver.find_element_by_xpath(
+                        "//div[@class='card card-sidebar-mobile']/ul/li[" + str(ii) + "]/a").get_attribute('title')
+                    print(PageName1)
                     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li["+str(ii)+"]/a/i").click()
-                    try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
 
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
-                        pass
+                    if PageName1 not in PageName:
+                        TestResult.append(PageName1 + " opened to collect all available links")
+                        TestResultStatus.append("Pass")
+
+                    PageName.append(PageName1)
+                    print(PageName)
+
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                time.sleep(0.5)
+                        except Exception:
+                            break
+
                     time.sleep(1)
                     elem = driver.find_elements_by_xpath("//a[@href]")
                     for elema in elem:
@@ -217,19 +232,20 @@ def test_VerifyAllClickables(test_setup):
                                     pass
                                 else:
                                     Listb.append(elema.get_attribute("href"))
+                    print("Total "+str(len(Listb))+" links collected")
+                    TestResult.append("Total "+str(len(Listb))+" links collected")
+                    TestResultStatus.append("Pass")
 
                 except Exception as dd:
                     pass
 
-            print(len(Listb))
-            for ad in range (len(Listb)):
-                try:
-                    print(Listb[ad])
-                    driver.get(Listb[ad])
-                except Exception as cl:
-                    print(cl)
-                    pass
-
+            # for ad in range (len(Listb)):
+            #     try:
+            #         print(Listb[ad])
+            #         driver.get(Listb[ad])
+            #     except Exception as cl:
+            #         print(cl)
+            #         pass
 
         except Exception:
             pass

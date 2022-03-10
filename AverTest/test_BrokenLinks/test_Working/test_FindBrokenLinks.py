@@ -6,6 +6,7 @@ import pytest
 from selenium import webdriver
 import allure
 from sys import platform
+import os
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -46,6 +47,10 @@ def test_setup():
   elif platform == "win32" or platform == "win64":
       path = 'D:/AVER/AverTest/' + Directory
 
+  MachineName = os.getenv('COMPUTERNAME')
+  if MachineName == "DESKTOP-JLLTS65":
+      path = path.replace('D:', 'C:')
+
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
   wbx = openpyxl.load_workbook(locx)
@@ -65,7 +70,10 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+          if MachineName == "DESKTOP-JLLTS65":
+              driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          else:
+              driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
       driver.maximize_window()
@@ -195,57 +203,69 @@ def test_VerifyAllClickables(test_setup):
 
             for ii in range(14):
                 try:
-                    elem.clear()
-                    PageName1 = driver.find_element_by_xpath(
-                        "//div[@class='card card-sidebar-mobile']/ul/li[" + str(ii) + "]/a").get_attribute('title')
-                    print(PageName1)
-                    driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li["+str(ii)+"]/a/i").click()
+                    if ii!=7:
+                        elem.clear()
+                        PageName1 = driver.find_element_by_xpath(
+                            "//div[@class='card card-sidebar-mobile']/ul/li[" + str(ii) + "]/a").get_attribute('title')
+                        print(PageName1)
+                        if ii==8:
+                            driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                            time.sleep(2)
+                            driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[8]/a").click()
+                            time.sleep(2)
+                            driver.find_element_by_xpath(
+                                "//div[@class='card card-sidebar-mobile']/ul/li[8]/ul/li/a").click()
+                        elif ii == 9:
+                            driver.find_element_by_xpath(
+                                "//div[@class='card card-sidebar-mobile']/ul/li[" + str(ii) + "]/a").click()
+                        else:
+                            driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li["+str(ii)+"]/a/i").click()
 
-                    if PageName1 not in PageName:
-                        TestResult.append(PageName1 + " opened to collect all available links")
+                        if PageName1 not in PageName:
+                            TestResult.append(PageName1 + " opened to collect all available links")
+                            TestResultStatus.append("Pass")
+
+                        PageName.append(PageName1)
+                        print(PageName)
+
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
+
+                        time.sleep(1)
+                        elem = driver.find_elements_by_xpath("//a[@href]")
+                        for elema in elem:
+                            if len(elema.get_attribute("href")) > 1:
+                                if elema.get_attribute("href") in Listb:
+                                    pass
+                                else :
+                                    if "logout" in elema.get_attribute("href"):
+                                        pass
+                                    elif "javascript:void(0)" in elema.get_attribute("href"):
+                                        pass
+                                    elif "javascript:void(0);" in elema.get_attribute("href"):
+                                        pass
+                                    elif "javascript:void();" in elema.get_attribute("href"):
+                                        pass
+                                    else:
+                                        Listb.append(elema.get_attribute("href"))
+                        print("Total "+str(len(Listb))+" links collected")
+                        TestResult.append("Total "+str(len(Listb))+" links collected")
                         TestResultStatus.append("Pass")
-
-                    PageName.append(PageName1)
-                    print(PageName)
-
-                    for load in range(LONG_TIMEOUT):
-                        try:
-                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                                time.sleep(0.5)
-                        except Exception:
-                            break
-
-                    time.sleep(1)
-                    elem = driver.find_elements_by_xpath("//a[@href]")
-                    for elema in elem:
-                        if len(elema.get_attribute("href")) > 1:
-                            if elema.get_attribute("href") in Listb:
-                                pass
-                            else :
-                                if "logout" in elema.get_attribute("href"):
-                                    pass
-                                elif "javascript:void(0)" in elema.get_attribute("href"):
-                                    pass
-                                elif "javascript:void(0);" in elema.get_attribute("href"):
-                                    pass
-                                elif "javascript:void();" in elema.get_attribute("href"):
-                                    pass
-                                else:
-                                    Listb.append(elema.get_attribute("href"))
-                    print("Total "+str(len(Listb))+" links collected")
-                    TestResult.append("Total "+str(len(Listb))+" links collected")
-                    TestResultStatus.append("Pass")
 
                 except Exception as dd:
                     pass
 
-            # for ad in range (len(Listb)):
-            #     try:
-            #         print(Listb[ad])
-            #         driver.get(Listb[ad])
-            #     except Exception as cl:
-            #         print(cl)
-            #         pass
+            for ad in range (len(Listb)):
+                try:
+                    print(Listb[ad])
+                    driver.get(Listb[ad])
+                except Exception as cl:
+                    print(cl)
+                    pass
 
         except Exception:
             pass

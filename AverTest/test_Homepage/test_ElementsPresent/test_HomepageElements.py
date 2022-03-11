@@ -34,7 +34,7 @@ def test_setup():
   global path
 
   TestName = "test_HomePageElements"
-  description = "This test scenario is to verify all the Elements present and their working at Homepage"
+  description = "This test scenario is to verify all the Elements present at Homepage"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -287,72 +287,6 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
             time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-            # ---------------------------Verify Pagination clicks-----------------------------
-            try:
-                for i1 in range(4):
-                    try:
-                        select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
-                        select.select_by_index(i1)
-                        time.sleep(1)
-                        RecordsPerPage = driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
-                        RecordsPerPage = int(RecordsPerPage)
-                        TestResult.append(
-                            "Selected [ " + str(RecordsPerPage) + " ] no. of records per page")
-                        TestResultStatus.append("Pass")
-                    except Exception:
-                        TestResult.append(
-                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not able to click")
-                        TestResultStatus.append("Fail")
-
-                    TotalItem = driver.find_element_by_xpath("//div[@class='table_data']/div/div[4]").text
-                    substr = "of"
-                    x = TotalItem.split(substr)
-                    string_name = x[0]
-                    TotalItemAfterOf = x[1]
-                    abc = ""
-                    countspace = 0
-                    for element in range(0, len(string_name)):
-                        if string_name[(len(string_name) - 1) - element] == " ":
-                            countspace = countspace + 1
-                            if countspace == 2:
-                                break
-                        else:
-                            abc = abc + string_name[(len(string_name) - 1) - element]
-                    abc = abc[::-1]
-                    TotalItemBeforeOf = abc
-                    TotalItemAfterOf = TotalItemAfterOf.split(" ")
-                    TotalItemAfterOf=TotalItemAfterOf[1]
-                    TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-
-                    TotalItemAfterOf = int(TotalItemAfterOf)
-                    TotalPages = TotalItemAfterOf/RecordsPerPage
-                    NumberOfPages = math.ceil(float(TotalPages))
-
-                    for i in range(NumberOfPages):
-                        if i==NumberOfPages-1:
-                            TestResult.append("Pagination for [ "+str(RecordsPerPage)+" ] no. of records is successfully verified")
-                            TestResultStatus.append("Pass")
-                            break
-                        driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                        time.sleep(0.5)
-                    if i != NumberOfPages - 1:
-                        TestResult.append(
-                            "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
-                        TestResultStatus.append("Fail")
-                    driver.refresh()
-                    try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
-                        pass
-            except Exception as aq:
-                print(aq)
-                TestResult.append("Pagination is not working properly\n"+aq)
-                TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 
         except Exception as err:

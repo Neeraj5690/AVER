@@ -247,7 +247,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
+            # ------------------------------------------------------------------------------------------
 
             # ---------------------------Verify Presence of upload button on NDIS Rate page-----------------------------
             PageName = "Upload button"

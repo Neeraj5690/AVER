@@ -8,6 +8,9 @@ import pytest
 from selenium import webdriver
 import allure
 from sys import platform
+
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -309,6 +312,15 @@ def test_VerifyAllClickables(test_setup):
                                 "By default [ 10 ] no. of records per page is selected")
                             TestResultStatus.append("Pass")
                         if i1>0:
+                            if RecordsPerPage==25:
+                                for clicks in range(3):
+                                    ActionChains(driver).key_down(Keys.PAGE_UP).perform()
+                                    time.sleep()
+
+                            elif RecordsPerPage==50:
+                                for clicks in range(4):
+                                    ActionChains(driver).key_down(Keys.PAGE_UP).key_up(Keys.PAGE_UP).perform()
+                                    time.sleep()
 
                             select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
                             select.select_by_index(i1)

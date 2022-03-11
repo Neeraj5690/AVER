@@ -1,19 +1,25 @@
 import datetime
 import math
 import re
+from selenium.webdriver.support.select import Select
 import time
-from telnetlib import EC
-
 import openpyxl
+from datetime import datetime,date
+import datetime as datetime
 from fpdf import FPDF
 import pytest
 from selenium import webdriver
 import allure
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 from sys import platform
-
-from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+import os
+import random
+import string
 
 
 @allure.step("Entering username ")
@@ -33,22 +39,29 @@ def test_setup():
   global TestResultStatus
   global TestDirectoryName
   global path
-  global ClickCounter
 
-  TestName = "test_NDISRateElements"
-  description = "This test scenario is to verify all the Elements present at NDIS Rate page"
+  TestName = "test_NDISRateWorking"
+  description = "This test scenario is to verify the Working of NDIS Rate process"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
   FailStatus="Pass"
-  TestDirectoryName = "test_NDISRateElements"
+  TestDirectoryName = "test_NDISRateWorking"
   global Exe
   Exe="Yes"
   Directory = 'test_NDISRate/'
+
+
+
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
       path = 'D:/AVER/AverTest/' + Directory
+
+  MachineName = os.getenv('COMPUTERNAME')
+  print(MachineName)
+  if MachineName=="DESKTOP-JLLTS65":
+      path=path.replace('D:', 'C:')
 
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
@@ -67,9 +80,13 @@ def test_setup():
 
   if Exe=="Yes":
       if platform == "linux" or platform == "linux2":
-          driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
+          driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux1")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+          if MachineName == "DESKTOP-JLLTS65":
+              driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          else:
+            driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
@@ -79,11 +96,11 @@ def test_setup():
 
   yield
   if Exe == "Yes":
-      ct = datetime.datetime.now().strftime("%d_%B_%Y_%I_%M%p")
       time_change = datetime.timedelta(hours=5)
       new_time = datetime.datetime.now() + time_change
       ctReportHeader = new_time.strftime("%d %B %Y %I %M%p")
-      ct1 = new_time.strftime("%d_%B_%Y_%I_%M%p")
+
+      ct = new_time.strftime("%d_%B_%Y_%I_%M%p")
 
       class PDF(FPDF):
           def header(self):
@@ -120,7 +137,7 @@ def test_setup():
          TestName1 = TestResult[i1].encode('latin-1', 'ignore').decode('latin-1')
          pdf.multi_cell(0, 7,str(i1+1)+")  "+TestName1, 0, 1,fill=True)
          TestFailStatus.append("Pass")
-      pdf.output(TestName+"_" + ct1 + ".pdf", 'F')
+      pdf.output(TestName+"_" + ct + ".pdf", 'F')
 
       #-----------To check if any failed Test case present-------------------
       for io in range(len(TestResult)):
@@ -184,12 +201,15 @@ def test_setup():
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
+    global select
     if Exe == "Yes":
-        TimeSpeed = 1
-        SHORT_TIMEOUT = 5
-        LONG_TIMEOUT = 400
+        TimeSpeed = 2
+        SHORT_TIMEOUT = 3
+        LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
+
         try:
+            print()
             # ---------------------------Verify NDIS Rate icon click-----------------------------
             PageName = "NDIS Rate icon"
             Ptitle1 = ""
@@ -205,7 +225,6 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
-
                 time.sleep(2)
                 TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
@@ -217,124 +236,92 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Page title-----------------------------
-            PageName = "Page title"
-            Ptitle1 = "NDIS Rate"
+            # ---------------------------Verify working of Back button on NDIS Rate page -----------------------------
+            PageName = "Back button"
+            Ptitle1 = "Rae"
             try:
-                PageTitle1 = driver.find_element_by_xpath(
-                    "//h2[text()='NDIS Rate']").text
+                driver.find_element_by_xpath("//a[text()='Back']").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
                 print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " (NDIS Rate) is present")
+                TestResult.append(PageName + " is clickable")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " (NDIS Rate) is not present")
-                TestResultStatus.append("Fail")
-            print()
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of back button on NDIS Rate page-----------------------------
-            PageName = "Back button"
-            Ptitle1 = "Back"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//a[text()='Back']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on NDIS Rate page")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present on NDIS Rate page")
+                TestResult.append(PageName + " is not clickable")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Presence of upload button on NDIS Rate page-----------------------------
-            PageName = "Upload button"
-            Ptitle1 = "Upload"
+            # ----------------Verify NDIS Rate icon click after verifying back--------
+            PageName = "NDIS Rate icon"
+            Ptitle1 = ""
             try:
-                PageTitle1 = driver.find_element_by_xpath("//a[text()='Upload']").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(PageName + "  is present on NDIS Rate page")
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[6]/a").click()
+                time.sleep(2)
+
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                TestResult.append(PageName + "  is opened again after verifying back button")
                 TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not present on NDIS Rate page")
+                TestResult.append(PageName + " is not opened again after verifying back button")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Version dropdown value on NDIS Rate page-----------------------------
-            PageName = "Version dropdown"
-            Ptitle1 = "Version 1 (01-01-2021)"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//select[@id='search_version']/option[2]").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(Ptitle1 + " value is present under "+PageName)
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(Ptitle1 + " value is not present under "+PageName)
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of Search filter-----------------------------
-            PageName = "Search filter"
-            Ptitle1 = "search"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//input[@placeholder='Type to filter...']").get_attribute(
-                    'type')
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                driver.find_element_by_xpath("//input[@placeholder='Type to filter...']").send_keys("test")
-                TestResult.append(PageName + "  is present and user is able to send inputs")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Presence of elements in NDIS Rate table-----------------------------
-            inside = "NDIS Rate"
-            # ---------------loop for Columns in table for NDIS Rate----------
-            ItemList = ["#", "Registration Group Number", "Service Support Item", "Support Item Number", "Unit of Measure",
-                        "Effective Date", "Action"]
-            print(len(ItemList))
-            ItemPresent = []
-            ItemNotPresent = []
-            for ii in range(len(ItemList)):
-                Text1 = ItemList[ii]
+            for load in range(LONG_TIMEOUT):
                 try:
-                    Element1 = driver.find_element_by_xpath(
-                        "//table[@id='ndis_rate_table_data']/thead/tr/th[" + str(ii + 1) + "]").text
-                    time.sleep(0.5)
+                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                        time.sleep(0.5)
                 except Exception:
-                    pass
-                try:
-                    assert Text1 in Element1, Text1 + " column under " + inside + " table is not present"
-                    ItemPresent.append(Text1)
-                except Exception as e1:
-                    ItemNotPresent.append(Text1)
-            if ItemPresent:
-                print("ItemPresent list is not empty")
-                ListC = ', '.join(ItemPresent)
-                TestResult.append("Below columns are present under [ " + inside + " ] table\n" + ListC)
+                    break
+            # ---------------------------------------------------------------------------------
+
+            # ----------------Verify working of Upload button-----------------------------------
+            PageName = "Upload button"
+            Ptitle1 = "Import Service Provider"
+            try:
+                driver.find_element_by_xpath("//a[text()='Upload']").click()
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Upload NDIS Rate']").text
+                time.sleep(2)
+                driver.find_element_by_xpath("//a[text()='Exit']").click()
+                time.sleep(2)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                assert PageTitle1 in Ptitle1, PageName + " not able to click"
+                TestResult.append(PageName + "  is clickable")
                 TestResultStatus.append("Pass")
-            if ItemNotPresent:
-                print("ItemNotPresent list is not empty")
-                ListD = ', '.join(ItemNotPresent)
-                TestResult.append("Below columns are not present under [ " + inside + " ] table\n" + ListD)
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
                 TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------------------------------------------------------------
+            # -------------------------------------------------------------------------------------------
 
-        except Exception:
+        except Exception as err:
+            print(err)
+            TestResult.append("NDIS Rate is not working correctly. Below error found\n"+str(err))
+            TestResultStatus.append("Fail")
             pass
 
     else:

@@ -283,16 +283,39 @@ def test_VerifyAllClickables(test_setup):
                     break
             # ---------------------------------------------------------------------------------
 
+            # ---------------------------Verify working of Choose client button for Notification Listing-----------------------------
+            PageName = "Choose client button"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                driver.find_element_by_xpath(
+                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/div/div/input").clear()
+                time.sleep(1)
+                driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/div/div/input").send_keys("Tclient")
+                time.sleep(2)
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " for notification listing is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
             # ---------------------------Verify Pagination clicks for Notification listing table-----------------------------
             PageName = "Notification listing table"
             try:
-                TotalItem = driver.find_elements_by_xpath("//table[@id='notification_table_data']/tbody/tr[last()]/td/nav/ul/li")
-                TotalItem = len(TotalItem)-1
-                print(TotalItem)
-                time.sleep(2)
-                totalClicks = driver.find_element_by_xpath("//table[@id='notification_table_data']/tbody/tr[last()]/td/nav/ul/li["+str(TotalItem)+"]").text
-                totalClicks = int(totalClicks)
+                totalClicks = driver.find_elements_by_xpath("//table[@id='notification_table_data']/tbody/tr[last()]/td/nav/ul/li")
+                totalClicks = len(totalClicks)-1
                 print(totalClicks)
+                time.sleep(2)
+
 
                 # ClickCounter = 0
                 # for i in range(NumberOfPages):

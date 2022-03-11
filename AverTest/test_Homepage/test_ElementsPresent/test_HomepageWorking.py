@@ -347,14 +347,15 @@ def test_VerifyAllClickables(test_setup):
                     TotalItem = driver.find_element_by_xpath("//div[@class='table_data']/div/div[4]").text
                     print(TotalItem)
 
-                    ShowingError="Showing 1 to "+str(RecordsPerPage)
-                    if ShowingError not in TotalItem:
-                        print("ShowingError found in TotalItem")
-                        TestResult.append(
-                            "For table [ Tracking ] Pagination footer info is wrong. It is showing TotalItem when selecting pagination for "+str(RecordsPerPage))
-                        TestResultStatus.append("Fail")
-
                     if TotalItem!="":
+                        ShowingError = "Showing 1 to " + str(RecordsPerPage)
+                        if ShowingError not in TotalItem:
+                            print("ShowingError found in " + TotalItem)
+                            TestResult.append(
+                                "For table [ Tracking ] Pagination footer info is wrong. It is showing " + TotalItem + " when selecting pagination for " + str(
+                                    RecordsPerPage))
+                            TestResultStatus.append("Fail")
+
                         substr = "of"
                         x = TotalItem.split(substr)
                         string_name = x[0]
@@ -416,7 +417,7 @@ def test_VerifyAllClickables(test_setup):
                         TestResultStatus.append("Pass")
             except Exception as aq:
                 print(aq)
-                TestResult.append("Pagination is not working properly\n"+aq)
+                TestResult.append("Pagination is not working properly\n"+str(aq))
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

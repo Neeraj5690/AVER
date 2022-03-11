@@ -260,7 +260,7 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ----------------Verify NDIS Rate icon click after verifying back--------
+            # ----------------Verify NDIS Rate icon click after verifying back------------------
             PageName = "NDIS Rate icon"
             Ptitle1 = ""
             try:
@@ -292,7 +292,7 @@ def test_VerifyAllClickables(test_setup):
 
             # ----------------Verify working of Upload button-----------------------------------
             PageName = "Upload button"
-            Ptitle1 = "Import Service Provider"
+            Ptitle1 = "Upload NDIS Rate"
             try:
                 driver.find_element_by_xpath("//a[text()='Upload']").click()
                 time.sleep(2)
@@ -315,6 +315,70 @@ def test_VerifyAllClickables(test_setup):
             print()
             time.sleep(TimeSpeed)
             # ------------------------------------------------------------------------------------------
+
+            # ---------------------------Verify NDIS Rate pagination working-----------------------------
+            try:
+                TotalItem = driver.find_element_by_xpath("//div[@id='ndis_rate_table_data_info']").text
+                print(TotalItem)
+                substr = "of"
+                x = TotalItem.split(substr)
+                string_name = x[0]
+                TotalItemAfterOf = x[1]
+                abc = ""
+                countspace = 0
+                for element in range(0, len(string_name)):
+                    if string_name[(len(string_name) - 1) - element] == " ":
+                        countspace = countspace + 1
+                        if countspace == 2:
+                            break
+                    else:
+                        abc = abc + string_name[(len(string_name) - 1) - element]
+                abc = abc[::-1]
+                TotalItemBeforeOf = abc
+                TotalItemAfterOf = TotalItemAfterOf.split(" ")
+                TotalItemAfterOf = TotalItemAfterOf[1]
+                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+
+                TotalItemAfterOf = int(TotalItemAfterOf)
+                RecordsPerPage = 50
+                TotalPages = TotalItemAfterOf / RecordsPerPage
+                NumberOfPages = math.ceil(float(TotalPages))
+                ClickCounter = 0
+                for i in range(NumberOfPages):
+                    if i < 1:
+                        if i == NumberOfPages - 1:
+                            TestResult.append("No Pagination found for [ " + str(
+                                TotalItemAfterOf) + " ] no. of records under NDIS Rate table")
+                            TestResultStatus.append("Pass")
+                            break
+                    try:
+                        time.sleep(TimeSpeed)
+                        driver.find_element_by_xpath(
+                            "//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+                        time.sleep(1)
+                        ClickCounter = ClickCounter + 1
+                    except Exception as cc:
+                        pass
+                TestResult.append("Pagination verified for [ " + str(
+                    TotalItemAfterOf) + " ] no. of records under NDIS Rate table")
+                TestResultStatus.append("Pass")
+                if i != ClickCounter:
+                    TestResult.append(
+                        "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
+                    TestResultStatus.append("Fail")
+                driver.refresh()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+            except Exception as aq:
+                TestResult.append(
+                    "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
+                TestResultStatus.append("Fail")
 
             # -------------------------------------------------------------------------------------------
 

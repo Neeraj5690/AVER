@@ -13,6 +13,7 @@ from sys import platform
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -189,6 +190,8 @@ def test_VerifyAllClickables(test_setup):
         SHORT_TIMEOUT = 5
         LONG_TIMEOUT = 400
         LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
+
+        NDIS = []
         try:
             # ---------------------------Verify NDIS Rate icon click-----------------------------
             PageName = "NDIS Rate icon"
@@ -265,18 +268,69 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
+            # ---------------------------Verify Presence of values in limit dropdown-----------------------------
+            inside = "Version dropdown"
+            # ---------------loop for NDIS version dropdown----------
+            ItemList = []
+            print(len(ItemList))
+            ItemPresent = []
+            ItemNotPresent = []
+
+            DropdownLength = driver.find_elements_by_xpath("//select[@id='search_version']/option")
+            DropdownLength = len(DropdownLength)
+            print(DropdownLength)
+
+            for ii1 in range(DropdownLength):
+                Text1 = ItemList[ii1]
+                try:
+                    Element1 = driver.find_elements_by_xpath(
+                        "//select[@id='search_version']/option[" + str(ii1 + 1) + "]").text
+                    time.sleep(0.5)
+                    print(Element1)
+                    NDIS.append(Element1)
+                    print(NDIS)
+
+                except Exception:
+                    pass
+                    TestResult.append(NDIS + " value is present under " + PageName)
+                    TestResultStatus.append("Pass")
+                try:
+                    assert Text1 in Element1, Text1 + " values under " + inside + " table is not present"
+                    ItemPresent.append(Text1)
+                except Exception as e1:
+                    ItemNotPresent.append(Text1)
+            if ItemPresent:
+                print("ItemPresent list is not empty")
+                ListC = ', '.join(ItemPresent)
+                TestResult.append("Below values are present under [ " + inside + " ]\n" + ListC)
+                TestResultStatus.append("Pass")
+            if ItemNotPresent:
+                print("ItemNotPresent list is not empty")
+                ListD = ', '.join(ItemNotPresent)
+                TestResult.append("Below values are not present under [ " + inside + " ]\n" + ListD)
+                TestResultStatus.append("Fail")
+            # ---------------------------------------------------------------------------------
+
             # ---------------------------Verify Presence of Version dropdown value on NDIS Rate page-----------------------------
             PageName = "Version dropdown"
-            Ptitle1 = "Version 1 (01-01-2021)"
-            try:
-                PageTitle1 = driver.find_element_by_xpath("//select[@id='search_version']/option[2]").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not able to open"
-                TestResult.append(Ptitle1 + " value is present under "+PageName)
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(Ptitle1 + " value is not present under "+PageName)
-                TestResultStatus.append("Fail")
+            Ptitle1 = ""
+
+            DropdownLength = driver.find_elements_by_xpath("//select[@id='search_version']/option")
+            DropdownLength = len(DropdownLength)
+            print(DropdownLength)
+
+            for ii1 in range(DropdownLength):
+
+                try:
+                    PageTitle1 = driver.find_elements_by_xpath("//select[@id='search_version']/option["+str(ii1+1)+"]").text
+                    print(PageTitle1)
+                    NDIS.append(PageTitle1)
+                    print(NDIS)
+                    TestResult.append(NDIS + " value is present under "+PageName)
+                    TestResultStatus.append("Pass")
+                except Exception:
+                    TestResult.append(Ptitle1 + " value is not present under "+PageName)
+                    TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------

@@ -300,16 +300,17 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------Verify Pagination clicks-----------------------------
             RecordsPerPage=10
             try:
-                for i1 in range(4):
+                for i1 in range(3):
                     try:
                         print(i1)
                         AlertFound = 0
+                        print("AlertFound "+str(AlertFound))
                         if i1==0:
                             TestResult.append(
                                 "By default [ 10 ] no. of records per page is selected")
                             TestResultStatus.append("Pass")
                         if i1>0:
-                            print(AlertFound)
+
                             select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
                             select.select_by_index(i1)
                             time.sleep(1)
@@ -318,6 +319,7 @@ def test_VerifyAllClickables(test_setup):
                                 print(AlertText)
                                 driver.switch_to_alert().accept()
                                 AlertFound=1
+                                print("Inside AlertFound")
                             except Exception:
                                 pass
                             RecordsPerPage = driver.find_element_by_xpath(
@@ -344,6 +346,14 @@ def test_VerifyAllClickables(test_setup):
 
                     TotalItem = driver.find_element_by_xpath("//div[@class='table_data']/div/div[4]").text
                     print(TotalItem)
+
+                    ShowingError="Showing 1 to "+str(RecordsPerPage)
+                    if ShowingError not in TotalItem:
+                        print("ShowingError found in TotalItem")
+                        TestResult.append(
+                            "For table [ Tracking ] Pagination footer info is wrong. It is showing TotalItem when selecting pagination for "+str(RecordsPerPage))
+                        TestResultStatus.append("Fail")
+
                     if TotalItem!="":
                         substr = "of"
                         x = TotalItem.split(substr)

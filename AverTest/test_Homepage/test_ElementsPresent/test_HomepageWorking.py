@@ -304,7 +304,6 @@ def test_VerifyAllClickables(test_setup):
                     try:
                         print(i1)
                         AlertFound = 0
-                        print("AlertFound "+str(AlertFound))
                         if i1==0:
                             TestResult.append(
                                 "By default [ 10 ] no. of records per page is selected")
@@ -319,7 +318,7 @@ def test_VerifyAllClickables(test_setup):
                                 print(AlertText)
                                 driver.switch_to_alert().accept()
                                 AlertFound=1
-                                print("Inside AlertFound")
+                                print("Inside Alert Found")
                             except Exception:
                                 pass
                             RecordsPerPage = driver.find_element_by_xpath(

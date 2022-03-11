@@ -312,27 +312,32 @@ def test_VerifyAllClickables(test_setup):
                                 "By default [ 10 ] no. of records per page is selected")
                             TestResultStatus.append("Pass")
                         if i1>0:
-                            if RecordsPerPage==25:
+                            print(RecordsPerPage)
+                            if RecordsPerPage==10:
                                 for clicks in range(3):
                                     ActionChains(driver).key_down(Keys.PAGE_UP).perform()
-                                    time.sleep(1)
+                                    time.sleep(3)
 
-                            elif RecordsPerPage==50:
+                            elif RecordsPerPage==25:
                                 for clicks in range(4):
                                     ActionChains(driver).key_down(Keys.PAGE_UP).key_up(Keys.PAGE_UP).perform()
-                                    time.sleep(1)
+                                    time.sleep(3)
+                                driver.close()
 
                             select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
                             select.select_by_index(i1)
-                            time.sleep(1)
+                            time.sleep(3)
                             try:
                                 AlertText = driver.switch_to_alert().text
                                 print(AlertText)
-                                driver.switch_to_alert().accept()
-                                AlertFound=1
-                                print("Inside Alert Found")
-                            except Exception:
-                                pass
+                            except Exception as al:
+                                 print(al)
+                                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                                 pass
+                            time.sleep(2)
+                            AlertFound=1
+                            print("Inside Alert Found")
+
                             RecordsPerPage = driver.find_element_by_xpath(
                                 "//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
                             RecordsPerPage = int(RecordsPerPage)
@@ -426,6 +431,7 @@ def test_VerifyAllClickables(test_setup):
                         TestResult.append(
                             "After selecting Pagination for [ " + str(RecordsPerPage) + " ] no. of records, no data found")
                         TestResultStatus.append("Pass")
+
             except Exception as aq:
                 print(aq)
                 TestResult.append("Pagination is not working properly\n"+str(aq))

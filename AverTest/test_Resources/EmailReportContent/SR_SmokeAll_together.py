@@ -53,7 +53,7 @@ def test_ReportSendSmokeAll():
     html = '''
         <html>
             <body>
-                <p>Hi Team <br />Here is the test summary report of Test Suite 10 ( Resources ) <br />Below test scenarios are covered </p>
+                <p>Hi Team <br />Here is the test summary report of Test Suite 12 ( Resources ) <br />Below test scenarios are covered </p>
                 <p></p>
                 <p>'''+B+'''</p
                 <p></p>
@@ -81,10 +81,10 @@ def test_ReportSendSmokeAll():
     #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
     email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
-    SenderEmail = "teamqa59@gmail.com"
-    RandmStr = "Gagan@0309"
+    SenderEmail = "Raeautomationbig@gmail.com"
+    RandmStr = "Raeautomationbig@786"
     msg = MIMEMultipart()
-    msg['Subject']='[Smoke Test 10 (Resources)]-Test Automation Report-Env [Test]'
+    msg['Subject']='[Test Suite 12 (Resources)]-Test Automation Report-Env [Test]'
     msg['From'] = email_from
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))

@@ -8,6 +8,9 @@ import pytest
 from selenium import webdriver
 import allure
 from sys import platform
+
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -300,7 +303,7 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------Verify Pagination clicks-----------------------------
             RecordsPerPage=10
             try:
-                for i1 in range(4):
+                for i1 in range(3):
                     try:
                         print(i1)
                         AlertFound = 0
@@ -309,17 +312,32 @@ def test_VerifyAllClickables(test_setup):
                                 "By default [ 10 ] no. of records per page is selected")
                             TestResultStatus.append("Pass")
                         if i1>0:
-                            print(AlertFound)
+                            print(RecordsPerPage)
+                            if RecordsPerPage==10:
+                                for clicks in range(3):
+                                    ActionChains(driver).key_down(Keys.PAGE_UP).perform()
+                                    time.sleep(3)
+
+                            elif RecordsPerPage==25:
+                                for clicks in range(4):
+                                    ActionChains(driver).key_down(Keys.PAGE_UP).key_up(Keys.PAGE_UP).perform()
+                                    time.sleep(3)
+                                driver.close()
+
                             select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
                             select.select_by_index(i1)
-                            time.sleep(1)
+                            time.sleep(3)
                             try:
                                 AlertText = driver.switch_to_alert().text
                                 print(AlertText)
-                                driver.switch_to_alert().accept()
-                                AlertFound=1
-                            except Exception:
-                                pass
+                            except Exception as al:
+                                 print(al)
+                                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                                 pass
+                            time.sleep(2)
+                            AlertFound=1
+                            print("Inside Alert Found")
+
                             RecordsPerPage = driver.find_element_by_xpath(
                                 "//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
                             RecordsPerPage = int(RecordsPerPage)
@@ -344,7 +362,16 @@ def test_VerifyAllClickables(test_setup):
 
                     TotalItem = driver.find_element_by_xpath("//div[@class='table_data']/div/div[4]").text
                     print(TotalItem)
+
                     if TotalItem!="":
+                        ShowingError = "Showing 1 to " + str(RecordsPerPage)
+                        if ShowingError not in TotalItem:
+                            print("ShowingError found in " + TotalItem)
+                            TestResult.append(
+                                "For table [ Tracking ] Pagination footer info is wrong. It is showing " + TotalItem + " when selecting pagination for " + str(
+                                    RecordsPerPage))
+                            TestResultStatus.append("Fail")
+
                         substr = "of"
                         x = TotalItem.split(substr)
                         string_name = x[0]
@@ -404,9 +431,10 @@ def test_VerifyAllClickables(test_setup):
                         TestResult.append(
                             "After selecting Pagination for [ " + str(RecordsPerPage) + " ] no. of records, no data found")
                         TestResultStatus.append("Pass")
+
             except Exception as aq:
                 print(aq)
-                TestResult.append("Pagination is not working properly\n"+aq)
+                TestResult.append("Pagination is not working properly\n"+str(aq))
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

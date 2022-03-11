@@ -315,12 +315,12 @@ def test_VerifyAllClickables(test_setup):
                             if RecordsPerPage==25:
                                 for clicks in range(3):
                                     ActionChains(driver).key_down(Keys.PAGE_UP).perform()
-                                    time.sleep()
+                                    time.sleep(1)
 
                             elif RecordsPerPage==50:
                                 for clicks in range(4):
                                     ActionChains(driver).key_down(Keys.PAGE_UP).key_up(Keys.PAGE_UP).perform()
-                                    time.sleep()
+                                    time.sleep(1)
 
                             select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
                             select.select_by_index(i1)

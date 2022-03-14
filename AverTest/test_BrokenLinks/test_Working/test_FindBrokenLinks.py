@@ -253,7 +253,7 @@ def test_VerifyAllClickables(test_setup):
                                     else:
                                         Listb.append(elema.get_attribute("href"))
                         print("Total "+str(len(Listb))+" links collected")
-                        TestResult.append("Total "+str(len(Listb))+" links collected")
+                        TestResult.append("Total "+str(len(Listb))+" links collected and verified")
                         TestResultStatus.append("Pass")
 
                 except Exception as dd:

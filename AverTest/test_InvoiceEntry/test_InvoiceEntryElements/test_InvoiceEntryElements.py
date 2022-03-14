@@ -527,8 +527,8 @@ def test_VerifyAllClickables(test_setup):
                     "//table[@class='table datatable-sorting']/thead/tr/th[5]/div").click()
                 time.sleep(1)
                 driver.find_element_by_xpath(
-                    "//table[@class='table datatable-sorting']/thead/tr/th[5]/div/div/div[2]/div[1]/input").click()
-                TestResult.append(PageName + " is present and user is able to select values")
+                    "//table[@class='table datatable-sorting']/thead/tr/th[5]/div/div/div[2]/div[1]/input").send_keys("Tservice provider")
+                TestResult.append(PageName + " is present and user is able to send inputs")
                 TestResultStatus.append("Pass")
             except Exception:
                 TestResult.append(PageName + " is not present")
@@ -992,7 +992,7 @@ def test_VerifyAllClickables(test_setup):
 
             # ---------------------------Verify Pagination clicks for Status Logs table-----------------------------
             PageName = "Status Logs table"
-            NumberOfPages = "//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[5]/a"
+            NumberOfPages = "//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[last()]/a"
             try:
                 for scrolldown in range(1, 10):
                     time.sleep(2)
@@ -1008,7 +1008,7 @@ def test_VerifyAllClickables(test_setup):
                         print("Page Down")
                         pass
                 NumberOfPages = driver.find_element_by_xpath(
-                    "//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[5]/a").text
+                    "//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[last()-1]/a").text
                 NumberOfPages = int(NumberOfPages)
                 print(NumberOfPages)
                 for sl in range(NumberOfPages):
@@ -1016,7 +1016,7 @@ def test_VerifyAllClickables(test_setup):
                         TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
                         TestResultStatus.append("Pass")
                         break
-                    driver.find_element_by_xpath("//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[6]/a").click()
+                    driver.find_element_by_xpath("//table[@id='invoice_status_listing']/tbody/tr[last()]/td/nav/ul/li[last()]/a").click()
                     time.sleep(1)
                 if sl != NumberOfPages - 1:
                     TestResult.append(

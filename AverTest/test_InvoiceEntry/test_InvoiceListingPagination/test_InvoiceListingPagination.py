@@ -303,7 +303,6 @@ def test_VerifyAllClickables(test_setup):
             totalClicks=int(totalClicks)
             print(totalClicks)
 
-            totalClicks = 5
             TotalPageAmount=0
             for l0 in range(totalClicks):
                 print()
@@ -327,8 +326,7 @@ def test_VerifyAllClickables(test_setup):
                         TotalAmountFloatList.append(TotalAmountFoundFloat)
                         TotalPageAmount=TotalPageAmount+TotalAmountFoundFloat
 
-                print(TotalPageAmount)
-                TestResult.append("On page no.["+str(l0+1)+"] total amount found is "+str(TotalPageAmount))
+                TestResult.append("On page no.["+str(l0+1)+"] total amount found is $"+str(round(TotalPageAmount,2)))
                 TestResultStatus.append("Pass")
                 TotalPageAmount=0
 

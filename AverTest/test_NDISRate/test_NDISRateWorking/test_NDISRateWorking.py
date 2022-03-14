@@ -197,7 +197,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      driver.quit()
+      #driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -211,7 +211,7 @@ def test_VerifyAllClickables(test_setup):
         try:
             print()
             # ---------------------------Verify NDIS Rate icon click-----------------------------
-            PageName = "NDIS Rate icon"
+            PageName = "NDIS Rate page"
             Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
@@ -226,161 +226,109 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         break
                 time.sleep(2)
-                TestResult.append(PageName + " is present in left menu and able to click")
+                TestResult.append(PageName + " opened successfully")
                 TestResultStatus.append("Pass")
             except Exception as ee:
                 print(ee)
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not able to open")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Back button on NDIS Rate page -----------------------------
-            PageName = "Back button"
-            Ptitle1 = "Rae"
-            try:
-                driver.find_element_by_xpath("//a[text()='Back']").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                time.sleep(2)
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ----------------Verify NDIS Rate icon click after verifying back------------------
-            PageName = "NDIS Rate icon"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[6]/a").click()
-                time.sleep(2)
-
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                TestResult.append(PageName + "  is opened again after verifying back button")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not opened again after verifying back button")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            for load in range(LONG_TIMEOUT):
-                try:
-                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                        time.sleep(0.5)
-                except Exception:
-                    break
-            # ---------------------------------------------------------------------------------
-
-            # ----------------Verify working of Upload button-----------------------------------
-            PageName = "Upload button"
-            Ptitle1 = "Upload NDIS Rate"
+            # ---------------------------Verify NDIS upload functionality-----------------------------
+            EffectiveDate="03-03-2022"
+            PageName="NDIS upload button"
             try:
                 driver.find_element_by_xpath("//a[text()='Upload']").click()
+                TestResult.append(PageName + " clicked successfully")
+                TestResultStatus.append("Pass")
                 time.sleep(2)
-                PageTitle1 = driver.find_element_by_xpath("//h4[text()='Upload NDIS Rate']").text
+                driver.find_element_by_xpath("//input[@name='effective_date']").send_keys(EffectiveDate)
                 time.sleep(2)
-                driver.find_element_by_xpath("//a[text()='Exit']").click()
+                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
                 time.sleep(2)
+                driver.find_element_by_xpath("//input[@name='ndis_rate_file']").send_keys("C:/AVER/AverTest/test_NDISRate/NDISData/NDISData.csv")
+                time.sleep(2)
+                driver.find_element_by_xpath("//button[text()='Save']").click()
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                             time.sleep(0.5)
                     except Exception:
                         break
-                assert PageTitle1 in Ptitle1, PageName + " not able to click"
-                TestResult.append(PageName + "  is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not clickable")
+
+
+            except Exception as ee:
+                print(ee)
+                TestResult.append(PageName + " is not able to click")
                 TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ------------------------------------------------------------------------------------------
+                time.sleep(2)
 
-            # ---------------------------Verify NDIS Rate pagination working-----------------------------
-            try:
-                TotalItem = driver.find_element_by_xpath("//div[@id='ndis_rate_table_data_info']").text
-                print(TotalItem)
-                substr = "of"
-                x = TotalItem.split(substr)
-                string_name = x[0]
-                TotalItemAfterOf = x[1]
-                abc = ""
-                countspace = 0
-                for element in range(0, len(string_name)):
-                    if string_name[(len(string_name) - 1) - element] == " ":
-                        countspace = countspace + 1
-                        if countspace == 2:
-                            break
-                    else:
-                        abc = abc + string_name[(len(string_name) - 1) - element]
-                abc = abc[::-1]
-                TotalItemBeforeOf = abc
-                TotalItemAfterOf = TotalItemAfterOf.split(" ")
-                TotalItemAfterOf = TotalItemAfterOf[1]
-                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-
-                TotalItemAfterOf = int(TotalItemAfterOf)
-                RecordsPerPage = 50
-                TotalPages = TotalItemAfterOf / RecordsPerPage
-                NumberOfPages = math.ceil(float(TotalPages))
-                ClickCounter = 0
-                for i in range(NumberOfPages):
-                    if i < 1:
-                        if i == NumberOfPages - 1:
-                            TestResult.append("No Pagination found for [ " + str(
-                                TotalItemAfterOf) + " ] no. of records under NDIS Rate table")
-                            TestResultStatus.append("Pass")
-                            break
-                    try:
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                        time.sleep(1)
-                        ClickCounter = ClickCounter + 1
-                    except Exception as cc:
-                        pass
-                TestResult.append("Pagination verified for [ " + str(
-                    TotalItemAfterOf) + " ] no. of records under NDIS Rate table")
-                TestResultStatus.append("Pass")
-                if i != ClickCounter:
-                    TestResult.append(
-                        "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
-                    TestResultStatus.append("Fail")
-                driver.refresh()
-                try:
-                    WebDriverWait(driver, SHORT_TIMEOUT
-                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-
-                    WebDriverWait(driver, LONG_TIMEOUT
-                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                except TimeoutException:
-                    pass
-            except Exception as aq:
-                TestResult.append(
-                    "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
-                TestResultStatus.append("Fail")
-
-            # -------------------------------------------------------------------------------------------
+            # # ---------------------------Verify NDIS Rate pagination working-----------------------------
+            # try:
+            #     TotalItem = driver.find_element_by_xpath("//div[@id='ndis_rate_table_data_info']").text
+            #     print(TotalItem)
+            #     substr = "of"
+            #     x = TotalItem.split(substr)
+            #     string_name = x[0]
+            #     TotalItemAfterOf = x[1]
+            #     abc = ""
+            #     countspace = 0
+            #     for element in range(0, len(string_name)):
+            #         if string_name[(len(string_name) - 1) - element] == " ":
+            #             countspace = countspace + 1
+            #             if countspace == 2:
+            #                 break
+            #         else:
+            #             abc = abc + string_name[(len(string_name) - 1) - element]
+            #     abc = abc[::-1]
+            #     TotalItemBeforeOf = abc
+            #     TotalItemAfterOf = TotalItemAfterOf.split(" ")
+            #     TotalItemAfterOf = TotalItemAfterOf[1]
+            #     TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+            #
+            #     TotalItemAfterOf = int(TotalItemAfterOf)
+            #     RecordsPerPage = 50
+            #     TotalPages = TotalItemAfterOf / RecordsPerPage
+            #     NumberOfPages = math.ceil(float(TotalPages))
+            #     ClickCounter = 0
+            #     for i in range(NumberOfPages):
+            #         if i < 1:
+            #             if i == NumberOfPages - 1:
+            #                 TestResult.append("No Pagination found for [ " + str(
+            #                     TotalItemAfterOf) + " ] no. of records under NDIS Rate table")
+            #                 TestResultStatus.append("Pass")
+            #                 break
+            #         try:
+            #             time.sleep(TimeSpeed)
+            #             driver.find_element_by_xpath(
+            #                 "//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+            #             time.sleep(1)
+            #             ClickCounter = ClickCounter + 1
+            #         except Exception as cc:
+            #             pass
+            #     TestResult.append("Pagination verified for [ " + str(
+            #         TotalItemAfterOf) + " ] no. of records under NDIS Rate table")
+            #     TestResultStatus.append("Pass")
+            #     if i != ClickCounter:
+            #         TestResult.append(
+            #             "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
+            #         TestResultStatus.append("Fail")
+            #     driver.refresh()
+            #     try:
+            #         WebDriverWait(driver, SHORT_TIMEOUT
+            #                       ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+            #
+            #         WebDriverWait(driver, LONG_TIMEOUT
+            #                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+            #     except TimeoutException:
+            #         pass
+            # except Exception as aq:
+            #     TestResult.append(
+            #         "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
+            #     TestResultStatus.append("Fail")
+            # # -------------------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)

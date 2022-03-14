@@ -77,7 +77,7 @@ def test_ReportSendSmokeAll():
                 file_attachment.add_header(name, value)
         msg.attach(file_attachment)
 
-    email_from = 'Aver Planning Test Automation Team'
+    email_from = 'Rae CRM Test Automation Team'
     email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
     #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com']
     #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']

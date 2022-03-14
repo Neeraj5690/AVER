@@ -288,6 +288,9 @@ def test_VerifyAllClickables(test_setup):
             Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").click()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").click()
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -308,50 +311,156 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify Pagination clicks for Notification listing table-----------------------------
-            PageName = "Notification listing table"
+            # ---------------------------Verify working of Choose Notification Type button for Notification Listing-----------------------------
+            PageName = "Choose Notification Type button"
+            Ptitle1 = ""
             try:
-                totalClicks = driver.find_elements_by_xpath("//table[@id='notification_table_data']/tbody/tr[last()]/td/nav/ul/li")
-                totalClicks = len(totalClicks)-1
-                print(totalClicks)
+                driver.find_element_by_xpath(
+                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").click()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                driver.find_element_by_xpath(
+                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/div/div/input").clear()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/div/div/input").send_keys(
+                    "Tclient")
                 time.sleep(2)
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " for notification listing is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
 
+            try:
+            # ---------------------------Verify Pagination clicks for Notification table-----------------------------
+                PageName = "Notification listing table"
+                NumberOfPages = "//tbody[@id='notificationListingAjaxView']/tr[last()]"
+                try:
+                    for scrolldown in range(1, 10):
+                        time.sleep(2)
+                        try:
+                            driver.execute_script("arguments[0].scrollIntoView();", NumberOfPages)
+                            break
+                        except Exception:
+                            print("Inside Excep")
+                            ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
+                            print("Page Down")
+                            pass
+                    NumberOfPages = driver.find_element_by_xpath(
+                        "//ul[@class='pagination']/li[last()-1]/a").text
+                    NumberOfPages = int(NumberOfPages)
+                    print(NumberOfPages)
+                    for sl in range(NumberOfPages):
+                        if sl == NumberOfPages - 1:
+                            TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
+                            TestResultStatus.append("Pass")
+                            break
+                        driver.find_element_by_xpath(
+                            "//ul[@class='pagination']/li[last()]/a").click()
+                        time.sleep(1)
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
 
-                # ClickCounter = 0
-                # for i in range(NumberOfPages):
-                #     if i < 1:
-                #         if i == NumberOfPages - 1:
-                #             TestResult.append("No Pagination found for [ " + str(
-                #                 RecordsPerPage) + " ] no. of records under Portal listing table")
-                #             TestResultStatus.append("Pass")
-                #             break
-                #     try:
-                #         time.sleep(TimeSpeed)
-                #         driver.find_element_by_xpath(
-                #             "//table[@id='notification_table_data']/tbody/tr[last()]/td/nav/ul/li[last()]").click()
-                #         time.sleep(1)
-                #         ClickCounter = ClickCounter + 1
-                #         TestResult.append("Pagination verified for [ " + str(
-                #             RecordsPerPage) + " ] no. of records under Portal listing table")
-                #         TestResultStatus.append("Pass")
-                #     except Exception:
-                #         pass
-                # if i != ClickCounter:
-                #     TestResult.append(
-                #         "Pagination for [ " + str(
-                #             RecordsPerPage) + " ] no. of records is not working correctly")
-                #     TestResultStatus.append("Fail")
-                # driver.refresh()
-                # for load in range(LONG_TIMEOUT):
-                #     try:
-                #         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                #             time.sleep(0.5)
-                #     except Exception:
-                #         break
+                    if sl != NumberOfPages - 1:
+                        TestResult.append(
+                            (
+                                    "Pagination for " + str(PageName) + " is not working correctly"))
+                        TestResultStatus.append("Fail")
+                    driver.refresh()
+                    try:
+                        WebDriverWait(driver, SHORT_TIMEOUT
+                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                        WebDriverWait(driver, LONG_TIMEOUT
+                                      ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    except TimeoutException:
+                        pass
+                except Exception as aq:
+                    print(aq)
+                    TestResult.append("Pagination for " + str(PageName) + " is not present")
+                    TestResultStatus.append("Fail")
+                # ---------------------------------------------------------------------------
             except Exception as aq:
                 print(aq)
                 TestResult.append(PageName + " pagination is not working correctly.Below error found\n"+str(aq))
                 TestResultStatus.append("Fail")
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify working of Choose client button for Completed Notification Listing-----------------------------
+            PageName = "Choose client button"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[1]/div/button/span").click()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[1]/div/button/span").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[1]/div/div/div/input").clear()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[1]/div/div/div/input").send_keys(
+                    "Tclient2")
+                time.sleep(2)
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " for notification listing is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ---------------------------Verify working of Choose Notification Type button for Completed Notification Listing-----------------------------
+            PageName = "Choose Notification Type button"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[2]/div/button/span").click()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[2]/div/button/span").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[2]/div/div/div/input").clear()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    "//div[@class='src_sec_hed']/span[2]/div/div/div/input").send_keys(
+                    "Tclient2")
+                time.sleep(2)
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " for notification listing is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------------------------------------------------------------

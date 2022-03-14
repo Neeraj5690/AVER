@@ -236,34 +236,34 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify NDIS upload functionality-----------------------------
-            EffectiveDate="03-03-2022"
-            PageName="NDIS upload button"
-            try:
-                driver.find_element_by_xpath("//a[text()='Upload']").click()
-                TestResult.append(PageName + " clicked successfully")
-                TestResultStatus.append("Pass")
-                time.sleep(2)
-                driver.find_element_by_xpath("//input[@name='effective_date']").send_keys(EffectiveDate)
-                time.sleep(2)
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                time.sleep(2)
-                driver.find_element_by_xpath("//input[@name='ndis_rate_file']").send_keys("C:/AVER/AverTest/test_NDISRate/NDISData/NDISData.csv")
-                time.sleep(2)
-                driver.find_element_by_xpath("//button[text()='Save']").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-
-
-            except Exception as ee:
-                print(ee)
-                TestResult.append(PageName + " is not able to click")
-                TestResultStatus.append("Fail")
-                time.sleep(2)
+            # # ---------------------------Verify NDIS upload functionality-----------------------------
+            # EffectiveDate="03-03-2022"
+            # PageName="NDIS upload button"
+            # try:
+            #     driver.find_element_by_xpath("//a[text()='Upload']").click()
+            #     TestResult.append(PageName + " clicked successfully")
+            #     TestResultStatus.append("Pass")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='effective_date']").send_keys(EffectiveDate)
+            #     time.sleep(2)
+            #     ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//input[@name='ndis_rate_file']").send_keys(path+"NDISData/NDISData.csv")
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//button[text()='Save']").click()
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #
+            #
+            # except Exception as ee:
+            #     print(ee)
+            #     TestResult.append(PageName + " is not able to click")
+            #     TestResultStatus.append("Fail")
+            #     time.sleep(2)
 
             # # ---------------------------Verify NDIS Rate pagination working-----------------------------
             # try:
@@ -329,6 +329,38 @@ def test_VerifyAllClickables(test_setup):
             #         "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
             #     TestResultStatus.append("Fail")
             # # -------------------------------------------------------------------------------------------
+
+            try:
+                print()
+                HeadCols = driver.find_elements_by_xpath("//table[@id='ndis_rate_table_data']/thead/tr/th")
+                BodyRows = driver.find_elements_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr")
+                BodyCols = driver.find_elements_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr[1]/td")
+                HeadCols = len(HeadCols)
+                BodyRows = len(BodyRows)
+                BodyCols = len(BodyCols)
+                print(HeadCols)
+                print(BodyRows)
+                print(BodyCols)
+                # for tc in range(HeadCols):
+                #     if tc == 6:
+                #         break
+                #     else:
+                #         TableHead = driver.find_elements_by_xpath(
+                #             "//table[@id='ndis_rate_table_data']/thead/tr/th[" + str(tc + 1) + "]").text
+                #         print(TableHead)
+                for br in range(BodyRows):
+                    print("br is"+br)
+                    for i1 in range(1,7):
+                        print("i1 is"+i1)
+                        if i1 == 6:
+                            break
+                        else:
+                            BodyColsText = driver.find_element_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr["+str(br+1)+"]/td["+str(i1)+"]").text
+                            print(BodyColsText)
+
+            except Exception:
+                pass
+
 
         except Exception as err:
             print(err)

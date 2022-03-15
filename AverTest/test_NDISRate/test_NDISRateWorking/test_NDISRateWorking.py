@@ -329,39 +329,72 @@ def test_VerifyAllClickables(test_setup):
             #         "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
             #     TestResultStatus.append("Fail")
             # # -------------------------------------------------------------------------------------------
-
+            TValuseDict = {}
+            THeadList = []
+            BodyColsList = []
             try:
                 print()
-                HeadCols = driver.find_elements_by_xpath("//table[@id='ndis_rate_table_data']/thead/tr/th")
-                BodyRows = driver.find_elements_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr")
-                BodyCols = driver.find_elements_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr[1]/td")
-                HeadCols = len(HeadCols)
-                BodyRows = len(BodyRows)
-                BodyCols = len(BodyCols)
-                print(HeadCols)
-                print(BodyRows)
-                print(BodyCols)
-                # for tc in range(HeadCols):
-                #     if tc == 6:
-                #         break
-                #     else:
-                #         TableHead = driver.find_elements_by_xpath(
-                #             "//table[@id='ndis_rate_table_data']/thead/tr/th[" + str(tc + 1) + "]").text
-                #         print(TableHead)
-                for br in range(BodyRows):
-                    print("br is"+br)
-                    for i1 in range(1,7):
-                        print("i1 is"+i1)
-                        if i1 == 6:
-                            break
-                        else:
-                            BodyColsText = driver.find_element_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr["+str(br+1)+"]/td["+str(i1)+"]").text
-                            print(BodyColsText)
+                try:
+                    try:
+                        for tc in range(1,7):
+                            THead = driver.find_element_by_xpath(
+                                "//table[@id='ndis_rate_table_data']/thead/tr/th[" + str(tc) + "]").text
+                            print(THead)
+                            THeadList.append(THead)
+                    except Exception:
+                        pass
+                    try:
+                        BodyRows = driver.find_elements_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr")
+                        BodyRows = len(BodyRows)
+                        print(BodyRows)
+                        for i in range(BodyRows):
+                            print(i)
+                            for i1 in range(1,7):
+                                BodyColsText = driver.find_element_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr["+str(i+1)+"]/td["+str(i1)+"]").text
+                                print(BodyColsText)
+                                BodyColsList.append(BodyColsText)
+                    except Exception:
+                        pass
+                    try:
+                        for ii in range(len(THeadList)):
+                            TValuseDict[THead].append(BodyColsText)
+                            TValuseDict[THeadList[ii]] = BodyColsList[ii]
+                        print(TValuseDict)
+                    except Exception:
+                        pass
 
+                except Exception as ee:
+                    print(ee)
             except Exception:
                 pass
-
-
+            # try:
+            #     print()
+            #     RegistrationGroupName = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[1]/div/span").text
+            #     print("Registration Group Name is "+RegistrationGroupName)
+            #     time.sleep(1)
+            #
+            #     SupportCategoryName = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[2]/div/span").text
+            #     print("Support Category Name is "+SupportCategoryName)
+            #     time.sleep(1)
+            #
+            #     SupportItemNumber = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[3]/div/span").text
+            #     print("Support Item Number is "+SupportItemNumber)
+            #     time.sleep(1)
+            #
+            #     SupportItemName = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[4]/div/span").text
+            #     print("Support Item Name is "+SupportItemName)
+            #     time.sleep(1)
+            #
+            #     Unit = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[5]/div/span").text
+            #     print("Unit is "+Unit)
+            #     time.sleep(1)
+            #
+            #     Quote = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[6]/div/span").text
+            #     print("Quote is "+Quote)
+            #     time.sleep(1)
+            #
+            # except Exception:
+            #     pass
         except Exception as err:
             print(err)
             TestResult.append("NDIS Rate is not working correctly. Below error found\n"+str(err))

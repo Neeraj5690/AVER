@@ -40,8 +40,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_PortalWorking"
-  description = "This test scenario is to verify the Working of Elements at Portal page"
+  TestName = "test_PortalDashboard"
+  description = "This test scenario is to verify content at Dashboard page of Client Portal"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -204,7 +204,7 @@ def test_VerifyAllClickables(test_setup):
         LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             # ---------------------------Verify Portal icon click-----------------------------
-            PageName = "Portal icon"
+            PageName = "Portal page"
             Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
@@ -220,140 +220,17 @@ def test_VerifyAllClickables(test_setup):
                         break
 
                 time.sleep(2)
-                TestResult.append(PageName + " is present in left menu and able to click")
+                TestResult.append(PageName + " opened successfully")
                 TestResultStatus.append("Pass")
             except Exception as ee:
                 print(ee)
-                TestResult.append(PageName + " is not present")
+                TestResult.append(PageName + " is not able to open")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
             # ---------------------------Verify working of Back button on Portal page -----------------------------
-            PageName = "Back button"
-            Ptitle1 = "Rae"
-            try:
-                driver.find_element_by_xpath("//a[text()='Back']").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                time.sleep(2)
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ----------------Verify Portal icon click after verifying back--------
-            PageName = "Portal icon"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[9]/a").click()
-                time.sleep(2)
-
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                TestResult.append(PageName + "  is opened again after verifying back button")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not opened again after verifying back button")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            for load in range(LONG_TIMEOUT):
-                try:
-                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-
-                        time.sleep(0.5)
-                except Exception:
-                    break
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify Pagination clicks for portal listing table-----------------------------
-            PageName = "portal listing table"
-            try:
-                TotalItem = driver.find_element_by_xpath("//div[@id='table_data_wrapper']/div[3]/div[1]").text
-                print(TotalItem)
-                substr = "of"
-                x = TotalItem.split(substr)
-                string_name = x[0]
-                TotalItemAfterOf = x[1]
-                abc = ""
-                countspace = 0
-                for element in range(0, len(string_name)):
-                    if string_name[(len(string_name) - 1) - element] == " ":
-                        countspace = countspace + 1
-                        if countspace == 2:
-                            break
-                    else:
-                        abc = abc + string_name[(len(string_name) - 1) - element]
-                abc = abc[::-1]
-                TotalItemBeforeOf = abc
-                TotalItemAfterOf = TotalItemAfterOf.split(" ")
-                TotalItemAfterOf = TotalItemAfterOf[1]
-                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-                print(TotalItemAfterOf)
-
-                TotalItemAfterOf = int(TotalItemAfterOf)
-                RecordsPerPage = 50
-                TotalPages = TotalItemAfterOf / RecordsPerPage
-                print(TotalPages)
-                NumberOfPages = math.ceil(float(TotalPages))
-                print(NumberOfPages)
-
-                ClickCounter = 0
-                for i in range(NumberOfPages):
-                    if i < 1:
-                        if i == NumberOfPages - 1:
-                            TestResult.append("No Pagination found for [ " + str(
-                                TotalItemAfterOf) + " ] no. of records under Portal listing table")
-                            TestResultStatus.append("Pass")
-                            break
-                    try:
-                        time.sleep(TimeSpeed)
-                        driver.find_element_by_xpath(
-                            "//div[@id='table_data_paginate']/a[2]").click()
-                        time.sleep(1)
-                        ClickCounter = ClickCounter + 1
-                        TestResult.append("Pagination verified for [ " + str(
-                            TotalItemAfterOf) + " ] no. of records under Portal listing table")
-                        TestResultStatus.append("Pass")
-                    except Exception:
-                        pass
-                if i != ClickCounter:
-                    TestResult.append(
-                        "Pagination for [ " + str(
-                            TotalItemAfterOf) + " ] no. of records is not working correctly")
-                    TestResultStatus.append("Fail")
-                driver.refresh()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-            except Exception as aq:
-                print(aq)
-                TestResult.append(PageName + " pagination is not working correctly.Below error found\n"+str(aq))
-                TestResultStatus.append("Fail")
-            # ---------------------------------------------------------------------------------
 
             # ---------------------------------------------------------------------------------
 

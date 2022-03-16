@@ -14,12 +14,6 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from sys import platform
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-import pyperclip
-import random
 import os
 
 
@@ -41,8 +35,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_SettingsWorking"
-  description = "This test scenario is to verify the Working of Elements at Settings page"
+  TestName = "test_SettingsNoteType"
+  description = "This test scenario is to verify Note Type data collected at Settings page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -194,7 +188,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      driver.quit()
+      #driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -230,65 +224,9 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Back button on Settings page -----------------------------
-            PageName = "Back button"
-            Ptitle1 = "Rae"
-            try:
-                driver.find_element_by_xpath("//a[text()='Back']").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                time.sleep(2)
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ----------------Verify Settings icon click after verifying back--------
-            PageName = "Settings icon"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[11]/a").click()
-                time.sleep(2)
-
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                TestResult.append(PageName + "  is opened again after verifying back button")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not opened again after verifying back button")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            for load in range(LONG_TIMEOUT):
-                try:
-                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                        time.sleep(0.5)
-                except Exception:
-                    break
-            # ---------------------------------------------------------------------------------
-
             # ---------------------------Verify working of Notes Types button under system settings-----------------------------
-            ClientName = "BitsInGlass"
             PageName = "Notes Types button"
-            Ptitle1 = "System Settings"
-            NoteTypeDict = {}
+            ExpectedDict = {}
             SuccessList = []
             PendingList = []
             try:
@@ -304,19 +242,18 @@ def test_VerifyAllClickables(test_setup):
                     NoteTypeRows = len(NoteTypeRows)
                     print(NoteTypeRows)
                     for tr in range (NoteTypeRows):
-                        Keys = driver.find_element_by_xpath("//table[@id='client_status_data']/tbody/tr["+str(tr+1)+"]/td[3]").text
-                        print(Keys)
+                        Keys1 = driver.find_element_by_xpath("//table[@id='client_status_data']/tbody/tr["+str(tr+1)+"]/td[3]").text
+                        print(Keys1)
                         time.sleep(0.25)
                         Values = driver.find_element_by_xpath("//table[@id='client_status_data']/tbody/tr["+str(tr+1)+"]/td[2]").text
                         print(Values)
                         time.sleep(0.25)
-                        if Keys == "Success":
+                        if Keys1 == "Success":
                             SuccessList.append(Values)
-                            NoteTypeDict[Keys] = SuccessList
-                        elif Keys == "Pending":
+                            ExpectedDict[Keys1] = SuccessList
+                        elif Keys1 == "Pending":
                             PendingList.append(Values)
-                            NoteTypeDict[Keys] = PendingList
-                    print(NoteTypeDict)
+                            ExpectedDict[Keys1] = PendingList
                 except Exception:
                     pass
 
@@ -330,46 +267,77 @@ def test_VerifyAllClickables(test_setup):
                             break
                 except Exception:
                     pass
-                Records = driver.find_elements_by_xpath("//div[@class='datatable-scroll']/table/tbody/tr")
-                Records = len(Records)
-                print(Records)
-                for ii in range(Records):
-                    ClientFound = driver.find_element_by_xpath(
-                        "//table[@id='table_data']/tbody/tr[" + str(ii) + "]/td[2]").text
-                    if ClientName == ClientFound:
-                        driver.find_element_by_xpath(
-                            "//table[@id='table_data']/tbody/tr[" + str(ii) + "]/td[2]/a").click()
-                        for load in range(LONG_TIMEOUT):
-                            try:
-                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                                    time.sleep(0.5)
-                            except Exception:
-                                break
-                    else:
-                        print("Client not present in application")
-                try:
-                    driver.find_element_by_xpath("//li/a[text()='Alert & Notes']").click()
-                    for load in range(LONG_TIMEOUT):
-                        try:
-                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                                time.sleep(0.5)
-                        except Exception:
-                            break
-                    driver.find_element_by_xpath("//div[@class='hed_wth_srch mt-4']/div/a[2]").click()
-                    for load in range(LONG_TIMEOUT):
-                        try:
-                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                                time.sleep(0.5)
-                        except Exception:
-                            break
-                except Exception:
-                    pass
 
-            except Exception:
-                TestResult.append(PageName + " is not clickable under system settings")
+                #------------------Fetch Client name from Excel--------------------
+
+                #------------------------------------------------------------------
+
+                NameToOpen = "BitsInGlass"
+                driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
+
+                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[text()='"+NameToOpen+"']/a").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+
+                #---------Checking Alert & Notes section in Client------------------
+                driver.find_element_by_xpath("//a[text()='Alert & Notes']").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+
+                #-------------Clicking on Add New + button--------------------
+                driver.find_element_by_xpath("//a[text()='Add New +']/parent::div/parent::div/parent::div/div[3]/div/a[2]").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+
+                #------Fetching dropdown values---------------
+                ActSuccessElements=[]
+                l = driver.find_element_by_name("note_type")
+                d = Select(l)
+                for opt in d.options:
+                    print(opt.text)
+                    if opt.text !="Select Note Type":
+                        ActSuccessElements.append(opt.text)
+
+                #------Comparing results-----------
+                print(len(ExpectedDict["Success"]))
+                print(len(ActSuccessElements))
+
+                if len(ActSuccessElements)==len(ExpectedDict["Success"]):
+                    print("Items number matched")
+                else:
+                    print("Items number does not match")
+
+
+                print(ExpectedDict["Success"])
+                print(ActSuccessElements)
+                if ActSuccessElements==ExpectedDict["Success"]:
+                    print("Items list matched")
+                else:
+                    print("Items list does not match")
+
+            except Exception as wr:
+                print(wr)
+                TestResult.append(PageName + " is not clickable under Settings section")
                 TestResultStatus.append("Fail")
-            print()
-            driver.find_element_by_xpath("//a[text()='Back']").click()
             # ---------------------------------------------------------------------------------
 
             # ---------------------------------------------------------------------------------

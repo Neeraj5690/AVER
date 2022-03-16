@@ -272,7 +272,7 @@ def test_VerifyAllClickables(test_setup):
             NewDate = date.today()
             NewDate = NewDate.strftime("%d-%m-%Y")
             EffectiveDate=NewDate
-            #EffectiveDate="13-03-2022"
+            EffectiveDate="11-03-2022"
             PageName="NDIS upload button"
             try:
                 driver.find_element_by_xpath("//a[text()='Upload']").click()
@@ -403,6 +403,7 @@ def test_VerifyAllClickables(test_setup):
                         break
                 TestResult.append(
                     "Below NDIS Rate details are found for record no.["+str(i2)+"]:")
+                TestResultStatus.append("Pass")
 
                 try:
                     print()

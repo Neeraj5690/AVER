@@ -321,7 +321,7 @@ def test_VerifyAllClickables(test_setup):
                     if opt.text !=" Select all":
                         ActSuccessElements.append(opt.text)
 
-                #------Comparing results-----------
+                #------Comparing results------------
                 print(len(ExpectedDict["Success"]))
                 print(len(ActSuccessElements))
 

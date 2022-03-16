@@ -299,7 +299,7 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         break
 
-                #-------------Clicking on Create New button--------------------
+                #-------------Clicking on Create New button---------------------
                 driver.find_element_by_xpath("//a[text()='Create New']").click()
                 for load in range(LONG_TIMEOUT):
                     try:

@@ -282,7 +282,7 @@ def test_VerifyAllClickables(test_setup):
                 except Exception:
                     pass
 
-                #------Fetching dropdown values---------------
+                #------Fetching dropdown values----------------
                 ActSuccessElements=[]
                 l = driver.find_element_by_name("type")
                 d = Select(l)

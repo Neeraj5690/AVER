@@ -130,7 +130,7 @@ def test_setup():
          TestFailStatus.append("Pass")
       pdf.output(TestName+"_" + ct + ".pdf", 'F')
 
-      #-----------To check if any failed Test case present-------------------
+      #-----------To check if any failed Test case present--------------------
       for io in range(len(TestResult)):
           if TestFailStatus[io]=="Fail":
               FailStatus="Fail"

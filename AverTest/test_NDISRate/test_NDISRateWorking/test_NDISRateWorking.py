@@ -250,6 +250,8 @@ def test_VerifyAllClickables(test_setup):
             csvreader = csv.reader(file)
             header = next(csvreader)
             #print(header)
+            TestResult.append("Reading NDIS rates csv file")
+            TestResultStatus.append("Pass")
 
             for row in csvreader:
                 #print(row[0])
@@ -357,23 +359,39 @@ def test_VerifyAllClickables(test_setup):
 
             if (TValuseDict["Registration Group Number"] == RegGroupNumberxl):
                 print("Registration Group Numbers are matching")
+                TestResult.append("Registration Group Numbers are matching")
+                TestResultStatus.append("Pass")
             else:
                 print("Registration Group Numbers are not matching")
+                TestResult.append("Registration Group Numbers are not matching")
+                TestResultStatus.append("Fail")
 
             if (TValuseDict["Service Support Item"] == SupportItemNamexl):
                 print("Service Support Item names are matching")
+                TestResult.append("Service Support Item names are matching")
+                TestResultStatus.append("Pass")
             else:
                 print("Service Support Item names are not matching")
+                TestResult.append("Service Support Item names are not matching")
+                TestResultStatus.append("Fail")
 
             if (TValuseDict["Support Item Number"] == SupportItemNumberxl):
                 print("Support Item Numbers are matching")
+                TestResult.append("Support Item Numbers are matching")
+                TestResultStatus.append("Pass")
             else:
                 print("Support Item Numbers are not matching")
+                TestResult.append("Support Item Numbers are not matching")
+                TestResultStatus.append("Fail")
 
             if (TValuseDict["Unit of Measure"] == Unitxl):
                 print("Unit of Measures are matching")
+                TestResult.append("Unit of Measures are matching")
+                TestResultStatus.append("Pass")
             else:
                 print("Unit of Measures are not matching")
+                TestResult.append("Unit of Measures are not matching")
+                TestResultStatus.append("Fail")
 
             for i2 in range(1,BodyRows+1):
                 driver.find_element_by_xpath("//table[@id='ndis_rate_table_data']/tbody/tr[" + str(i2) + "]/td[last()]/a[1]").click()
@@ -383,31 +401,50 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
+                TestResult.append(
+                    "Below NDIS Rate details are found for record no.["+str(i2)+"]:")
 
                 try:
                     print()
                     RegistrationGroupName = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[1]/div/span").text
                     print("Registration Group Name is "+RegistrationGroupName)
+                    TestResult.append("Registration Group Name is "+RegistrationGroupName)
+                    TestResultStatus.append("Pass")
                     time.sleep(1)
 
                     SupportCategoryName = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[2]/div/span").text
                     print("Support Category Name is "+SupportCategoryName)
+                    TestResult.append(
+                        "Support Category Name is "+SupportCategoryName)
+                    TestResultStatus.append("Pass")
                     time.sleep(1)
 
                     SupportItemNumber = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[3]/div/span").text
                     print("Support Item Number is "+SupportItemNumber)
+                    TestResult.append(
+                        "Support Item Number is "+SupportItemNumber)
+                    TestResultStatus.append("Pass")
                     time.sleep(1)
 
                     SupportItemName = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[4]/div/span").text
                     print("Support Item Name is "+SupportItemName)
+                    TestResult.append(
+                        "Support Item Name is "+SupportItemName)
+                    TestResultStatus.append("Pass")
                     time.sleep(1)
 
                     Unit = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[5]/div/span").text
                     print("Unit is "+Unit)
+                    TestResult.append(
+                        "Unit is "+Unit)
+                    TestResultStatus.append("Pass")
                     time.sleep(1)
 
                     Quote = driver.find_element_by_xpath("//form[@class='frm_viw_data mb-4']/div[6]/div/span").text
                     print("Quote is "+Quote)
+                    TestResult.append(
+                        "Quote is "+Quote)
+                    TestResultStatus.append("Pass")
                     time.sleep(1)
 
                 except Exception:

@@ -223,7 +223,6 @@ def test_VerifyAllClickables(test_setup):
             try:
                 PageTitle1 = driver.find_element_by_xpath(
                     "//h2[text()='Notification Listing']").text
-                print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not present"
                 TestResult.append(PageName + " (Notification Listing) is present")
                 TestResultStatus.append("Pass")
@@ -238,7 +237,6 @@ def test_VerifyAllClickables(test_setup):
             Ptitle1 = "Back"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//a[text()='Back']").text
-                print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 TestResult.append(PageName + "  is present on PM Notifications page")
                 TestResultStatus.append("Pass")
@@ -254,7 +252,6 @@ def test_VerifyAllClickables(test_setup):
             Ptitle1 = "Choose Client"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").text
-                print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 TestResult.append(PageName + "  is present on notification listing table")
                 TestResultStatus.append("Pass")
@@ -270,7 +267,6 @@ def test_VerifyAllClickables(test_setup):
             Ptitle1 = "Choose Notification Type"
             try:
                 PageTitle1 = driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").text
-                print(PageTitle1)
                 assert PageTitle1 in Ptitle1, PageName + " not able to open"
                 TestResult.append(PageName + "  is present on notification listing table")
                 TestResultStatus.append("Pass")
@@ -289,13 +285,13 @@ def test_VerifyAllClickables(test_setup):
             print(len(ItemList))
             ItemPresent = []
             ItemNotPresent = []
-            for ii in range(len(ItemList)+1):
+            for ii in range(len(ItemList)):
                 Text1 = ItemList[ii]
                 print(Text1)
                 try:
                     if ii == 0:
                         try:
-                            Element1 = driver.find_element_by_xpath(
+                            driver.find_element_by_xpath(
                                 "//table[@id='notification_table_data']/thead/tr/th[" + str(ii + 1) + "]/input").is_displayed()
                             print("Checkbox present")
                             TestResult.append("Checkbox is present under [ " + inside + " ] table")

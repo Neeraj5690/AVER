@@ -352,7 +352,7 @@ def test_VerifyAllClickables(test_setup):
                                             except Exception:
                                                 break
 
-                                        TestResult.append("Checking Service Provide view page details")
+                                        TestResult.append("Checking Service Provider view page details")
                                         TestResultStatus.append("Pass")
 
                                         #-------Verifying Service provider name---------

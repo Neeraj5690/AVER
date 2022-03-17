@@ -278,10 +278,7 @@ def test_VerifyAllClickables(test_setup):
                 print("Ref sheet is not able to read, please check the ref doc sheet")
                 driver.close()
 
-            print(FirstNameListXL)
-            print(LastNameListXL)
-            print(RelationListXL)
-            # ---------------------------Verify Client Portal Dashboard Data-----------------------------
+            # ---------------------------Verify Client Portal Profile Data-----------------------------
             PageName = "Client Portal Profile page"
             TitleExpected="Profile"
             try:
@@ -311,7 +308,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not able to open")
                 TestResultStatus.append("Fail")
 
-            # ------------------------Fetching Data present at Dashboard page --------------
+            # ------------------------Fetching Data present at Profile page --------------
             FoundUserName=driver.find_element_by_xpath("//label[text()='User Name']/parent::div/p").text
             print(FoundUserName)
 
@@ -330,7 +327,7 @@ def test_VerifyAllClickables(test_setup):
             FoundUserAddress = driver.find_element_by_xpath("//label[text()='User Address']/parent::div/p").text
             print(FoundUserAddress)
 
-            # ------------------------Verify Data present at Dashboard page --------------
+            # ------------------------Verify Data present at Profile page --------------
             if FLNameXL!=FoundUserName:
                 print("Client name at client portal (Profile) does not match with client name at admin portal")
             else:
@@ -360,6 +357,82 @@ def test_VerifyAllClickables(test_setup):
                 print("Plan Status at client portal (Profile) does not match with Plan Status at admin portal")
             else:
                 print("Plan Status at client portal (Profile) matched with Plan Status at admin portal")
+
+            # -----------Clearing Client data from the ref sheet-------------------
+            sheetx2.cell(3, 1).value = None
+            sheetx2.cell(3, 2).value = None
+            sheetx2.cell(3, 3).value = None
+            sheetx2.cell(3, 4).value = None
+            sheetx2.cell(3, 5).value = None
+            sheetx2.cell(3, 6).value = None
+            wbx2.save(locx2)
+
+            #---------------------------Fetching Additonal contact details-----------------------------
+            if AddContactCountXL>0:
+                ACFirstNameList = []
+                ACLastNameList = []
+                ACRelationList = []
+
+                AddContCount = driver.find_elements_by_xpath("//table[@id='contacts-list']/tbody/tr")
+                if len(AddContCount) == 1:
+                    print("No additional Contact present")
+                elif len(AddContCount) > 1:
+                    print("Additional Contact present")
+                    print(len(AddContCount))
+                    for c in range(len(AddContCount)):
+                        print()
+                        print("c is " + str(c))
+                        ACFirstName = driver.find_element_by_xpath(
+                            "//table[@id='contacts-list']/tbody/tr[" + str(c + 1) + "]/td[2]").text
+                        print(ACFirstName)
+                        ACFirstNameList.append(ACFirstName)
+
+                        ACLastName = driver.find_element_by_xpath(
+                            "//table[@id='contacts-list']/tbody/tr[" + str(c + 1) + "]/td[3]").text
+                        print(ACLastName)
+                        ACLastNameList.append(ACLastName)
+
+                        ACRelation = driver.find_element_by_xpath(
+                            "//table[@id='contacts-list']/tbody/tr[" + str(c + 1) + "]/td[4]").text
+                        print(ACRelation)
+                        ACRelationList.append(ACRelation)
+                print(ACFirstNameList)
+                print(ACLastNameList)
+                print(ACRelationList)
+
+                print(FirstNameListXL)
+                print(LastNameListXL)
+                print(RelationListXL)
+
+                # ------------------------Verify Additional contact data at Profile page --------------
+                if FirstNameListXL != ACFirstNameList:
+                    print("Additional contact first name at client portal (Profile) does not match with Additional contact first name at admin portal")
+                else:
+                    print("Additional contact first name at client portal (Profile) matched with Additional contact first name at admin portal")
+
+                if LastNameListXL != ACLastNameList:
+                    print("Additional contact last name at client portal (Profile) does not match with Additional contact last name at admin portal")
+                else:
+                    print("Additional contact last name at client portal (Profile) matched with Additional contact last name at admin portal")
+
+                if RelationListXL != ACRelationList:
+                    print("Additional contact relation at client portal (Profile) does not match with Additional contact relation at admin portal")
+                else:
+                    print("Additional contact relation at client portal (Profile) matched with Additional contact relation at admin portal")
+
+                #-----------Clearing additional contact data from the ref sheet-------------------
+                for ac1 in range(AddContactCountXL):
+                    sheetx2.cell(ac1 + 5, 1).value=None
+                    sheetx2.cell(ac1 + 5, 2).value=None
+                    sheetx2.cell(ac1 + 5, 3).value=None
+
+                #-------Clearing additional contact count data from the ref sheet-------------------
+                sheetx2.cell(4, 2).value = None
+                wbx2.save(locx2)
+
+
+            else:
+                print("No additional contact present in client profile page")
 
 
         except Exception as err:

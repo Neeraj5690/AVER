@@ -40,8 +40,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_PortalDashboard"
-  description = "This test scenario is to verify content at Dashboard page of Client Portal"
+  TestName = "test_ClientDataVerify"
+  description = "This test scenario is to verify Client Data at client listing section of the Portal"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -50,6 +50,7 @@ def test_setup():
   global Exe
   Exe="Yes"
   Directory = 'test_Portal/'
+
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
@@ -84,6 +85,11 @@ def test_setup():
               driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
+      driver.maximize_window()
+      driver.get("https://averreplica.1wayit.com/login")
+      enter_username("admin@averplanning.com")
+      enter_password("admin786")
+      driver.find_element_by_xpath("//button[@type='submit']").click()
 
   yield
   if Exe == "Yes":
@@ -141,7 +147,6 @@ def test_setup():
       loc = (path+'PDFFileNameData/' + ExcelFileName + '.xlsx')
       wb = openpyxl.load_workbook(loc)
       sheet = wb.active
-      print()
       check = TestName
       PdfName = TestName + "_" + ct + ".pdf"
       checkcount = 0
@@ -199,66 +204,35 @@ def test_VerifyAllClickables(test_setup):
         LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             print()
-            # ----------------Fecthing Client name from the ref Data sheet--------------------
+            #----------------Fecthing Client name from the ref Data sheet--------------------
             ExcelFileName2 = "RefData"
             locx2 = (path + 'Ref/' + ExcelFileName2 + '.xlsx')
             wbx2 = openpyxl.load_workbook(locx2)
             sheetx2 = wbx2.active
 
             try:
-                UsernameNameXL = sheetx2.cell(1, 4).value
-                print(UsernameNameXL)
-                PasswordXL = sheetx2.cell(1,5).value
-                print(PasswordXL)
-                if UsernameNameXL == None or PasswordXL == None:
-                    print("Username and / or Password not found in ref sheet")
-                    driver.close()
-                else:
-                    # ------------Login to Client Portal----------------
-                    driver.maximize_window()
-                    driver.get("https://averreplica.1wayit.com/login")
-                    enter_username(UsernameNameXL)
-                    enter_password(PasswordXL)
-                    driver.find_element_by_xpath("//button[@type='submit']").click()
-                    time.sleep(2)
-                    try:
-                        LoginError=driver.find_element_by_xpath("//span[@class='invalid-feedback']/strong").text
-                        print("User is not able to login. Below error found\n"+LoginError)
-
-                    except Exception:
-                        pass
-            except Exception:
-                print("Ref sheet is not able to read, please check the ref doc sheet")
-                driver.close()
-
-            try:
-                FLNameXL = sheetx2.cell(3, 1).value
-                print(FLNameXL)
-                NDISXL = sheetx2.cell(3,2).value
+                FNameXL=sheetx2.cell(1, 1).value
+                print(FNameXL)
+                LNameXL = sheetx2.cell(1, 2).value
+                print(LNameXL)
+                NDISXL = sheetx2.cell(1, 3).value
                 print(NDISXL)
-                PhoneXL = sheetx2.cell(3, 3).value
-                print(PhoneXL)
-                EmailXL = sheetx2.cell(3, 4).value
-                print(EmailXL)
-                AddressXL = sheetx2.cell(3, 5).value
-                print(AddressXL)
-                PlanNameXL = sheetx2.cell(3, 6).value
-                print(PlanNameXL)
 
-                if FLNameXL == None or NDISXL == None or PhoneXL == None or EmailXL == None or AddressXL == None:
-                    print("Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
+                if FNameXL==None or LNameXL==None or NDISXL==None:
+                    print("Either First name, Last name or NDIS number not found in ref sheet")
                     driver.close()
             except Exception:
                 print("Ref sheet is not able to read, please check the ref doc sheet")
                 driver.close()
 
-            # ---------------------------Verify Client Portal Dashboard Data-----------------------------
-            PageName = "Client Portal Dashboard page"
-            TitleExpected="Aver Planning"
+            # ---------------------------Verify Portal icon click-----------------------------
+            PageName = "Client listing page"
             try:
-                #driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-                TitleFound=driver.title
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
                 time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a").click()
+                time.sleep(2)
+
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -267,54 +241,138 @@ def test_VerifyAllClickables(test_setup):
                         break
 
                 time.sleep(2)
-                if TitleFound==TitleExpected:
-                    print(PageName + " opened successfully")
-                    TestResult.append(PageName + " opened successfully")
-                    TestResultStatus.append("Pass")
-                else:
-                    TestResult.append(PageName + " is not able to open")
-                    TestResultStatus.append("Fail")
+                TestResult.append(PageName + " opened successfully")
+                TestResultStatus.append("Pass")
             except Exception as ee:
                 print(ee)
                 TestResult.append(PageName + " is not able to open")
                 TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
 
-            # ------------------------Fetching Data present at Dashboard page --------------
-            FoundFirstName=driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[2]/a").text
-            print(FoundFirstName)
+            # -----------------Searching client on Client listing page -----------------------
+            driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(FNameXL)
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+            driver.find_element_by_xpath("//table/tbody/tr[1]/td[text()='"+FNameXL+"']/following-sibling::td[text()='"+LNameXL+"']/following-sibling::td[text()='"+str(NDISXL)+"']").click()
+            # ---------------------------------------------------------------------------------
 
-            FoundLastName = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[3]").text
-            print(FoundLastName)
+            ProfileDataDic={}
+            # ---------------------Storing client data in Dictionary --------------------------
+            UsernamewithNDIS=driver.find_element_by_xpath("//div[@class='src_sec_hed']/a[text()='Back']/parent::div/parent::div/h2").text
+            print(UsernamewithNDIS)
+            NameDataList=UsernamewithNDIS.split()
+            Firstname=NameDataList[0]
+            print(Firstname)
 
-            FoundNDIS = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[4]").text
-            print(FoundNDIS)
+            Lastname = NameDataList[1]
+            print(Lastname)
+            ProfileDataDic["User Name"]=Firstname+" "+Lastname
 
-            FoundMobileNumber = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[5]").text
-            print(FoundMobileNumber)
+            NDIS = NameDataList[3]
+            print(NDIS)
+            ProfileDataDic["NDIS Number"] = NDIS
 
-            FoundEmail = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[6]").text
-            print(FoundEmail)
+            ContactNumber=driver.find_element_by_xpath("//div/label[text()='Mobile Number']/following-sibling::span").text
+            print(ContactNumber)
+            ProfileDataDic["Contact Number"] = ContactNumber
 
-            # ------------------------Verify Data present at Dashboard page --------------
-            if FLNameXL!=FoundFirstName+" "+FoundLastName:
-                print("Client name at client portal does not match with client name at admin portal")
+            EmailAddress = driver.find_element_by_xpath("//div/label[text()='Email']/following-sibling::span").text
+            print(EmailAddress)
+            ProfileDataDic["Email Address"] = EmailAddress
+
+            UserAddress = driver.find_element_by_xpath("//div/label[text()='Address']/following-sibling::span").text
+            print(UserAddress)
+            ProfileDataDic["User Address"] = UserAddress
+
+            PlanTablePresence=driver.find_element_by_xpath("//table[@class='table datatable-sorting']/thead").is_displayed()
+            print(PlanTablePresence)
+            if PlanTablePresence==True:
+                print("Service Booking Plan Table is Present")
+                PlanStatusCount = driver.find_elements_by_xpath("//table[@class='table datatable-sorting']/tbody/tr/td[@class='sub_tbl_icn']")
+                print(len(PlanStatusCount))
+                ProfileDataDic["Plan Status Count"] = len(PlanStatusCount)
+                if len(PlanStatusCount)==0:
+                    PlanStatusCount="NA"
+                    ProfileDataDic["Plan Status"] = PlanStatusCount
+                elif len(PlanStatusCount)>0:
+                    FirstPlanName=driver.find_element_by_xpath("//table[@class='table datatable-sorting']/tbody/tr[1]/td[@class='sub_tbl_icn']/preceding-sibling::td[6]").text
+                    print(FirstPlanName)
+
+                    ActivePlan = driver.find_element_by_xpath(
+                        "//table[@class='table datatable-sorting']/tbody/tr[1]/td[@class='sub_tbl_icn']/preceding-sibling::td[5]").text
+                    print(ActivePlan)
+
+                    if ActivePlan=="Active":
+                        ProfileDataDic["Plan Status"] = FirstPlanName
+                    else:
+                        ProfileDataDic["Plan Status"] = "NA"
             else:
-                print("Client name at client portal matched with client name at admin portal")
+                print("Service Booking Plan Table is not Present")
 
-            if NDISXL!=FoundNDIS:
-                print("NDIS at client portal does not match with NDIS at admin portal")
-            else:
-                print("NDIS at client portal matched with NDIS at admin portal")
 
-            if PhoneXL!=FoundMobileNumber:
-                print("Mobile Number at client portal does not match with Mobile Number at admin portal")
-            else:
-                print("Mobile Number at client portal matched with Mobile Number at admin portal")
+            # ----------------------------Storing data in the excel-------------------------------
+            sheetx2.cell(3, 1).value=ProfileDataDic["User Name"]
+            sheetx2.cell(3, 2).value = str(ProfileDataDic["NDIS Number"])
+            sheetx2.cell(3, 3).value = ProfileDataDic["Contact Number"]
+            sheetx2.cell(3, 4).value = ProfileDataDic["Email Address"]
+            sheetx2.cell(3, 5).value = ProfileDataDic["User Address"]
+            sheetx2.cell(3, 6).value = ProfileDataDic["Plan Status"]
+            wbx2.save(locx2)
 
-            if EmailXL!=FoundEmail:
-                print("Email at client portal does not match with Email at admin portal")
+            # ----------------------Fetching Additional Contact details-------------------------------
+            driver.find_element_by_xpath("//a[text()='Additional Contacts']").click()
+            for load in range(LONG_TIMEOUT):
+                try:
+                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                        time.sleep(0.5)
+                except Exception:
+                    break
+
+            ACFirstNameList=[]
+            ACLastNameList = []
+            ACRelationList = []
+
+            AddContCount=driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr")
+            if len(AddContCount)==1:
+                print("No additional Contact present")
+            elif len(AddContCount)>1:
+                print("Additional Contact present")
+                print(len(AddContCount))
+                for c in range(len(AddContCount)):
+                    print()
+                    print("c is "+str(c))
+                    ACFirstName=driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(c+1)+"]/td[2]/a").text
+                    print(ACFirstName)
+                    ACFirstNameList.append(ACFirstName)
+                    ProfileDataDic["AC First Name"] = ACFirstNameList
+
+                    ACLastName = driver.find_element_by_xpath(
+                        "//table[@id='table_data']/tbody/tr[" + str(c+1) + "]/td[3]").text
+                    print(ACLastName)
+                    ACLastNameList.append(ACLastName)
+                    ProfileDataDic["AC Last Name"] = ACLastNameList
+
+                    ACRelation = driver.find_element_by_xpath(
+                        "//table[@id='table_data']/tbody/tr[" + str(c+1) + "]/td[4]").text
+                    print(ACRelation)
+                    ACRelationList.append(ACRelation)
+                    ProfileDataDic["AC Relation"] = ACRelationList
+
+            print(ProfileDataDic)
+            for c1 in range(len(ACFirstNameList)):
+                print("c1 is "+str(c1))
+                sheetx2.cell(c1+5, 1).value = ACFirstNameList[c1]
+                sheetx2.cell(c1 + 5, 2).value = ACLastNameList[c1]
+                sheetx2.cell(c1 + 5, 3).value = ACRelationList[c1]
+
+            if len(ACFirstNameList)==0:
+                sheetx2.cell(4, 2).value ="No Contact found"
             else:
-                print("Email at client portal matched with Email at admin portal")
+                sheetx2.cell(4, 2).value = len(ACFirstNameList)
+
+            wbx2.save(locx2)
 
         except Exception as err:
             print(err)

@@ -7,7 +7,8 @@ from sys import platform
 @pytest.mark.smoke
 def test_PieChartTestResult():
     TestStatus = []
-    Directory = 'test_Resources/'
+    Directory = 'test_Portal/'
+
     if platform == "linux" or platform == "linux2":
         path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
     elif platform == "win32" or platform == "win64":

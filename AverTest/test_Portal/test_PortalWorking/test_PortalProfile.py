@@ -40,8 +40,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_PortalDashboard"
-  description = "This test scenario is to verify content at Dashboard page of Client Portal"
+  TestName = "test_PortalProfile"
+  description = "This test scenario is to verify content at Profile page of Client Portal"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -50,6 +50,7 @@ def test_setup():
   global Exe
   Exe="Yes"
   Directory = 'test_Portal/'
+
   if platform == "linux" or platform == "linux2":
       path = '/home/legion/office 1wayit/AVER/AverTest/' + Directory
   elif platform == "win32" or platform == "win64":
@@ -245,19 +246,50 @@ def test_VerifyAllClickables(test_setup):
                 PlanNameXL = sheetx2.cell(3, 6).value
                 print(PlanNameXL)
 
-                if FLNameXL == None or NDISXL == None or PhoneXL == None or EmailXL == None or AddressXL == None:
+                AddContactCountXL = sheetx2.cell(4, 2).value
+                FirstNameListXL = []
+                LastNameListXL = []
+                RelationListXL = []
+                try:
+                    AddContactCountXL=int(AddContactCountXL)
+                    print(AddContactCountXL)
+                    if AddContactCountXL>0:
+                        for ac in range(AddContactCountXL):
+                            print("ac is "+str(ac))
+
+                            FirstNameXL = sheetx2.cell(ac+5, 1).value
+                            FirstNameListXL.append(FirstNameXL)
+
+                            LastNameXL = sheetx2.cell(ac + 5, 2).value
+                            LastNameListXL.append(LastNameXL)
+
+                            RelationXL = sheetx2.cell(ac + 5, 3).value
+                            RelationListXL.append(RelationXL)
+
+                except Exception:
+                    AddContactCountXL=0
+                    print("Ref sheet has invalid Additional contact count, please check the ref doc sheet")
+                    pass
+
+                if FLNameXL == None or NDISXL == None or PhoneXL == None or EmailXL == None or AddressXL == None or PlanNameXL == None:
                     print("Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
                     driver.close()
             except Exception:
                 print("Ref sheet is not able to read, please check the ref doc sheet")
                 driver.close()
 
+            print(FirstNameListXL)
+            print(LastNameListXL)
+            print(RelationListXL)
             # ---------------------------Verify Client Portal Dashboard Data-----------------------------
-            PageName = "Client Portal Dashboard page"
-            TitleExpected="Aver Planning"
+            PageName = "Client Portal Profile page"
+            TitleExpected="Profile"
             try:
-                #driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-                TitleFound=driver.title
+                driver.find_element_by_xpath("//div[@class='hed_wth_srch']/a").click()
+                time.sleep(1)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]").click()
+
+                TitleFound=driver.find_element_by_xpath("//h2[text()='Profile']").text
                 time.sleep(2)
                 for load in range(LONG_TIMEOUT):
                     try:
@@ -280,41 +312,55 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
 
             # ------------------------Fetching Data present at Dashboard page --------------
-            FoundFirstName=driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[2]/a").text
-            print(FoundFirstName)
+            FoundUserName=driver.find_element_by_xpath("//label[text()='User Name']/parent::div/p").text
+            print(FoundUserName)
 
-            FoundLastName = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[3]").text
-            print(FoundLastName)
-
-            FoundNDIS = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[4]").text
+            FoundNDIS = driver.find_element_by_xpath("//label[text()='NDIS Number']/parent::div/p").text
             print(FoundNDIS)
 
-            FoundMobileNumber = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[5]").text
-            print(FoundMobileNumber)
+            FoundEmailAddress = driver.find_element_by_xpath("//label[text()='Email Address']/parent::div/p").text
+            print(FoundEmailAddress)
 
-            FoundEmail = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[6]").text
-            print(FoundEmail)
+            FoundPlanStatus = driver.find_element_by_xpath("//label[text()='Plan Status ']/parent::div/p/span/a").text
+            print(FoundPlanStatus)
+
+            FoundContactNumber = driver.find_element_by_xpath("//label[text()='Contact Number']/parent::div/p").text
+            print(FoundContactNumber)
+
+            FoundUserAddress = driver.find_element_by_xpath("//label[text()='User Address']/parent::div/p").text
+            print(FoundUserAddress)
 
             # ------------------------Verify Data present at Dashboard page --------------
-            if FLNameXL!=FoundFirstName+" "+FoundLastName:
-                print("Client name at client portal does not match with client name at admin portal")
+            if FLNameXL!=FoundUserName:
+                print("Client name at client portal (Profile) does not match with client name at admin portal")
             else:
-                print("Client name at client portal matched with client name at admin portal")
+                print("Client name at client portal (Profile) matched with client name at admin portal")
 
             if NDISXL!=FoundNDIS:
-                print("NDIS at client portal does not match with NDIS at admin portal")
+                print("NDIS at client portal (Profile) does not match with NDIS at admin portal")
             else:
-                print("NDIS at client portal matched with NDIS at admin portal")
+                print("NDIS at client portal (Profile) matched with NDIS at admin portal")
 
-            if PhoneXL!=FoundMobileNumber:
-                print("Mobile Number at client portal does not match with Mobile Number at admin portal")
+            if PhoneXL!=FoundContactNumber:
+                print("Mobile Number at client portal (Profile) does not match with Mobile Number at admin portal")
             else:
-                print("Mobile Number at client portal matched with Mobile Number at admin portal")
+                print("Mobile Number at client portal (Profile) matched with Mobile Number at admin portal")
 
-            if EmailXL!=FoundEmail:
-                print("Email at client portal does not match with Email at admin portal")
+            if EmailXL!=FoundEmailAddress:
+                print("Email at client portal (Profile) does not match with Email at admin portal")
             else:
-                print("Email at client portal matched with Email at admin portal")
+                print("Email at client portal (Profile) matched with Email at admin portal")
+
+            if AddressXL!=FoundUserAddress:
+                print("User Address at client portal (Profile) does not match with User Address at admin portal")
+            else:
+                print("User Address at client portal (Profile) matched with User Address at admin portal")
+
+            if PlanNameXL not in FoundPlanStatus:
+                print("Plan Status at client portal (Profile) does not match with Plan Status at admin portal")
+            else:
+                print("Plan Status at client portal (Profile) matched with Plan Status at admin portal")
+
 
         except Exception as err:
             print(err)

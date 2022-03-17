@@ -35,8 +35,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_SettingsNoteType"
-  description = "This test scenario is to verify Note Type data collected at Settings page"
+  TestName = "test_SettingsProfileTypes"
+  description = "This test scenario is to verify Profile Type data collected at Settings page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -130,7 +130,7 @@ def test_setup():
          TestFailStatus.append("Pass")
       pdf.output(TestName+"_" + ct + ".pdf", 'F')
 
-      #-----------To check if any failed Test case present--------------------
+      #-----------To check if any failed Test case present-------------------
       for io in range(len(TestResult)):
           if TestFailStatus[io]=="Fail":
               FailStatus="Fail"
@@ -224,14 +224,14 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Notes Types button under system settings-----------------------------
-            PageName = "Notes Types button"
+            # ---------------------------Verify working of Profile Types button under system settings-----------------------------
+            PageName = "Profile Types button"
             ExpectedDict = {}
             SuccessList = []
             PendingList = []
             try:
                 try:
-                    driver.find_element_by_xpath("//a[text()='Notes Types']").click()
+                    driver.find_element_by_xpath("//a[text()='Profile Types']").click()
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -268,53 +268,27 @@ def test_VerifyAllClickables(test_setup):
                 except Exception:
                     pass
 
-                #------------------Fetch Client name from Excel--------------------
+                #------------------Fetch Client name from Excel-------------------------------------------
 
-                #------------------------------------------------------------------
+                #-----------------------------------------------------------------------------------------
+                try:
+                    driver.find_element_by_xpath("//a[text()='Create New Client']").click()
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                time.sleep(0.5)
+                        except Exception:
+                            break
+                except Exception:
+                    pass
 
-                NameToOpen = "BitsInGlass"
-                driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
-
-                ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[text()='"+NameToOpen+"']/a").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-
-                #---------Checking Alert & Notes section in Client------------------
-                driver.find_element_by_xpath("//a[text()='Alert & Notes']").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-
-                #-------------Clicking on Add New + button--------------------
-                driver.find_element_by_xpath("//a[text()='Add New +']/parent::div/parent::div/parent::div/div[3]/div/a[2]").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-
-                #------Fetching dropdown values---------------
+                #------Fetching dropdown values----------------
                 ActSuccessElements=[]
-                l = driver.find_element_by_name("note_type")
+                l = driver.find_element_by_name("type")
                 d = Select(l)
                 for opt in d.options:
                     print(opt.text)
-                    if opt.text !="Select Note Type":
+                    if opt.text !="Select Profile type":
                         ActSuccessElements.append(opt.text)
 
                 #------Comparing results-----------

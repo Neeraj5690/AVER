@@ -35,8 +35,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_SettingsNoteType"
-  description = "This test scenario is to verify Note Type data collected at Settings page"
+  TestName = "test_SettingsCLAlertTypes"
+  description = "This test scenario is to verify Client Listing Alert Types data collected at Settings page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -130,7 +130,7 @@ def test_setup():
          TestFailStatus.append("Pass")
       pdf.output(TestName+"_" + ct + ".pdf", 'F')
 
-      #-----------To check if any failed Test case present--------------------
+      #-----------To check if any failed Test case present-------------------
       for io in range(len(TestResult)):
           if TestFailStatus[io]=="Fail":
               FailStatus="Fail"
@@ -224,24 +224,24 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Notes Types button under system settings-----------------------------
-            PageName = "Notes Types button"
+            # ---------------------------Verify working of Client Listing Alert Types button under system settings-----------------------------
+            PageName = "Client Listing Alert Types button"
             ExpectedDict = {}
             SuccessList = []
             PendingList = []
             try:
                 try:
-                    driver.find_element_by_xpath("//a[text()='Notes Types']").click()
+                    driver.find_element_by_xpath("//a[text()='Client Listing Alert Types']").click()
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                                 time.sleep(0.5)
                         except Exception:
                             break
-                    NoteTypeRows = driver.find_elements_by_xpath("//table[@id='client_status_data']/tbody/tr")
-                    NoteTypeRows = len(NoteTypeRows)
-                    print(NoteTypeRows)
-                    for tr in range (NoteTypeRows):
+                    Rows = driver.find_elements_by_xpath("//table[@id='client_status_data']/tbody/tr")
+                    Rows = len(Rows)
+                    print(Rows)
+                    for tr in range (Rows):
                         Keys1 = driver.find_element_by_xpath("//table[@id='client_status_data']/tbody/tr["+str(tr+1)+"]/td[3]").text
                         print(Keys1)
                         time.sleep(0.25)
@@ -290,7 +290,7 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         break
 
-                #---------Checking Alert & Notes section in Client------------------
+                #---------Checking Alert Types section in Client------------------
                 driver.find_element_by_xpath("//a[text()='Alert & Notes']").click()
                 for load in range(LONG_TIMEOUT):
                     try:
@@ -300,24 +300,28 @@ def test_VerifyAllClickables(test_setup):
                         break
 
                 #-------------Clicking on Add New + button--------------------
-                driver.find_element_by_xpath("//a[text()='Add New +']/parent::div/parent::div/parent::div/div[3]/div/a[2]").click()
+                driver.find_element_by_xpath("//a[text()='Add New +']/parent::div/parent::div/parent::div/div[1]/div/a[2]").click()
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                             time.sleep(0.5)
                     except Exception:
                         break
+                # #-------------Fetching dropdown values--------------
+                # AlertLength = driver.find_elements_by_xpath("//div[@class='multiselect-container dropdown-menu show']/button/span/label")
+                # AlertLength = len(AlertLength)
+                # print(AlertLength)
 
                 #------Fetching dropdown values---------------
                 ActSuccessElements=[]
-                l = driver.find_element_by_name("note_type")
+                l = driver.find_element_by_id("alert_type")
                 d = Select(l)
                 for opt in d.options:
                     print(opt.text)
-                    if opt.text !="Select Note Type":
+                    if opt.text !=" Select all":
                         ActSuccessElements.append(opt.text)
 
-                #------Comparing results-----------
+                #------Comparing results------------
                 print(len(ExpectedDict["Success"]))
                 print(len(ActSuccessElements))
 

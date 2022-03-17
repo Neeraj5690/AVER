@@ -232,16 +232,21 @@ def test_VerifyAllClickables(test_setup):
             try:
                 try:
                     driver.find_element_by_xpath("//a[text()='Additional Contact Types']").click()
+                    TestResult.append(PageName + " is clickable on settings page")
+                    TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                                 time.sleep(0.5)
                         except Exception:
                             break
-                    AddContTypeRows = driver.find_elements_by_xpath("//table[@id='client_status_data']/tbody/tr")
-                    AddContTypeRows = len(AddContTypeRows)
-                    print(AddContTypeRows)
-                    for tr in range (AddContTypeRows):
+                    Rows = driver.find_elements_by_xpath("//table[@id='client_status_data']/tbody/tr")
+                    Rows = len(Rows)
+                    print(Rows)
+                    TestResult.append(
+                        "Number of records found on Additional Contact Types settings section is: " + str(Rows))
+                    TestResultStatus.append("Pass")
+                    for tr in range (Rows):
                         Keys1 = driver.find_element_by_xpath("//table[@id='client_status_data']/tbody/tr["+str(tr+1)+"]/td[3]").text
                         print(Keys1)
                         time.sleep(0.25)
@@ -254,11 +259,20 @@ def test_VerifyAllClickables(test_setup):
                         elif Keys1 == "Pending":
                             PendingList.append(Values)
                             ExpectedDict[Keys1] = PendingList
+
+                    TestResult.append(
+                        "Below items found for success status : \n" + str(SuccessList))
+                    TestResultStatus.append("Pass")
+                    TestResult.append(
+                        "Below items found for pending status : \n" + str(PendingList))
+                    TestResultStatus.append("Pass")
                 except Exception:
                     pass
 
                 try:
                     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
+                    TestResult.append("Client listing icon is clicked")
+                    TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -276,6 +290,9 @@ def test_VerifyAllClickables(test_setup):
                 driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
 
                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
+                TestResult.append(
+                    "Searching client in application")
+                TestResultStatus.append("Pass")
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -289,6 +306,9 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
+                TestResult.append(
+                    "Clicking on client name to navigate client details page")
+                TestResultStatus.append("Pass")
 
                 #---------Checking Additional Contacts section in Client------------------
                 driver.find_element_by_xpath("//a[text()='Additional Contacts']").click()
@@ -298,6 +318,9 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
+                TestResult.append(
+                    "Additional Contacts section is clicked on client details page")
+                TestResultStatus.append("Pass")
 
                 #-------------Clicking on Create New button---------------------
                 driver.find_element_by_xpath("//a[text()='Create New']").click()
@@ -307,6 +330,9 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
+                TestResult.append(
+                    "Clicking on Create New button")
+                TestResultStatus.append("Pass")
 
                 #------Fetching dropdown values---------------
                 ActSuccessElements=[]
@@ -320,23 +346,41 @@ def test_VerifyAllClickables(test_setup):
                 #------Comparing results-----------
                 print(len(ExpectedDict["Success"]))
                 print(len(ActSuccessElements))
+                TestResult.append(
+                    "Comparing number of items found on Additional Contacts type settings section and Relationship to client dropdown")
+                TestResultStatus.append("Pass")
 
                 if len(ActSuccessElements)==len(ExpectedDict["Success"]):
                     print("Items number matched")
+                    TestResult.append(
+                        "Items number matched")
+                    TestResultStatus.append("Pass")
                 else:
                     print("Items number does not match")
+                    TestResult.append(
+                        "Items number does not match")
+                    TestResultStatus.append("Fail")
 
 
                 print(ExpectedDict["Success"])
                 print(ActSuccessElements)
+                TestResult.append(
+                    "Comparing list of items found on Additional Contacts type settings section and Relationship to client dropdown")
+                TestResultStatus.append("Pass")
+
                 if ActSuccessElements==ExpectedDict["Success"]:
                     print("Items list matched")
+                    TestResult.append("Items list matched")
+                    TestResultStatus.append("Pass")
                 else:
                     print("Items list does not match")
+                    TestResult.append(
+                        "Items list does not match")
+                    TestResultStatus.append("Fail")
 
             except Exception as wr:
                 print(wr)
-                TestResult.append(PageName + " is not clickable under Settings section")
+                TestResult.append("Additional contacts types settings section is not working correctly")
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

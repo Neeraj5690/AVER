@@ -35,8 +35,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_SettingsCLAlertTypes"
-  description = "This test scenario is to verify Client Listing Alert Types data collected at Settings page"
+  TestName = "test_SettingsSPAlertType"
+  description = "This test scenario is to verify Service provider alert types data collected at Settings page"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -130,7 +130,7 @@ def test_setup():
          TestFailStatus.append("Pass")
       pdf.output(TestName+"_" + ct + ".pdf", 'F')
 
-      #-----------To check if any failed Test case present-------------------
+      #-----------To check if any failed Test case present--------------------
       for io in range(len(TestResult)):
           if TestFailStatus[io]=="Fail":
               FailStatus="Fail"
@@ -224,15 +224,15 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Client Listing Alert Types button under system settings-----------------------------
-            PageName = "Client Listing Alert Types button"
+            # ---------------------------Verify working of Service provider alert types button under system settings-----------------------------
+            PageName = "Service provider alert types button"
             ExpectedDict = {}
             SuccessList = []
             PendingList = []
             try:
                 try:
-                    driver.find_element_by_xpath("//a[text()='Client Listing Alert Types']").click()
-                    TestResult.append(PageName + " is clickable on settings page")
+                    driver.find_element_by_xpath("//a[text()='Service Provider Alert Types']").click()
+                    TestResult.append(PageName+" is clickable on settings page")
                     TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
@@ -244,7 +244,7 @@ def test_VerifyAllClickables(test_setup):
                     Rows = len(Rows)
                     print(Rows)
                     TestResult.append(
-                        "Number of records found on Client Listing Alert Types settings section is: " + str(Rows))
+                        "Number of records found on Service provider alert types settings section is: "+str(Rows))
                     TestResultStatus.append("Pass")
                     for tr in range (Rows):
                         Keys1 = driver.find_element_by_xpath("//table[@id='client_status_data']/tbody/tr["+str(tr+1)+"]/td[3]").text
@@ -270,8 +270,8 @@ def test_VerifyAllClickables(test_setup):
                     pass
 
                 try:
-                    driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
-                    TestResult.append("Client listing icon is clicked")
+                    driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[7]/a").click()
+                    TestResult.append("Service provider icon is clicked")
                     TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
@@ -282,16 +282,14 @@ def test_VerifyAllClickables(test_setup):
                 except Exception:
                     pass
 
-                #------------------Fetch Client name from Excel--------------------
-
                 #------------------------------------------------------------------
 
-                NameToOpen = "BitsInGlass"
-                driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
+                NameToOpen = "hofen"
+                driver.find_element_by_xpath("//input[@placeholder='Type to search...']").send_keys(NameToOpen)
 
                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
                 TestResult.append(
-                    "Searching client in application")
+                    "Searching service provider in application")
                 TestResultStatus.append("Pass")
                 for load in range(LONG_TIMEOUT):
                     try:
@@ -299,7 +297,8 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
-                driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[text()='"+NameToOpen+"']/a").click()
+                driver.find_element_by_xpath(
+                    "//table[@id='table_data']/tbody/tr[1]/td[2]/a").click()
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -307,10 +306,10 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         break
                 TestResult.append(
-                    "Clicking on client name to navigate client details page")
+                    "Clicking on service provider name to navigate service provider details page")
                 TestResultStatus.append("Pass")
 
-                #---------Checking Alert Types section in Client------------------
+                # ---------Checking Alert & Notes section in Service provider------------------
                 driver.find_element_by_xpath("//a[text()='Alert & Notes']").click()
                 for load in range(LONG_TIMEOUT):
                     try:
@@ -319,11 +318,12 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         break
                 TestResult.append(
-                    "Client Listing Alert Types section is clicked on client details page")
+                    "Alert & Notes section is clicked on client details page")
                 TestResultStatus.append("Pass")
 
-                #-------------Clicking on Add New + button--------------------
-                driver.find_element_by_xpath("//a[text()='Add New +']/parent::div/parent::div/parent::div/div[1]/div/a[2]").click()
+                # -------------Clicking on Add New + button--------------------
+                driver.find_element_by_xpath(
+                    "//a[text()='Add New +']/parent::div/parent::div/parent::div/div[1]/div/a[2]").click()
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -331,38 +331,44 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         break
                 TestResult.append(
-                    "Clicking on Create New button")
+                    "Clicking on Add New + button")
                 TestResultStatus.append("Pass")
-                #-------------Fetching dropdown values--------------
+
+                # -------------Fetching dropdown values--------------
                 ActSuccessElements = []
                 try:
                     driver.find_element_by_xpath("//button[@title='Choose a Alert Type']/parent::div").click()
                     time.sleep(2)
                     driver.find_element_by_xpath("//button[@title='Choose a Alert Type']/parent::div").click()
+                    TestResult.append(
+                        "Clicking on alert type dropdown to get the values present under it")
+                    TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                                 time.sleep(0.5)
                         except Exception:
                             break
-                    AlertLength = driver.find_elements_by_xpath("//div[@class='btn-group show']/div/button")
-                    AlertLength = len(AlertLength)
-                    print(AlertLength)
-                    for al in range(AlertLength):
-                        AlertText = driver.find_element_by_xpath("//div[@class='btn-group show']/div/button["+str(al+1)+"]/span/label").text
-                        if AlertText == "Select all":
+                    SPalertLength = driver.find_elements_by_xpath(
+                        "//div[@class='btn-group show']/div/button")
+                    SPalertLength = len(SPalertLength)
+                    print(SPalertLength)
+                    for sp in range(SPalertLength):
+                        SPalertText = driver.find_element_by_xpath(
+                            "//div[@class='btn-group show']/div/button["+str(sp+1)+"]/span").text
+                        print(SPalertText)
+                        if SPalertText == "Select all":
                             pass
                         else:
-                            ActSuccessElements.append(AlertText)
-                    print(ActSuccessElements)
-                except Exception as alerr:
-                    print(alerr)
+                            ActSuccessElements.append(SPalertText)
+                except Exception as er:
+                    print(er)
 
-                #------Comparing results------------
+                #------Comparing results-----------
                 print(len(ExpectedDict["Success"]))
                 print(len(ActSuccessElements))
                 TestResult.append(
-                    "Comparing number of items found on Client Listing Alert Types settings section and Alert type dropdown")
+                    "Comparing number of items found on Invoice hold reason settings section and client note type dropdown")
                 TestResultStatus.append("Pass")
 
                 if len(ActSuccessElements)==len(ExpectedDict["Success"]):
@@ -380,9 +386,8 @@ def test_VerifyAllClickables(test_setup):
                 print(ExpectedDict["Success"])
                 print(ActSuccessElements)
                 TestResult.append(
-                    "Comparing list of items found on Client Listing Alert Types settings section and Alert type dropdown")
+                    "Comparing list of items found on Invoice hold reason settings section and client note type dropdown")
                 TestResultStatus.append("Pass")
-
                 if ActSuccessElements==ExpectedDict["Success"]:
                     print("Items list matched")
                     TestResult.append("Items list matched")
@@ -395,7 +400,7 @@ def test_VerifyAllClickables(test_setup):
 
             except Exception as wr:
                 print(wr)
-                TestResult.append("Additional contacts types settings section is not working correctly")
+                TestResult.append("Invoice hold reason settings section is not working correctly")
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

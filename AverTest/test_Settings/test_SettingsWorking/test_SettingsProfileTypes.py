@@ -232,16 +232,21 @@ def test_VerifyAllClickables(test_setup):
             try:
                 try:
                     driver.find_element_by_xpath("//a[text()='Profile Types']").click()
+                    TestResult.append(PageName + " is clickable on settings page")
+                    TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                                 time.sleep(0.5)
                         except Exception:
                             break
-                    NoteTypeRows = driver.find_elements_by_xpath("//table[@id='client_status_data']/tbody/tr")
-                    NoteTypeRows = len(NoteTypeRows)
-                    print(NoteTypeRows)
-                    for tr in range (NoteTypeRows):
+                    Rows = driver.find_elements_by_xpath("//table[@id='client_status_data']/tbody/tr")
+                    Rows = len(Rows)
+                    print(Rows)
+                    TestResult.append(
+                        "Number of records found on Profile Types settings section is: " + str(Rows))
+                    TestResultStatus.append("Pass")
+                    for tr in range (Rows):
                         Keys1 = driver.find_element_by_xpath("//table[@id='client_status_data']/tbody/tr["+str(tr+1)+"]/td[3]").text
                         print(Keys1)
                         time.sleep(0.25)
@@ -254,11 +259,20 @@ def test_VerifyAllClickables(test_setup):
                         elif Keys1 == "Pending":
                             PendingList.append(Values)
                             ExpectedDict[Keys1] = PendingList
+
+                    TestResult.append(
+                        "Below items found for success status : \n" + str(SuccessList))
+                    TestResultStatus.append("Pass")
+                    TestResult.append(
+                        "Below items found for pending status : \n" + str(PendingList))
+                    TestResultStatus.append("Pass")
                 except Exception:
                     pass
 
                 try:
                     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a/i").click()
+                    TestResult.append("Client listing icon is clicked")
+                    TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -268,11 +282,13 @@ def test_VerifyAllClickables(test_setup):
                 except Exception:
                     pass
 
-                #------------------Fetch Client name from Excel-------------------------------------------
 
                 #-----------------------------------------------------------------------------------------
                 try:
                     driver.find_element_by_xpath("//a[text()='Create New Client']").click()
+                    TestResult.append(
+                        "Clicking on create new client button")
+                    TestResultStatus.append("Pass")
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -294,23 +310,42 @@ def test_VerifyAllClickables(test_setup):
                 #------Comparing results-----------
                 print(len(ExpectedDict["Success"]))
                 print(len(ActSuccessElements))
+                TestResult.append(
+                    "Comparing number of items found on Profile type settings section and client Profile type dropdown")
+                TestResultStatus.append("Pass")
 
                 if len(ActSuccessElements)==len(ExpectedDict["Success"]):
                     print("Items number matched")
+                    print("Items number matched")
+                    TestResult.append(
+                        "Items number matched")
+                    TestResultStatus.append("Pass")
                 else:
                     print("Items number does not match")
+                    TestResult.append(
+                        "Items number does not match")
+                    TestResultStatus.append("Fail")
 
 
                 print(ExpectedDict["Success"])
                 print(ActSuccessElements)
+                TestResult.append(
+                    "Comparing list of items found on Profile type settings section and client Profile type dropdown")
+                TestResultStatus.append("Pass")
                 if ActSuccessElements==ExpectedDict["Success"]:
                     print("Items list matched")
+                    TestResult.append(
+                        "Items list matched")
+                    TestResultStatus.append("Pass")
                 else:
                     print("Items list does not match")
+                    TestResult.append(
+                        "Items list does not match")
+                    TestResultStatus.append("Fail")
 
             except Exception as wr:
                 print(wr)
-                TestResult.append(PageName + " is not clickable under Settings section")
+                TestResult.append("Profile type section is not working correctly")
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

@@ -339,7 +339,7 @@ def test_VerifyAllClickables(test_setup):
                 print(len(ExpectedDict["Success"]))
                 print(len(ActSuccessElements))
                 TestResult.append(
-                    "Comparing number of items found on Invoice hold reason settings section and client note type dropdown")
+                    "Comparing number of items found on Invoice email copy settings section and client note type dropdown")
                 TestResultStatus.append("Pass")
 
                 if len(ActSuccessElements)==len(ExpectedDict["Success"]):
@@ -357,7 +357,7 @@ def test_VerifyAllClickables(test_setup):
                 print(ExpectedDict["Success"])
                 print(ActSuccessElements)
                 TestResult.append(
-                    "Comparing list of items found on Invoice hold reason settings section and client note type dropdown")
+                    "Comparing list of items found on Invoice emial copy settings section and client note type dropdown")
                 TestResultStatus.append("Pass")
                 if ActSuccessElements==ExpectedDict["Success"]:
                     print("Items list matched")

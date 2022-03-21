@@ -321,12 +321,12 @@ def test_VerifyAllClickables(test_setup):
             if ItemPresent:
                 print("ItemPresent list is not empty")
                 ListC = ', '.join(ItemPresent)
-                TestResult.append("Below buttons are present under [ " + inside + " ]\n" + ListC)
+                TestResult.append("Below sections are present under [ " + inside + " ]\n" + ListC)
                 TestResultStatus.append("Pass")
             if ItemNotPresent:
                 print("ItemNotPresent list is not empty")
                 ListD = ', '.join(ItemNotPresent)
-                TestResult.append("Below buttons are not present under [ " + inside + " ]\n" + ListD)
+                TestResult.append("Below sections are not present under [ " + inside + " ]\n" + ListD)
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

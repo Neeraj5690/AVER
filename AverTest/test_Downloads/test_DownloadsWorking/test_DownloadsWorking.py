@@ -229,59 +229,59 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify working of Back button on Downloads page -----------------------------
-            # PageName = "Back button"
-            # Ptitle1 = "Rae"
-            # try:
-            #     driver.find_element_by_xpath("//a[text()='Back']").click()
-            #     for load in range(LONG_TIMEOUT):
-            #         try:
-            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-            #                 time.sleep(0.5)
-            #         except Exception:
-            #             break
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ----------------Verify Downloads icon click after verifying back--------
-            # PageName = "Downloads icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
-            #     time.sleep(2)
-            #
-            #     for load in range(LONG_TIMEOUT):
-            #         try:
-            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-            #                 time.sleep(0.5)
-            #         except Exception:
-            #             break
-            #     TestResult.append(PageName + "  is opened again after verifying back button")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not opened again after verifying back button")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # for load in range(LONG_TIMEOUT):
-            #     try:
-            #         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-            #             time.sleep(0.5)
-            #     except Exception:
-            #         break
-            # # ---------------------------------------------------------------------------------
+            # ---------------------------Verify working of Back button on Downloads page -----------------------------
+            PageName = "Back button"
+            Ptitle1 = "Rae"
+            try:
+                driver.find_element_by_xpath("//a[text()='Back']").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                time.sleep(2)
+                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not present"
+                TestResult.append(PageName + " is clickable")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not clickable")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            # ---------------------------------------------------------------------------------
+
+            # ----------------Verify Downloads icon click after verifying back--------
+            PageName = "Downloads icon"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
+                time.sleep(2)
+
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                TestResult.append(PageName + "  is opened again after verifying back button")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not opened again after verifying back button")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            for load in range(LONG_TIMEOUT):
+                try:
+                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                        time.sleep(0.5)
+                except Exception:
+                    break
+            # ---------------------------------------------------------------------------------
 
             #-------------------------------------------------------------------------------------
             RecordsPerPage = 50

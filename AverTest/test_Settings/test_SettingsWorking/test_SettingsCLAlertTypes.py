@@ -395,7 +395,7 @@ def test_VerifyAllClickables(test_setup):
 
             except Exception as wr:
                 print(wr)
-                TestResult.append("Additional contacts types settings section is not working correctly")
+                TestResult.append("Client listing alert types settings section is not working correctly")
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

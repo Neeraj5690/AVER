@@ -371,7 +371,7 @@ def test_VerifyAllClickables(test_setup):
 
             except Exception as wr:
                 print(wr)
-                TestResult.append("Invoice hold reason settings section is not working correctly")
+                TestResult.append("Invoice email copy settings section is not working correctly")
                 TestResultStatus.append("Fail")
             # ---------------------------------------------------------------------------------
 

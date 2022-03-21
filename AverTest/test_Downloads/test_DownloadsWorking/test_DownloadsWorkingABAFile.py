@@ -395,7 +395,7 @@ def test_VerifyAllClickables(test_setup):
 
         except Exception as err:
             print(err)
-            TestResult.append("Downloads is not working correctly. Below error found\n"+str(err))
+            TestResult.append("ABA file verification process is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

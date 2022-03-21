@@ -20,6 +20,9 @@ from selenium.common.exceptions import TimeoutException
 import pyperclip
 import random
 import os
+import ntpath
+import glob
+import os.path
 
 
 @allure.step("Entering username ")
@@ -229,67 +232,109 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Back button on Downloads page -----------------------------
-            PageName = "Back button"
-            Ptitle1 = "Rae"
+            # # ---------------------------Verify working of Back button on Downloads page -----------------------------
+            # PageName = "Back button"
+            # Ptitle1 = "Rae"
+            # try:
+            #     driver.find_element_by_xpath("//a[text()='Back']").click()
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     time.sleep(2)
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ----------------Verify Downloads icon click after verifying back--------
+            # PageName = "Downloads icon"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
+            #     time.sleep(2)
+            #
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     TestResult.append(PageName + "  is opened again after verifying back button")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not opened again after verifying back button")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # for load in range(LONG_TIMEOUT):
+            #     try:
+            #         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #             time.sleep(0.5)
+            #     except Exception:
+            #         break
+            # # ---------------------------------------------------------------------------------
+
+            # --------------Generating ABA file from invoice entry table-------------------------------------
             try:
-                driver.find_element_by_xpath("//a[text()='Back']").click()
+                print()
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[4]/a").click()
+                time.sleep(1)
+                driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr[1]/td[1]/input").click()
+                time.sleep(1)
+                driver.find_element_by_xpath("//button[@id='actionBtn']").click()
+                time.sleep(1)
+                driver.find_element_by_xpath("//button[@id='actionBtn']").click()
+                time.sleep(1)
+                driver.find_element_by_xpath("//a[text()='Generate ABA File']").click()
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                             time.sleep(0.5)
                     except Exception:
                         break
-                time.sleep(2)
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
 
-            # ----------------Verify Downloads icon click after verifying back--------
-            PageName = "Downloads icon"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
-                time.sleep(2)
-
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                TestResult.append(PageName + "  is opened again after verifying back button")
-                TestResultStatus.append("Pass")
             except Exception:
-                TestResult.append(PageName + " is not opened again after verifying back button")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
+                print("No record found under Invoice entry table")
+                pass
+
+            #-------------------------------------------------------------------------------------
+
+
+            # --------------Finding latest downloaded file in downloads folder-------------------------------------
+            time.sleep(3)
+            folder_path = r'C:/Users/crochet-08/Downloads'
+            file_type = r'\*'
+            files = glob.glob(folder_path + file_type)
+            max_file = max(files, key=os.path.getctime)
+
+            print(max_file)
+            filename = ntpath.basename("'r'" + str(max_file))
+            print(filename)
+
+            driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
             for load in range(LONG_TIMEOUT):
                 try:
                     if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                         time.sleep(0.5)
                 except Exception:
                     break
-            # ---------------------------------------------------------------------------------
 
-            #-------------------------------------------------------------------------------------
+            # -------------------------------------------------------------------------------------
+
+            # --------------Verifying pagination clicks for downloads listing table-------------------------------------
             RecordsPerPage = 50
-            xcelFileName = "DownloadRecords"
-            locx1 = (path + 'DownloadRecords/' + xcelFileName + '.xlsx')
-            wbx1 = openpyxl.load_workbook(locx1)
-            sheetx1 = wbx1.active
-
             TotalItem = driver.find_element_by_xpath("//div[@id='table_data_info']").text
             print(TotalItem)
 
@@ -329,18 +374,15 @@ def test_VerifyAllClickables(test_setup):
                 ItemLength = len(ItemLength)
                 print(ItemLength)
                 for ii in range(ItemLength):
-                    for ii1 in range(1, 9):
-                        TableHeader = driver.find_element_by_xpath("//table[@id='table_data']/thead/tr/th["+str(ii1)+"]").text
-                        Text = driver.find_element_by_xpath(
-                            "//table[@id='table_data']/tbody/tr[" + str(ii+1) + "]/td["+str(ii1)+"]").text
-                        print(Text)
-                        sheetx1.cell(1, ii1).value = TableHeader
-                        sheetx1.cell(ii + 2, ii1).value = Text
+                    Text1 = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(ii+1)+"]/td[6]").text
+                    if Text1 == filename:
+                        print("Downloaded file is found in downloads section of application and verified successfully")
+                    else:
+                        print("Downloaded file is not found in downloads section of application")
                     time.sleep(0.5)
 
-                    driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                    time.sleep(2)
-                    wbx1.save(locx1)
+                driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+                time.sleep(2)
             if i != NumberOfPages - 1:
                 TestResult.append(
                     "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")

@@ -18,11 +18,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import pyperclip
-import random
+from pathlib import Path
 import os
 import ntpath
-import glob
 import os.path
+
+from setuptools import glob
 
 
 @allure.step("Entering username ")
@@ -43,8 +44,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_DownloadsWorking"
-  description = "This test scenario is to verify the Working of Elements at Downloads page"
+  TestName = "test_DownloadsWorkingABAFile"
+  description = "This test scenario is to verify download process of ABA file"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -314,7 +315,7 @@ def test_VerifyAllClickables(test_setup):
 
             # --------------Finding latest downloaded file in downloads folder-------------------------------------
             time.sleep(3)
-            folder_path = r'C:/Users/crochet-08/Downloads'
+            folder_path = str(Path.home() / "Downloads")
             file_type = r'\*'
             files = glob.glob(folder_path + file_type)
             max_file = max(files, key=os.path.getctime)
@@ -377,6 +378,8 @@ def test_VerifyAllClickables(test_setup):
                     Text1 = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(ii+1)+"]/td[6]").text
                     if Text1 == filename:
                         print("Downloaded file is found in downloads section of application and verified successfully")
+                        os.remove(max_file)
+                        break
                     else:
                         print("Downloaded file is not found in downloads section of application")
                     time.sleep(0.5)
@@ -387,7 +390,6 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(
                     "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")
                 TestResultStatus.append("Fail")
-
 
             # ---------------------------------------------------------------------------------
 

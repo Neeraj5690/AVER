@@ -1,5 +1,4 @@
 import datetime
-import glob
 import math
 import re
 import time
@@ -24,6 +23,8 @@ from pathlib import Path
 import os
 import ntpath
 import os.path
+
+from setuptools import glob
 
 
 @allure.step("Entering username ")
@@ -348,82 +349,66 @@ def test_VerifyAllClickables(test_setup):
                 files = glob.glob(folder_path + file_type)
                 max_file = max(files, key=os.path.getctime)
 
-                print(max_file)
                 filename = ntpath.basename("'r'" + str(max_file))
-                print(filename)
                 TestResult.append(
                     "Downloaded file is found in downloads folder. The file name is : \n" + str(filename))
                 TestResultStatus.append("Pass")
 
-                # --------------Verifying pagination clicks for Resources table-------------------------------------
-                RecordsPerPage = 50
-                TotalItem = driver.find_element_by_xpath("//div[@id='table_documents_info']").text
-                print(TotalItem)
-
-                substr = "of"
-                x = TotalItem.split(substr)
-                string_name = x[0]
-                TotalItemAfterOf = x[1]
-                abc = ""
-                countspace = 0
-                for element in range(0, len(string_name)):
-                    if string_name[(len(string_name) - 1) - element] == " ":
-                        countspace = countspace + 1
-                        if countspace == 2:
-                            break
-                    else:
-                        abc = abc + string_name[(len(string_name) - 1) - element]
-                abc = abc[::-1]
-                TotalItemBeforeOf = abc
-                TotalItemAfterOf = TotalItemAfterOf.split(" ")
-                TotalItemAfterOf = TotalItemAfterOf[1]
-                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-
-                TotalItemAfterOf = int(TotalItemAfterOf)
-                TotalPages = TotalItemAfterOf / RecordsPerPage
-                NumberOfPages = math.ceil(float(TotalPages))
-                print(TotalItemAfterOf)
-                print(NumberOfPages)
-                print("RecordsPerPage is " + str(RecordsPerPage))
-
-                for i in range(NumberOfPages):
-                    if i == NumberOfPages - 1:
-                        TestResult.append(
-                            "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is successfully verified")
-                        TestResultStatus.append("Pass")
+                #---------------------Searching file and removing it----------------------
+                driver.find_element_by_xpath("//input[@type='search']").send_keys(DocumentName)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
                         break
-                    ItemLength = driver.find_elements_by_xpath("//table[@id='table_documents']/tbody/tr")
-                    ItemLength = len(ItemLength)
-                    print(ItemLength)
-                    for ii in range(ItemLength):
-                        Text1 = driver.find_element_by_xpath(
-                            "//table[@id='table_documents']/tbody/tr[" + str(ii + 1) + "]/td[3]").text
-                        if Text1 == filename:
-                            print(
-                                "Downloaded file is found in resources attachments listing table of application and verified successfully")
-                            TestResult.append(
-                                "Downloaded file is found in resources attachments listing table application and verified successfully")
-                            TestResultStatus.append("Pass")
-                            driver.find_element_by_xpath(
-                                "//table[@id='table_documents']/tbody/tr[1]/td[4]/a[2]").click()
-                            os.remove(max_file)
-                            break
-                        else:
-                            print("Downloaded file is not found in resources attachments listing table of application")
-                            TestResult.append(
-                                "Downloaded file is not found in resources attachments listing table of application")
-                            TestResultStatus.append("Fail")
-                        time.sleep(0.5)
+                try:
+                    Text1=driver.find_element_by_xpath("//table[@id='table_documents']/tbody/tr[1]/td[3]").text
+                    if Text1 == filename:
+                        print(
+                            "Downloaded file searched successfully in resources attachments listing table")
+                        TestResult.append(
+                            "Downloaded file searched successfully in resources attachments listing table")
+                        TestResultStatus.append("Pass")
 
-                    driver.find_element_by_xpath(
-                        "//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                    time.sleep(2)
-                if i != NumberOfPages - 1:
+                        driver.find_element_by_xpath("//table[@id='table_documents']/tbody/tr[1]/td[4]/a[2]").click()
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
+                        driver.find_element_by_xpath("//button[text()='Yes']").click()
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
+                        print("Downloaded file removed successfully from resources attachments listing table")
+                        TestResult.append(
+                            "Downloaded file removed successfully from resources attachments listing table")
+                        TestResultStatus.append("Pass")
+
+                    else:
+                        print("Downloaded file is not able to found in resources attachments listing table")
+                        TestResult.append(
+                            "Downloaded file is not able to found in resources attachments listing table")
+                        TestResultStatus.append("Fail")
+                except Exception as fl:
+                    print(fl)
                     TestResult.append(
-                        "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
+                        "Downloaded file is not able to found in resources attachments listing table")
                     TestResultStatus.append("Fail")
 
-                # ---------------------------------------------------------------------------------
+                #-----------------------Removing file from the system-------------------
+                os.remove(max_file)
+                print(
+                    "Downloaded file removed successfully from the system")
+                TestResult.append(
+                    "Downloaded file removed successfully from the system")
+                TestResultStatus.append("Pass")
+
             except Exception as ee:
                 print(ee)
                 TestResult.append("Add new document process is not working due to below error : \n"+str(ee))

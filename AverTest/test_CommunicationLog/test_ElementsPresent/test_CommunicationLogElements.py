@@ -1,6 +1,6 @@
 import datetime
 import math
-import re
+import os
 import time
 import openpyxl
 from fpdf import FPDF
@@ -9,11 +9,13 @@ from selenium import webdriver
 import allure
 from sys import platform
 
-from selenium.webdriver import ActionChains, Keys
+#from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as EC, wait
 from selenium.common.exceptions import TimeoutException
 
 
@@ -50,6 +52,10 @@ def test_setup():
   elif platform == "win32" or platform == "win64":
       path = 'D:/AVER/AverTest/' + Directory
 
+  MachineName = os.getenv('COMPUTERNAME')
+  if MachineName == "DESKTOP-JLLTS65":
+      path = path.replace('D:', 'C:')
+
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
   wbx = openpyxl.load_workbook(locx)
@@ -69,7 +75,10 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver = webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+          if MachineName == "DESKTOP-JLLTS65":
+              driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          else:
+              driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
 
       driver.implicitly_wait(10)
       driver.maximize_window()
@@ -181,7 +190,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      driver.quit()
+      #driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -193,10 +202,9 @@ def test_VerifyAllClickables(test_setup):
         try:
             #---------------------------Verify Communication Log elements-----------------------------
             PageName = "Communication log icon"
-            Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
-                time.sleep(2)
+                time.sleep(10)
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -210,6 +218,70 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
+
+            # ----------------Verify Communication Log icon click after verifying back--------
+            # ---------------------------Verify Select entry dropdown working-----------------------------
+            for cv in range(5):
+                print(cv)
+                Selector = ['Email', 'Letter', 'SMS', 'Phone Call', 'New Plan Form']
+                if cv == 0:
+                    select = Select(driver.find_element_by_xpath("//select[@id='selectTemplateOption']"))
+                    select.select_by_visible_text(Selector[3])
+                    time.sleep(TimeSpeed)
+                    TextCheck = Selector[3]
+                    path1 = "//select[@name='communication_type']/option"
+                if cv == 1:
+                    select = Select(driver.find_element_by_xpath("//select[@id='selectTemplateOption']"))
+                    select.select_by_visible_text(Selector[0])
+                    time.sleep(TimeSpeed)
+                    TextCheck = Selector[0]
+                    path1 = "//select[@name='communication_type']/option"
+                elif cv == 2:
+                    select = Select(driver.find_element_by_xpath("//select[@id='selectTemplateOption']"))
+                    select.select_by_visible_text(Selector[1])
+                    time.sleep(TimeSpeed)
+                    TextCheck = Selector[1]
+                    path1 = "//select[@name='communication_type']/option"
+                elif cv == 3:
+                    select = Select(driver.find_element_by_xpath("//select[@id='selectTemplateOption']"))
+                    select.select_by_visible_text(Selector[2])
+                    time.sleep(TimeSpeed)
+                    TextCheck = Selector[2]
+                    path1 = "//select[@name='communication_type']/option"
+                elif cv == 4:
+                    select = Select(driver.find_element_by_xpath("//select[@id='selectTemplateOption']"))
+                    select.select_by_visible_text(Selector[4])
+                    time.sleep(TimeSpeed)
+                    TextCheck = Selector[4]
+                    path1 = "//ul[@class='GeneralClientDetails']/li[1]"
+
+                textFound = driver.find_element_by_xpath(path1).text
+                print(textFound)
+
+                if ":" in textFound:
+                    textFound = textFound.split(":")
+                    textFound = textFound[1]
+
+                textFound = textFound.strip()
+                if textFound == TextCheck:
+                    TestResult.append(
+                        TextCheck + " dropdown value inside select new entry dropdown is able to click and open")
+                    TestResultStatus.append("Pass")
+                else:
+                    TestResult.append(
+                        TextCheck + " dropdown value inside select new entry dropdown is not able to click")
+                    TestResultStatus.append("Fail")
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
+                time.sleep(TimeSpeed)
+            print()
+            # ---------------------------------------------------------------------------------
+            driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
+            for load in range(LONG_TIMEOUT):
+                try:
+                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                        time.sleep(0.5)
+                except Exception:
+                    break
             #---------------------------------------------------------------------------------
 
             #---------------------------Verify Page title-----------------------------
@@ -387,7 +459,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
-            PageTitle1 = driver.find_element_by_xpath(
+            driver.find_element_by_xpath(
                 "//div[@class='content yellow_color']/div[2]/div[1]/div/div/form/div/div/select").click()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
@@ -464,10 +536,12 @@ def test_VerifyAllClickables(test_setup):
             ItemNotPresent = []
             for ii in range(len(ItemList)):
                 Text1 = ItemList[ii]
+                print(ii)
                 try:
                     Element1 = driver.find_element_by_xpath(
                         "//table[@id='comm-log-blank']/thead/tr/th[" + str(
                             ii + 1) + "]").text
+                    print(Element1)
                 except Exception:
                     pass
                 try:
@@ -566,9 +640,10 @@ def test_VerifyAllClickables(test_setup):
             print()
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------------------------------------------------------------
         except Exception as err:
             print(err)
+            TestResult.append("Communication Log page is not working correctly. Below error found\n" + str(err))
+            TestResultStatus.append("Fail")
             pass
 
     else:

@@ -44,8 +44,8 @@ def test_setup():
   global TestDirectoryName
   global path
 
-  TestName = "test_DownloadsWorkingABAFile"
-  description = "This test scenario is to verify download process of ABA file"
+  TestName = "test_DownloadsWorkingXEROCSV"
+  description = "This test scenario is to verify download process of XERO CSV file"
   TestResult = []
   TestResultStatus = []
   TestFailStatus = []
@@ -233,79 +233,32 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # # ---------------------------Verify working of Back button on Downloads page -----------------------------
-            # PageName = "Back button"
-            # Ptitle1 = "Rae"
-            # try:
-            #     driver.find_element_by_xpath("//a[text()='Back']").click()
-            #     for load in range(LONG_TIMEOUT):
-            #         try:
-            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-            #                 time.sleep(0.5)
-            #         except Exception:
-            #             break
-            #     time.sleep(2)
-            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not present"
-            #     TestResult.append(PageName + " is clickable")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not clickable")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
-            #
-            # # ----------------Verify Downloads icon click after verifying back--------
-            # PageName = "Downloads icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
-            #     time.sleep(2)
-            #
-            #     for load in range(LONG_TIMEOUT):
-            #         try:
-            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-            #                 time.sleep(0.5)
-            #         except Exception:
-            #             break
-            #     TestResult.append(PageName + "  is opened again after verifying back button")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not opened again after verifying back button")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # for load in range(LONG_TIMEOUT):
-            #     try:
-            #         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-            #             time.sleep(0.5)
-            #     except Exception:
-            #         break
-            # # ---------------------------------------------------------------------------------
-
-            # --------------Generating ABA file from invoice entry table-------------------------------------
+            # --------------Generating XERO CSV file from invoice entry table-------------------------------------
+            StartDate = "01-03-2022"
+            EndDate = "10-03-2022"
             try:
                 print()
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[4]/a").click()
                 time.sleep(1)
                 TestResult.append("Clicking on Invoice entry icon")
                 TestResultStatus.append("Pass")
-                driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr[1]/td[1]/input").click()
+                driver.find_element_by_xpath("//button[text()='XERO CSV']").click()
                 time.sleep(1)
-                TestResult.append("Invoice reference number is selected from invoice entry table")
+                TestResult.append("Clicking on XERO CSV button present on invoice entry page")
                 TestResultStatus.append("Pass")
-                driver.find_element_by_xpath("//button[@id='actionBtn']").click()
                 time.sleep(1)
-                TestResult.append("Clicking on action button")
+                driver.find_element_by_xpath("//input[@name='start_date']").send_keys(StartDate)
+                time.sleep(1)
+                TestResult.append("Start date is entered successfully during generate invoice report")
                 TestResultStatus.append("Pass")
-                driver.find_element_by_xpath("//button[@id='actionBtn']").click()
+                driver.find_element_by_xpath("//input[@name='end_date']").send_keys(EndDate)
                 time.sleep(1)
-                driver.find_element_by_xpath("//a[text()='Generate ABA File']").click()
-                TestResult.append("Selecting generate ABA file option under action button")
+                TestResult.append("End date is entered successfully during generate invoice report")
+                TestResultStatus.append("Pass")
+                time.sleep(1)
+                driver.find_element_by_xpath("//input[@value='Generate Csv']").click()
+                TestResult.append(
+                    "XERO CSV is generated successfully")
                 TestResultStatus.append("Pass")
                 for load in range(LONG_TIMEOUT):
                     try:
@@ -313,12 +266,17 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
-                TestResult.append("ABA file is generated successfully")
-                TestResultStatus.append("Pass")
+                driver.find_element_by_xpath("//div[@id='xeroReport']/div/div/div/button").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
 
-            except Exception as it:
-                print("Generate ABA file process not completed due to below error : "+str(it))
-                TestResult.append("Generate ABA file process not completed due to below error : "+str(it))
+            except Exception as cs:
+                print("XERO CSV generation process is not completed due to below error \n"+str(cs))
+                TestResult.append("XERO CSV generation process is not completed due to below error \n"+str(cs))
                 TestResultStatus.append("Fail")
                 pass
 
@@ -337,18 +295,19 @@ def test_VerifyAllClickables(test_setup):
             print(max_file)
             filename = ntpath.basename("'r'" + str(max_file))
             print(filename)
-            TestResult.append("Downloaded ABA file is found in downloads folder. The file name is : \n"+str(filename))
+            TestResult.append("Downloaded CSV file is found in downloads folder. The file name is : \n"+str(filename))
             TestResultStatus.append("Pass")
 
-            driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
-            TestResult.append("Downloads icon is clicked again after generating ABA file to verify the downloaded file in ")
-            TestResultStatus.append("Pass")
-            for load in range(LONG_TIMEOUT):
-                try:
-                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                        time.sleep(0.5)
-                except Exception:
-                    break
+            try:
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+            except Exception as ee:
+                print(ee)
 
             # -------------------------------------------------------------------------------------
 
@@ -396,16 +355,10 @@ def test_VerifyAllClickables(test_setup):
                     Text1 = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(ii+1)+"]/td[6]").text
                     if Text1 == filename:
                         print("Downloaded file is found in downloads section of application and verified successfully")
-                        TestResult.append(
-                            "Downloaded file is found in downloads section of application and verified successfully")
-                        TestResultStatus.append("Pass")
                         os.remove(max_file)
                         break
                     else:
                         print("Downloaded file is not found in downloads section of application")
-                        TestResult.append(
-                            "Downloaded file is not found in downloads section of application")
-                        TestResultStatus.append("Fail")
                     time.sleep(0.5)
 
                 driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
@@ -419,7 +372,7 @@ def test_VerifyAllClickables(test_setup):
 
         except Exception as err:
             print(err)
-            TestResult.append("ABA file verification process is not working correctly. Below error found\n"+str(err))
+            TestResult.append("Report CSV verification process is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

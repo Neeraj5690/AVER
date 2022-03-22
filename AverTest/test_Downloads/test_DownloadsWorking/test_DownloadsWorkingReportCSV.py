@@ -240,18 +240,33 @@ def test_VerifyAllClickables(test_setup):
                 print()
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[4]/a").click()
                 time.sleep(1)
+                TestResult.append("Clicking on Invoice entry icon")
+                TestResultStatus.append("Pass")
                 driver.find_element_by_xpath("//button[text()='Report']").click()
                 time.sleep(1)
+                TestResult.append("Clicking on Report button present on invoice entry page")
+                TestResultStatus.append("Pass")
                 select = Select(driver.find_element_by_xpath("//select[@name='search_report_date_type']"))
                 select.select_by_index(1)
+                TestResult.append("Selecting date type value from dropdown on generate invoice report screen")
+                TestResultStatus.append("Pass")
                 time.sleep(1)
                 driver.find_element_by_xpath("//input[@name='search_report_start_date']").send_keys(StartDate)
                 time.sleep(1)
+                TestResult.append("Start date is entered successfully during generate invoice report")
+                TestResultStatus.append("Pass")
                 driver.find_element_by_xpath("//input[@name='search_report_end_date']").send_keys(EndDate)
                 time.sleep(1)
+                TestResult.append("End date is entered successfully during generate invoice report")
+                TestResultStatus.append("Pass")
                 driver.find_element_by_xpath("//input[@id='search_report_select_all_checkbox_id']").click()
+                TestResult.append("Select all checkbox is clicked under report information section on generate invoice report screen")
+                TestResultStatus.append("Pass")
                 time.sleep(1)
                 driver.find_element_by_xpath("//a[text()='Create CSV']").click()
+                TestResult.append(
+                    "Report CSV is generated successfully")
+                TestResultStatus.append("Pass")
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -266,14 +281,18 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         break
 
-            except Exception:
-                print("No record found under Invoice entry table")
+            except Exception as cs:
+                print("Report CSV generation process is not completed due to below error \n"+str(cs))
+                TestResult.append("Report CSV generation process is not completed due to below error \n"+str(cs))
+                TestResultStatus.append("Fail")
                 pass
 
             #-------------------------------------------------------------------------------------
 
 
             # --------------Finding latest downloaded file in downloads folder-------------------------------------
+            TestResult.append("Searching downloaded file in downloads folder")
+            TestResultStatus.append("Pass")
             time.sleep(3)
             folder_path = str(Path.home() / "Downloads")
             file_type = r'\*'
@@ -283,6 +302,8 @@ def test_VerifyAllClickables(test_setup):
             print(max_file)
             filename = ntpath.basename("'r'" + str(max_file))
             print(filename)
+            TestResult.append("Downloaded CSV file is found in downloads folder. The file name is : \n"+str(filename))
+            TestResultStatus.append("Pass")
 
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
@@ -341,10 +362,16 @@ def test_VerifyAllClickables(test_setup):
                     Text1 = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(ii+1)+"]/td[6]").text
                     if Text1 == filename:
                         print("Downloaded file is found in downloads section of application and verified successfully")
+                        TestResult.append(
+                            "Downloaded file is found in downloads section of application and verified successfully")
+                        TestResultStatus.append("Pass")
                         os.remove(max_file)
                         break
                     else:
                         print("Downloaded file is not found in downloads section of application")
+                        TestResult.append(
+                            "Downloaded file is not found in downloads section of application")
+                        TestResultStatus.append("Fail")
                     time.sleep(0.5)
 
                 driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
@@ -358,7 +385,7 @@ def test_VerifyAllClickables(test_setup):
 
         except Exception as err:
             print(err)
-            TestResult.append("Report CSV verification process is not working correctly. Below error found\n"+str(err))
+            TestResult.append("XERO CSV verification process is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

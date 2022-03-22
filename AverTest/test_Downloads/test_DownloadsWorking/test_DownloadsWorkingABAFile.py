@@ -290,20 +290,31 @@ def test_VerifyAllClickables(test_setup):
             # --------------Generating ABA file from invoice entry table-------------------------------------
             try:
                 print()
+                #------------------Clicking on invoice entry icon-----------------------------
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[4]/a").click()
                 time.sleep(1)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 TestResult.append("Clicking on Invoice entry icon")
                 TestResultStatus.append("Pass")
+
+                #------------------Selecting reference number checkbox-----------------------------
                 driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr[1]/td[1]/input").click()
                 time.sleep(1)
                 TestResult.append("Invoice reference number is selected from invoice entry table")
                 TestResultStatus.append("Pass")
+                # ------------------Clicking on action button-----------------------------
                 driver.find_element_by_xpath("//button[@id='actionBtn']").click()
                 time.sleep(1)
                 TestResult.append("Clicking on action button")
                 TestResultStatus.append("Pass")
                 driver.find_element_by_xpath("//button[@id='actionBtn']").click()
                 time.sleep(1)
+                # ------------------Selecting generate ABA file option-----------------------------
                 driver.find_element_by_xpath("//a[text()='Generate ABA File']").click()
                 TestResult.append("Selecting generate ABA file option under action button")
                 TestResultStatus.append("Pass")

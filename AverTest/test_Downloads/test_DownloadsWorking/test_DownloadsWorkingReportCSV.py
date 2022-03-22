@@ -240,10 +240,24 @@ def test_VerifyAllClickables(test_setup):
                 print()
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[4]/a").click()
                 time.sleep(1)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+
                 TestResult.append("Clicking on Invoice entry icon")
                 TestResultStatus.append("Pass")
                 driver.find_element_by_xpath("//button[text()='Report']").click()
                 time.sleep(1)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+
                 TestResult.append("Clicking on Report button present on invoice entry page")
                 TestResultStatus.append("Pass")
                 select = Select(driver.find_element_by_xpath("//select[@name='search_report_date_type']"))
@@ -385,7 +399,7 @@ def test_VerifyAllClickables(test_setup):
 
         except Exception as err:
             print(err)
-            TestResult.append("XERO CSV verification process is not working correctly. Below error found\n"+str(err))
+            TestResult.append("Report CSV verification process is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

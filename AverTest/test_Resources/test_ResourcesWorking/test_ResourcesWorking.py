@@ -1,4 +1,5 @@
 import datetime
+import glob
 import math
 import re
 import time
@@ -19,7 +20,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import pyperclip
 import random
+from pathlib import Path
 import os
+import ntpath
+import os.path
 
 
 @allure.step("Entering username ")
@@ -282,24 +286,30 @@ def test_VerifyAllClickables(test_setup):
                 except Exception:
                     break
             # ---------------------------------------------------------------------------------
+
+            # ----------------Uploading attachment in resources section------------------------
             FileName = "nature"
             locx1 = (path + 'FileToUpload/' + FileName + '.jpg')
             PageName = "Add New button"
-            DocumentName = "Nature"
+            DocumentName = "Test Document"
             try:
+                #-----------Clicking on add new button-------------------------------------
                 driver.find_element_by_xpath("//a[text()='Add New']").click()
                 TestResult.append(PageName + " clicked successfully")
                 TestResultStatus.append("Pass")
                 time.sleep(1)
+                # -----------Entering document name-----------------------------------------
                 driver.find_element_by_xpath("//input[@name='name']").send_keys(DocumentName)
                 time.sleep(1)
                 TestResult.append("Document name entered successfully")
                 TestResultStatus.append("Pass")
+                # -----------Uploading document--------------------------------------------
                 driver.find_element_by_xpath("//input[@name='attachment']").send_keys(locx1)
                 time.sleep(1)
                 TestResult.append("Document uploaded successfully")
                 TestResultStatus.append("Pass")
                 time.sleep(1)
+                # -----------Clicking on save button---------------------------------------
                 driver.find_element_by_xpath("//button[text()='Save']").click()
                 TestResult.append("Save button is clicked successfully")
                 TestResultStatus.append("Pass")
@@ -309,37 +319,114 @@ def test_VerifyAllClickables(test_setup):
                             time.sleep(0.5)
                     except Exception:
                         break
-                driver.find_element_by_xpath("//input[@placeholder='Type to filter...']").send_keys(DocumentName)
-                time.sleep(1)
-                TestResult.append("Searching uploaded document in resource attachments listing table")
-                TestResultStatus.append("Pass")
-                NameFound = driver.find_element_by_xpath("//table[@id='table_documents']/tbody/tr[1]/td[2]").text
-                TestResult.append("Uploaded document name found in resource attachments listing table is : "+NameFound)
-                TestResultStatus.append("Pass")
-                print(NameFound)
-                if NameFound == DocumentName:
-                    print("Search filter is working")
-                    TestResult.append("Search filter is working")
-                    TestResultStatus.append("Pass")
-                    driver.find_element_by_xpath("//table[@id='table_documents']/tbody/tr[1]/td[4]/a[2]").click()
+                # -----------Applying search filter to search the uploaded document in application-----------------------
+                try:
+                    driver.find_element_by_xpath("//input[@placeholder='Type to filter...']").send_keys(
+                        DocumentName)
                     time.sleep(1)
-                    driver.find_element_by_xpath("//button[text()='Yes']").click()
-                    TestResult.append("Delete button is working for records under resource attachments listing table")
+                    TestResult.append("Searching uploaded document in resource attachments listing table")
                     TestResultStatus.append("Pass")
+
+                    # ---------Downloading uploaded document----------------------------------
+                    driver.find_element_by_xpath("//table[@id='table_documents']/tbody/tr[1]/td[4]/a[1]").click()
+                    time.sleep(1)
                     for load in range(LONG_TIMEOUT):
                         try:
                             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                                 time.sleep(0.5)
                         except Exception:
                             break
-                else:
-                    print("Search filter is not working")
-                    TestResult.append("Search filter is not working")
+                except Exception:
+                    pass
+                driver.refresh()
+                # --------------Finding latest downloaded file in downloads folder-------------------------------------
+                TestResult.append("Searching downloaded file in downloads folder")
+                TestResultStatus.append("Pass")
+                time.sleep(3)
+                folder_path = str(Path.home() / "Downloads")
+                file_type = r'\*'
+                files = glob.glob(folder_path + file_type)
+                max_file = max(files, key=os.path.getctime)
+
+                print(max_file)
+                filename = ntpath.basename("'r'" + str(max_file))
+                print(filename)
+                TestResult.append(
+                    "Downloaded file is found in downloads folder. The file name is : \n" + str(filename))
+                TestResultStatus.append("Pass")
+
+                # --------------Verifying pagination clicks for Resources table-------------------------------------
+                RecordsPerPage = 50
+                TotalItem = driver.find_element_by_xpath("//div[@id='table_documents_info']").text
+                print(TotalItem)
+
+                substr = "of"
+                x = TotalItem.split(substr)
+                string_name = x[0]
+                TotalItemAfterOf = x[1]
+                abc = ""
+                countspace = 0
+                for element in range(0, len(string_name)):
+                    if string_name[(len(string_name) - 1) - element] == " ":
+                        countspace = countspace + 1
+                        if countspace == 2:
+                            break
+                    else:
+                        abc = abc + string_name[(len(string_name) - 1) - element]
+                abc = abc[::-1]
+                TotalItemBeforeOf = abc
+                TotalItemAfterOf = TotalItemAfterOf.split(" ")
+                TotalItemAfterOf = TotalItemAfterOf[1]
+                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+
+                TotalItemAfterOf = int(TotalItemAfterOf)
+                TotalPages = TotalItemAfterOf / RecordsPerPage
+                NumberOfPages = math.ceil(float(TotalPages))
+                print(TotalItemAfterOf)
+                print(NumberOfPages)
+                print("RecordsPerPage is " + str(RecordsPerPage))
+
+                for i in range(NumberOfPages):
+                    if i == NumberOfPages - 1:
+                        TestResult.append(
+                            "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is successfully verified")
+                        TestResultStatus.append("Pass")
+                        break
+                    ItemLength = driver.find_elements_by_xpath("//table[@id='table_documents']/tbody/tr")
+                    ItemLength = len(ItemLength)
+                    print(ItemLength)
+                    for ii in range(ItemLength):
+                        Text1 = driver.find_element_by_xpath(
+                            "//table[@id='table_documents']/tbody/tr[" + str(ii + 1) + "]/td[3]").text
+                        if Text1 == filename:
+                            print(
+                                "Downloaded file is found in resources attachments listing table of application and verified successfully")
+                            TestResult.append(
+                                "Downloaded file is found in resources attachments listing table application and verified successfully")
+                            TestResultStatus.append("Pass")
+                            driver.find_element_by_xpath(
+                                "//table[@id='table_documents']/tbody/tr[1]/td[4]/a[2]").click()
+                            os.remove(max_file)
+                            break
+                        else:
+                            print("Downloaded file is not found in resources attachments listing table of application")
+                            TestResult.append(
+                                "Downloaded file is not found in resources attachments listing table of application")
+                            TestResultStatus.append("Fail")
+                        time.sleep(0.5)
+
+                    driver.find_element_by_xpath(
+                        "//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+                    time.sleep(2)
+                if i != NumberOfPages - 1:
+                    TestResult.append(
+                        "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
                     TestResultStatus.append("Fail")
 
+                # ---------------------------------------------------------------------------------
             except Exception as ee:
                 print(ee)
-                TestResult.append("Add new document process is not working")
+                TestResult.append("Add new document process is not working due to below error : \n"+str(ee))
                 TestResultStatus.append("Fail")
                 time.sleep(2)
 

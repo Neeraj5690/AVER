@@ -203,9 +203,8 @@ def test_VerifyAllClickables(test_setup):
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
-            # ---------------------------Verify PM Notifications icon click-----------------------------
+            # ---------------------------Verify Client Listing icon click-----------------------------
             PageName = "Client Listing icon"
-            Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
                 time.sleep(2)
@@ -226,65 +225,61 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-            # # ---------------------------Fetching all Clients-----------------------------
-            # ClientList=[]
-            # try:
-            #     TotalItem = driver.find_element_by_xpath("//div[@id='table_data_info']").text
-            #     print(TotalItem)
-            #     substr = "of"
-            #     x = TotalItem.split(substr)
-            #     string_name = x[0]
-            #     TotalItemAfterOf = x[1]
-            #     abc = ""
-            #     countspace = 0
-            #     for element in range(0, len(string_name)):
-            #         if string_name[(len(string_name) - 1) - element] == " ":
-            #             countspace = countspace + 1
-            #             if countspace == 2:
-            #                 break
-            #         else:
-            #             abc = abc + string_name[(len(string_name) - 1) - element]
-            #     abc = abc[::-1]
-            #     TotalItemBeforeOf = abc
-            #     TotalItemAfterOf = TotalItemAfterOf.split(" ")
-            #     TotalItemAfterOf = TotalItemAfterOf[1]
-            #     TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-            #     print(TotalItemAfterOf)
-            #
-            #     TotalItemAfterOf = int(TotalItemAfterOf)
-            #     RecordsPerPage = 50
-            #     TotalPages = TotalItemAfterOf / RecordsPerPage
-            #     NumberOfPages = math.ceil(float(TotalPages))
-            #     print(NumberOfPages)
-            #
-            #     ClickCounter=0
-            #     for i in range(NumberOfPages):
-            #         print("i is "+str(i))
-            #         NOfRecords = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr")
-            #         print(len(NOfRecords))
-            #         for i1 in range(len(NOfRecords)):
-            #             CName = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(i1+1)+"]/td[2]").text
-            #             print(CName)
-            #             ClientList.append(CName)
-            #         if NumberOfPages>1:
-            #             driver.find_element_by_xpath("//a[@id='table_data_next']").click()
-            #             i1=0
-            #             for load in range(LONG_TIMEOUT):
-            #                 try:
-            #                     if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-            #                         time.sleep(0.5)
-            #                 except Exception:
-            #                     break
-            # except Exception as pmm:
-            #     print(pmm)
-            #     pass
-            #
-            # # ---------------------------Verify PM Notifications icon click-----------------------------
-            # print(ClientList)
+
+            # ---------------------------Fetching all Clients-----------------------------
+            ClientList=[]
+            try:
+                TotalItem = driver.find_element_by_xpath("//div[@id='table_data_info']").text
+                print(TotalItem)
+                substr = "of"
+                x = TotalItem.split(substr)
+                string_name = x[0]
+                TotalItemAfterOf = x[1]
+                abc = ""
+                countspace = 0
+                for element in range(0, len(string_name)):
+                    if string_name[(len(string_name) - 1) - element] == " ":
+                        countspace = countspace + 1
+                        if countspace == 2:
+                            break
+                    else:
+                        abc = abc + string_name[(len(string_name) - 1) - element]
+                abc = abc[::-1]
+                TotalItemBeforeOf = abc
+                TotalItemAfterOf = TotalItemAfterOf.split(" ")
+                TotalItemAfterOf = TotalItemAfterOf[1]
+                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+                print(TotalItemAfterOf)
+
+                TotalItemAfterOf = int(TotalItemAfterOf)
+                RecordsPerPage = 50
+                TotalPages = TotalItemAfterOf / RecordsPerPage
+                NumberOfPages = math.ceil(float(TotalPages))
+                print(NumberOfPages)
+
+                for i in range(NumberOfPages):
+                    NOfRecords = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr")
+                    print(len(NOfRecords))
+                    for i1 in range(len(NOfRecords)):
+                        CName = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(i1+1)+"]/td[2]").text
+                        ClientList.append(CName)
+                    if NumberOfPages>1:
+                        driver.find_element_by_xpath("//a[@id='table_data_next']").click()
+                        i1=0
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
+            except Exception as pmm:
+                print(pmm)
+                pass
+
+            # ---------------------------Verify PM Notifications icon click-----------------------------
+            print(ClientList)
 
             #ClientList=['avneet1', 'BitsAver', 'BitsInGlass1', 'Carter', 'check', 'fee', 'Fee', 'FName', 'FNameA', 'gagan', 'hdnvn', 'hxnjx', 'ithhr', 'jeudh', 'jsisn', 'kjryw', 'kmbgj', 'liqcl', 'lpazv', 'mandeep', 'Mary', 'Master Terry', 'Miss Annie', 'Mr Brenton', 'mrinh', 'nfyci', 'no email client', 'Note', 'nwwjz', 'otgpw', 'ovljn', 'piteo', 'pljqp', 'qbpkw', 'rdmue', 'Reilly', 'Reilly', 'Rose-Marie', 'rzdul', 'schedule', 'sumreet', 'Sumreet', 'SUNIL', 'tas client', 'test', 'tlaee', 'uegpt', 'vfcex', 'wvxcg', 'yad', 'ycfkd', 'ydcip', 'yycpf', 'zdpqy', 'zqato']
-            ClientList=['avneet1', 'BitsInGlass1']
             for Clclick in range (len(ClientList)):
                 print(Clclick)
                 NameToOpen = ClientList[Clclick]
@@ -307,15 +302,6 @@ def test_VerifyAllClickables(test_setup):
                                 time.sleep(0.5)
                         except Exception:
                             break
-                    try:
-                        Alert=driver.find_element_by_xpath("//div[@id='alert_modal']").is_displayed()
-                        print(Alert)
-                        button = driver.find_element_by_xpath("//div[@id='alert_modal']/div/div/div/button")
-                        driver.execute_script("arguments[0].click();", button)
-                        #driver.find_element_by_xpath("//div[@id='alert_modal']/div/div/div/button").click()
-                    except Exception as dd:
-                        print(dd)
-                        pass
                     driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[2]/a").click()
                     for load in range(LONG_TIMEOUT):
                         try:
@@ -323,6 +309,12 @@ def test_VerifyAllClickables(test_setup):
                                 time.sleep(0.5)
                         except Exception:
                             break
+                    try:
+                        button = driver.find_element_by_xpath("//div[@id='alert_modal']/div/div/div/button")
+                        driver.execute_script("arguments[0].click();", button)
+                    except Exception as dd:
+                        print(dd)
+                        pass
                     driver.find_element_by_xpath("//tbody/tr/td[@class='ServiceBookingTHwidth']/p/a").click()
                     for load in range(LONG_TIMEOUT):
                         try:
@@ -374,7 +366,14 @@ def test_VerifyAllClickables(test_setup):
                         print(PercentageAmount)
                         if RemainingAmountFound<PercentageAmount:
                             print("Yes")
+                            TestResult.append("Suitable Client found to verify PM Notification. Client name is below\n"+NameToOpen)
+                            TestResultStatus.append("Pass")
+
                             driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[10]/a").click()
+                            TestResult.append(
+                                "Navigated to PM Notification page successfully")
+                            TestResultStatus.append("Pass")
+
                             time.sleep(2)
                             for load in range(LONG_TIMEOUT):
                                 try:
@@ -383,33 +382,42 @@ def test_VerifyAllClickables(test_setup):
                                 except Exception:
                                     break
                             driver.find_element_by_xpath("//a[text()='Back']/parent::div/span[1]/div/button").click()
+                            time.sleep(2)
                             driver.find_element_by_xpath("//a[text()='Back']/parent::div/span[1]/div/button").click()
+                            time.sleep(2)
                             driver.find_element_by_xpath("//a[text()='Back']/parent::div/span[1]/div/div/div/input").send_keys(NameToOpen)
+                            time.sleep(2)
                             ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                            time.sleep(1)
+                            time.sleep(2)
                             ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                            time.sleep(1)
+                            time.sleep(2)
                             driver.find_element_by_xpath("//a[text()='Back']/parent::div/span[1]/div/button").click()
+                            TestResult.append(
+                                "Client searched to find notification Information")
+                            TestResultStatus.append("Pass")
+
                             FoundClient=driver.find_element_by_xpath("//table[@id='notification_table_data']/tbody/tr[1]/td[2]").text
                             print(FoundClient)
+                            FoundNotification = driver.find_element_by_xpath(
+                                "//table[@id='notification_table_data']/tbody/tr[1]/td[4]").text
+                            print(FoundNotification)
                             if NameToOpen in  FoundClient:
                                 print("Client Notifiaction found")
+                                TestResult.append(
+                                    "Notification Information (as given below) found successfully\n"+FoundNotification)
+                                TestResultStatus.append("Pass")
                             break
                         else:
-                            print("No")
-
+                            pass
                     except Exception as pm:
                         print(pm)
                         pass
                 except Exception as ee:
                     print(ee)
-                    TestResult.append(PageName + " is not present")
-                    TestResultStatus.append("Fail")
 
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
-
         except Exception as err:
             print(err)
             TestResult.append("PM Notification is not working correctly. Below error found\n"+str(err))

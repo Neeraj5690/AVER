@@ -229,245 +229,329 @@ def test_VerifyAllClickables(test_setup):
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Back button on PM Notifications page -----------------------------
-            PageName = "Back button"
-            Ptitle1 = "Rae"
+            # ---------------------------Verify PM Notifications icon click-----------------------------
+            NameToOpen = "BitsInGlass1"
             try:
-                driver.find_element_by_xpath("//a[text()='Back']").click()
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a").click()
+                time.sleep(2)
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                             time.sleep(0.5)
                     except Exception:
                         break
+                driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
                 time.sleep(2)
-                PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
-                print(PageTitle1)
-                assert PageTitle1 in Ptitle1, PageName + " not present"
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ----------------Verify PM Notifications icon click after verifying back--------
-            PageName = "PM Notifications icon"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-                time.sleep(2)
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[10]/a").click()
-                time.sleep(2)
-
+                driver.find_element_by_xpath("//button[@id='searchBtn']").click()
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
                             time.sleep(0.5)
                     except Exception:
                         break
-                TestResult.append(PageName + "  is opened again after verifying back button")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " is not opened again after verifying back button")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            for load in range(LONG_TIMEOUT):
+                driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[2]/a").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
+                driver.find_element_by_xpath("//tbody/tr/td[@class='ServiceBookingTHwidth']/p/a").click()
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 try:
-                    if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                        time.sleep(0.5)
-                except Exception:
-                    break
-            # ---------------------------------------------------------------------------------
+                    forZeroBreak = 0
+                    AllocatedAmount = driver.find_element_by_xpath("//tr[@class='LighBluetr yellowTbodyBorder p-0 ']/td[2]/span").text
+                    print(AllocatedAmount)
+                    time.sleep(2)
+                    RemainingAmount = driver.find_element_by_xpath("//tr[@class='LighBluetr yellowTbodyBorder p-0 ']/td[4]/span").text
+                    print(RemainingAmount)
 
-            # ---------------------------Verify working of Choose client button for Notification Listing-----------------------------
-            PageName = "Choose client button"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").click()
-                time.sleep(1)
-                driver.find_element_by_xpath(
-                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath(
-                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/div/div/input").clear()
-                time.sleep(1)
-                driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/div/div/input").send_keys("Tclient")
-                time.sleep(2)
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " for notification listing is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            # ---------------------------Verify working of Choose Notification Type button for Notification Listing-----------------------------
-            PageName = "Choose Notification Type button"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath(
-                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").click()
-                time.sleep(1)
-                driver.find_element_by_xpath(
-                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath(
-                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/div/div/input").clear()
-                time.sleep(1)
-                driver.find_element_by_xpath(
-                    "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/div/div/input").send_keys(
-                    "Tclient")
-                time.sleep(2)
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " for notification listing is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
-
-            try:
-            # ---------------------------Verify Pagination clicks for Notification table-----------------------------
-                PageName = "Notification listing table"
-                NumberOfPages = "//tbody[@id='notificationListingAjaxView']/tr[last()]"
-                try:
-                    for scrolldown in range(1, 10):
-                        time.sleep(2)
+                    for char in AllocatedAmount:
+                        AllocatedAmount = AllocatedAmount.replace(',', "")
+                        temp = re.findall(r'\d+', AllocatedAmount)
+                        res = list(map(int, temp))
                         try:
-                            driver.execute_script("arguments[0].scrollIntoView();", NumberOfPages)
-                            break
+                            AllocatedAmountFound = res[0]
+                            AllocatedAmountFound = float(AllocatedAmountFound)
                         except Exception:
-                            print("Inside Excep")
-                            ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
-                            print("Page Down")
-                            pass
-                    NumberOfPages = driver.find_element_by_xpath(
-                        "//ul[@class='pagination']/li[last()-1]/a").text
-                    NumberOfPages = int(NumberOfPages)
-                    print(NumberOfPages)
-                    for sl in range(NumberOfPages):
-                        if sl == NumberOfPages - 1:
-                            TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
-                            TestResultStatus.append("Pass")
+                            AllocatedAmountFound = 0.0
+
+                        print(AllocatedAmountFound)
+                        if AllocatedAmountFound > 0.0:
+                            forZeroBreak = 1
                             break
-                        driver.find_element_by_xpath(
-                            "//ul[@class='pagination']/li[last()]/a").click()
-                        time.sleep(1)
-                        for load in range(LONG_TIMEOUT):
-                            try:
-                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                                    time.sleep(0.5)
-                            except Exception:
-                                break
+                        print(AllocatedAmountFound)
 
-                    if sl != NumberOfPages - 1:
-                        TestResult.append(
-                            (
-                                    "Pagination for " + str(PageName) + " is not working correctly"))
-                        TestResultStatus.append("Fail")
-                    driver.refresh()
-                    try:
-                        WebDriverWait(driver, SHORT_TIMEOUT
-                                      ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                    for char1 in RemainingAmount:
+                        RemainingAmount = RemainingAmount.replace(',', "")
+                        temp = re.findall(r'\d+', RemainingAmount)
+                        res = list(map(int, temp))
+                        try:
+                            RemainingAmountFound = res[0]
+                            RemainingAmountFound = float(RemainingAmountFound)
+                        except Exception:
+                            RemainingAmountFound = 0.0
 
-                        WebDriverWait(driver, LONG_TIMEOUT
-                                      ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-                    except TimeoutException:
-                        pass
-                except Exception as aq:
-                    print(aq)
-                    TestResult.append("Pagination for " + str(PageName) + " is not present")
-                    TestResultStatus.append("Fail")
-                # ---------------------------------------------------------------------------
-            except Exception as aq:
-                print(aq)
-                TestResult.append(PageName + " pagination is not working correctly.Below error found\n"+str(aq))
-                TestResultStatus.append("Fail")
-            # ---------------------------------------------------------------------------------
+                        print(RemainingAmountFound)
+                        if RemainingAmountFound > 0.0:
+                            forZeroBreak = 1
+                            break
+                        print(RemainingAmountFound)
 
-            # ---------------------------Verify working of Choose client button for Completed Notification Listing-----------------------------
-            PageName = "Choose client button"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[1]/div/button/span").click()
-                time.sleep(1)
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[1]/div/button/span").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[1]/div/div/div/input").clear()
-                time.sleep(1)
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[1]/div/div/div/input").send_keys(
-                    "Tclient2")
-                time.sleep(2)
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " for notification listing is not clickable")
+                except Exception as pm:
+                    print(pm)
+                    pass
+            except Exception as ee:
+                print(ee)
+                TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
 
-            # ---------------------------Verify working of Choose Notification Type button for Completed Notification Listing-----------------------------
-            PageName = "Choose Notification Type button"
-            Ptitle1 = ""
-            try:
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[2]/div/button/span").click()
-                time.sleep(1)
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[2]/div/button/span").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[2]/div/div/div/input").clear()
-                time.sleep(1)
-                driver.find_element_by_xpath(
-                    "//div[@class='src_sec_hed']/span[2]/div/div/div/input").send_keys(
-                    "Tclient2")
-                time.sleep(2)
-                TestResult.append(PageName + " is clickable")
-                TestResultStatus.append("Pass")
-            except Exception:
-                TestResult.append(PageName + " for notification listing is not clickable")
-                TestResultStatus.append("Fail")
-            print()
-            time.sleep(TimeSpeed)
-            # ---------------------------------------------------------------------------------
+            # # ---------------------------Verify working of Back button on PM Notifications page -----------------------------
+            # PageName = "Back button"
+            # Ptitle1 = "Rae"
+            # try:
+            #     driver.find_element_by_xpath("//a[text()='Back']").click()
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     time.sleep(2)
+            #     PageTitle1 = driver.find_element_by_xpath("//div[@class='hed_wth_srch']/h2").text
+            #     print(PageTitle1)
+            #     assert PageTitle1 in Ptitle1, PageName + " not present"
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ----------------Verify PM Notifications icon click after verifying back--------
+            # PageName = "PM Notifications icon"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+            #     time.sleep(2)
+            #     driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[10]/a").click()
+            #     time.sleep(2)
+            #
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     TestResult.append(PageName + "  is opened again after verifying back button")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " is not opened again after verifying back button")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # for load in range(LONG_TIMEOUT):
+            #     try:
+            #         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #             time.sleep(0.5)
+            #     except Exception:
+            #         break
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify working of Choose client button for Notification Listing-----------------------------
+            # PageName = "Choose client button"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").click()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/button/span").click()
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/div/div/input").clear()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath("//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[1]/div/div/div/input").send_keys("Tclient")
+            #     time.sleep(2)
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " for notification listing is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify working of Choose Notification Type button for Notification Listing-----------------------------
+            # PageName = "Choose Notification Type button"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").click()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/button/span").click()
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/div/div/input").clear()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='content magenta_color ']/div/div[1]/div[1]/div[1]/span[2]/div/div/div/input").send_keys(
+            #         "Tclient")
+            #     time.sleep(2)
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " for notification listing is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            #
+            # # ---------------------------Verify Pagination clicks for Notification table-----------------------------
+            # try:
+            #     PageName = "Notification listing table"
+            #     NumberOfPages = "//tbody[@id='notificationListingAjaxView']/tr[last()]"
+            #     try:
+            #         for scrolldown in range(1, 10):
+            #             time.sleep(2)
+            #             try:
+            #                 driver.execute_script("arguments[0].scrollIntoView();", NumberOfPages)
+            #                 break
+            #             except Exception:
+            #                 print("Inside Excep")
+            #                 ActionChains(driver).key_down(Keys.PAGE_DOWN).perform()
+            #                 print("Page Down")
+            #                 pass
+            #         NumberOfPages = driver.find_element_by_xpath(
+            #             "//ul[@class='pagination']/li[last()-1]/a").text
+            #         NumberOfPages = int(NumberOfPages)
+            #         print(NumberOfPages)
+            #         for sl in range(NumberOfPages):
+            #             if sl == NumberOfPages - 1:
+            #                 TestResult.append("Pagination for " + str(PageName) + " is successfully verified")
+            #                 TestResultStatus.append("Pass")
+            #                 break
+            #             driver.find_element_by_xpath(
+            #                 "//ul[@class='pagination']/li[last()]/a").click()
+            #             time.sleep(1)
+            #             for load in range(LONG_TIMEOUT):
+            #                 try:
+            #                     if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                         time.sleep(0.5)
+            #                 except Exception:
+            #                     break
+            #
+            #         if sl != NumberOfPages - 1:
+            #             TestResult.append(
+            #                 (
+            #                         "Pagination for " + str(PageName) + " is not working correctly"))
+            #             TestResultStatus.append("Fail")
+            #         driver.refresh()
+            #         for load in range(LONG_TIMEOUT):
+            #             try:
+            #                 if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                     time.sleep(0.5)
+            #             except Exception:
+            #                 break
+            #     except Exception as aq:
+            #         print(aq)
+            #         TestResult.append("Pagination for " + str(PageName) + " is not present")
+            #         TestResultStatus.append("Fail")
+            #     # ---------------------------------------------------------------------------
+            # except Exception as aq:
+            #     print(aq)
+            #     TestResult.append(PageName + " pagination is not working correctly.Below error found\n"+str(aq))
+            #     TestResultStatus.append("Fail")
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify working of Choose client button for Completed Notification Listing-----------------------------
+            # PageName = "Choose client button"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[1]/div/button/span").click()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[1]/div/button/span").click()
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[1]/div/div/div/input").clear()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[1]/div/div/div/input").send_keys(
+            #         "Tclient2")
+            #     time.sleep(2)
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " for notification listing is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
+            #
+            # # ---------------------------Verify working of Choose Notification Type button for Completed Notification Listing-----------------------------
+            # PageName = "Choose Notification Type button"
+            # Ptitle1 = ""
+            # try:
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[2]/div/button/span").click()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[2]/div/button/span").click()
+            #     for load in range(LONG_TIMEOUT):
+            #         try:
+            #             if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+            #                 time.sleep(0.5)
+            #         except Exception:
+            #             break
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[2]/div/div/div/input").clear()
+            #     time.sleep(1)
+            #     driver.find_element_by_xpath(
+            #         "//div[@class='src_sec_hed']/span[2]/div/div/div/input").send_keys(
+            #         "Tclient2")
+            #     time.sleep(2)
+            #     TestResult.append(PageName + " is clickable")
+            #     TestResultStatus.append("Pass")
+            # except Exception:
+            #     TestResult.append(PageName + " for notification listing is not clickable")
+            #     TestResultStatus.append("Fail")
+            # print()
+            # time.sleep(TimeSpeed)
+            # # ---------------------------------------------------------------------------------
 
             # ---------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)
-            TestResult.append("Portal is not working correctly. Below error found\n"+str(err))
+            TestResult.append("PM Notification is not working correctly. Below error found\n"+str(err))
             TestResultStatus.append("Fail")
             pass
 

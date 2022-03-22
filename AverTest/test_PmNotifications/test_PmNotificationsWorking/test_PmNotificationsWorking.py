@@ -304,6 +304,10 @@ def test_VerifyAllClickables(test_setup):
                                 time.sleep(0.5)
                         except Exception:
                             break
+                    try:
+                        driver.find_element_by_xpath("//div[@class='modal-header bg-danger']/button").click()
+                    except Exception:
+                        pass
                     driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[2]/a").click()
                     for load in range(LONG_TIMEOUT):
                         try:
@@ -358,6 +362,13 @@ def test_VerifyAllClickables(test_setup):
                                 forZeroBreak = 1
                                 break
                             print(RemainingAmountFound)
+                        PercentageAmount = AllocatedAmountFound*50/100
+                        print(PercentageAmount)
+                        if RemainingAmountFound<=PercentageAmount:
+                            print("Yes")
+                            break
+                        else:
+                            print("No")
 
                     except Exception as pm:
                         print(pm)

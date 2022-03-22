@@ -271,6 +271,7 @@ def test_VerifyAllClickables(test_setup):
                     RemainingAmount = driver.find_element_by_xpath("//tr[@class='LighBluetr yellowTbodyBorder p-0 ']/td[4]/span").text
                     print(RemainingAmount)
 
+
                     for char in AllocatedAmount:
                         AllocatedAmount = AllocatedAmount.replace(',', "")
                         temp = re.findall(r'\d+', AllocatedAmount)

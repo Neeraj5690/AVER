@@ -8,6 +8,8 @@ import pytest
 from selenium import webdriver
 import allure
 from sys import platform
+
+from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -187,7 +189,7 @@ def test_VerifyAllClickables(test_setup):
         TimeSpeed = 2
         SHORT_TIMEOUT = 2
         LONG_TIMEOUT = 60
-        LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
+        LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             #---------------------------Verify Communication Log elements-----------------------------
             PageName = "Communication log icon"
@@ -195,6 +197,12 @@ def test_VerifyAllClickables(test_setup):
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[2]/a/i").click()
                 time.sleep(2)
+                for load in range(LONG_TIMEOUT):
+                    try:
+                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                            time.sleep(0.5)
+                    except Exception:
+                        break
                 TestResult.append(PageName + " is present in left menu and able to click")
                 TestResultStatus.append("Pass")
             except Exception:

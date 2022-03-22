@@ -204,14 +204,13 @@ def test_VerifyAllClickables(test_setup):
         LOADING_ELEMENT_XPATH = "//body[@class='sidebar-xs loader_overlay']"
         try:
             # ---------------------------Verify PM Notifications icon click-----------------------------
-            PageName = "PM Notifications icon"
+            PageName = "Client Listing icon"
             Ptitle1 = ""
             try:
                 driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
                 time.sleep(2)
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[10]/a").click()
+                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a").click()
                 time.sleep(2)
-
                 for load in range(LONG_TIMEOUT):
                     try:
                         if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
@@ -228,89 +227,146 @@ def test_VerifyAllClickables(test_setup):
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------
+            # ---------------------------Fetching all Clients-----------------------------
+            ClientList=[]
+            try:
+                TotalItem = driver.find_element_by_xpath("//div[@id='table_data_info']").text
+                print(TotalItem)
+                substr = "of"
+                x = TotalItem.split(substr)
+                string_name = x[0]
+                TotalItemAfterOf = x[1]
+                abc = ""
+                countspace = 0
+                for element in range(0, len(string_name)):
+                    if string_name[(len(string_name) - 1) - element] == " ":
+                        countspace = countspace + 1
+                        if countspace == 2:
+                            break
+                    else:
+                        abc = abc + string_name[(len(string_name) - 1) - element]
+                abc = abc[::-1]
+                TotalItemBeforeOf = abc
+                TotalItemAfterOf = TotalItemAfterOf.split(" ")
+                TotalItemAfterOf = TotalItemAfterOf[1]
+                TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
+                print(TotalItemAfterOf)
+
+                TotalItemAfterOf = int(TotalItemAfterOf)
+                RecordsPerPage = 50
+                TotalPages = TotalItemAfterOf / RecordsPerPage
+                NumberOfPages = math.ceil(float(TotalPages))
+                print(NumberOfPages)
+
+                ClickCounter=0
+                for i in range(NumberOfPages):
+                    print("i is "+str(i))
+                    NOfRecords = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr")
+                    print(len(NOfRecords))
+                    for i1 in range(len(NOfRecords)):
+                        CName = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(i1+1)+"]/td[2]").text
+                        print(CName)
+                        ClientList.append(CName)
+                    if NumberOfPages>1:
+                        driver.find_element_by_xpath("//a[@id='table_data_next']").click()
+                        i1=0
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
+            except Exception as pmm:
+                print(pmm)
+                pass
 
             # ---------------------------Verify PM Notifications icon click-----------------------------
-            NameToOpen = "BitsInGlass1"
-            try:
-                driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a").click()
-                time.sleep(2)
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
-                time.sleep(2)
-                driver.find_element_by_xpath("//button[@id='searchBtn']").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[2]/a").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
-                driver.find_element_by_xpath("//tbody/tr/td[@class='ServiceBookingTHwidth']/p/a").click()
-                for load in range(LONG_TIMEOUT):
-                    try:
-                        if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
-                            time.sleep(0.5)
-                    except Exception:
-                        break
+            print(ClientList)
+
+            for Clclick in range (len(ClientList)):
+                NameToOpen = ClientList[Clclick]
+                print(NameToOpen)
                 try:
-                    forZeroBreak = 0
-                    AllocatedAmount = driver.find_element_by_xpath("//tr[@class='LighBluetr yellowTbodyBorder p-0 ']/td[2]/span").text
-                    print(AllocatedAmount)
+                    driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[3]/a").click()
                     time.sleep(2)
-                    RemainingAmount = driver.find_element_by_xpath("//tr[@class='LighBluetr yellowTbodyBorder p-0 ']/td[4]/span").text
-                    print(RemainingAmount)
-
-
-                    for char in AllocatedAmount:
-                        AllocatedAmount = AllocatedAmount.replace(',', "")
-                        temp = re.findall(r'\d+', AllocatedAmount)
-                        res = list(map(int, temp))
+                    for load in range(LONG_TIMEOUT):
                         try:
-                            AllocatedAmountFound = res[0]
-                            AllocatedAmountFound = float(AllocatedAmountFound)
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                time.sleep(0.5)
                         except Exception:
-                            AllocatedAmountFound = 0.0
-
-                        print(AllocatedAmountFound)
-                        if AllocatedAmountFound > 0.0:
-                            forZeroBreak = 1
                             break
-                        print(AllocatedAmountFound)
-
-                    for char1 in RemainingAmount:
-                        RemainingAmount = RemainingAmount.replace(',', "")
-                        temp = re.findall(r'\d+', RemainingAmount)
-                        res = list(map(int, temp))
+                    driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
+                    time.sleep(2)
+                    driver.find_element_by_xpath("//button[@id='searchBtn']").click()
+                    for load in range(LONG_TIMEOUT):
                         try:
-                            RemainingAmountFound = res[0]
-                            RemainingAmountFound = float(RemainingAmountFound)
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                time.sleep(0.5)
                         except Exception:
-                            RemainingAmountFound = 0.0
-
-                        print(RemainingAmountFound)
-                        if RemainingAmountFound > 0.0:
-                            forZeroBreak = 1
                             break
-                        print(RemainingAmountFound)
+                    driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr[1]/td[2]/a").click()
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                time.sleep(0.5)
+                        except Exception:
+                            break
+                    driver.find_element_by_xpath("//tbody/tr/td[@class='ServiceBookingTHwidth']/p/a").click()
+                    for load in range(LONG_TIMEOUT):
+                        try:
+                            if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                time.sleep(0.5)
+                        except Exception:
+                            break
+                    try:
+                        forZeroBreak = 0
+                        AllocatedAmount = driver.find_element_by_xpath("//tr[@class='LighBluetr yellowTbodyBorder p-0 ']/td[2]/span").text
+                        print(AllocatedAmount)
+                        time.sleep(2)
+                        RemainingAmount = driver.find_element_by_xpath("//tr[@class='LighBluetr yellowTbodyBorder p-0 ']/td[4]/span").text
+                        print(RemainingAmount)
 
-                except Exception as pm:
-                    print(pm)
-                    pass
-            except Exception as ee:
-                print(ee)
-                TestResult.append(PageName + " is not present")
-                TestResultStatus.append("Fail")
+
+                        for char in AllocatedAmount:
+                            AllocatedAmount = AllocatedAmount.replace(',', "")
+                            temp = re.findall(r'\d+', AllocatedAmount)
+                            res = list(map(int, temp))
+                            try:
+                                AllocatedAmountFound = res[0]
+                                AllocatedAmountFound = float(AllocatedAmountFound)
+                            except Exception:
+                                AllocatedAmountFound = 0.0
+
+                            print(AllocatedAmountFound)
+                            if AllocatedAmountFound > 0.0:
+                                forZeroBreak = 1
+                                break
+                            print(AllocatedAmountFound)
+
+                        for char1 in RemainingAmount:
+                            RemainingAmount = RemainingAmount.replace(',', "")
+                            temp = re.findall(r'\d+', RemainingAmount)
+                            res = list(map(int, temp))
+                            try:
+                                RemainingAmountFound = res[0]
+                                RemainingAmountFound = float(RemainingAmountFound)
+                            except Exception:
+                                RemainingAmountFound = 0.0
+
+                            print(RemainingAmountFound)
+                            if RemainingAmountFound > 0.0:
+                                forZeroBreak = 1
+                                break
+                            print(RemainingAmountFound)
+
+                    except Exception as pm:
+                        print(pm)
+                        pass
+                except Exception as ee:
+                    print(ee)
+                    TestResult.append(PageName + " is not present")
+                    TestResultStatus.append("Fail")
+
             print()
             time.sleep(TimeSpeed)
             # ---------------------------------------------------------------------------------

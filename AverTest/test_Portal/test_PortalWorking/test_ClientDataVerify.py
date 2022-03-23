@@ -220,9 +220,13 @@ def test_VerifyAllClickables(test_setup):
 
                 if FNameXL==None or LNameXL==None or NDISXL==None:
                     print("Either First name, Last name or NDIS number not found in ref sheet")
+                    TestResult.append("Either First name, Last name or NDIS number not found in ref sheet")
+                    TestResultStatus.append("Fail")
                     driver.close()
             except Exception:
                 print("Ref sheet is not able to read, please check the ref doc sheet")
+                TestResult.append("Ref sheet is not able to read, please check the ref doc sheet")
+                TestResultStatus.append("Fail")
                 driver.close()
 
             # ---------------------------Verify Portal icon click-----------------------------
@@ -253,9 +257,13 @@ def test_VerifyAllClickables(test_setup):
 
             # -----------------Searching client on Client listing page -----------------------
             driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(FNameXL)
+            TestResult.append("Searching for client [ "+FNameXL+" ] at client listing")
+            TestResultStatus.append("Pass")
             time.sleep(1)
             ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
             driver.find_element_by_xpath("//table/tbody/tr[1]/td[text()='"+FNameXL+"']/following-sibling::td[text()='"+LNameXL+"']/following-sibling::td[text()='"+str(NDISXL)+"']").click()
+            TestResult.append("Client is able to search")
+            TestResultStatus.append("Pass")
             # ---------------------------------------------------------------------------------
 
             ProfileDataDic={}
@@ -265,40 +273,63 @@ def test_VerifyAllClickables(test_setup):
             NameDataList=UsernamewithNDIS.split()
             Firstname=NameDataList[0]
             print(Firstname)
+            TestResult.append("Client first name [ "+Firstname+" ] stored in List")
+            TestResultStatus.append("Pass")
 
             Lastname = NameDataList[1]
             print(Lastname)
+            TestResult.append("Client last name [ "+Lastname+" ] stored in List")
+            TestResultStatus.append("Pass")
             ProfileDataDic["User Name"]=Firstname+" "+Lastname
 
             NDIS = NameDataList[3]
             print(NDIS)
+            TestResult.append("Client NDIS [ "+NDIS+" ] stored in List")
+            TestResultStatus.append("Pass")
             ProfileDataDic["NDIS Number"] = NDIS
 
             ContactNumber=driver.find_element_by_xpath("//div/label[text()='Mobile Number']/following-sibling::span").text
             print(ContactNumber)
+            if ContactNumber=="":
+                ContactNumber="N/A"
+            TestResult.append("Client Contact Number [ " + ContactNumber + " ] stored in List")
+            TestResultStatus.append("Pass")
             ProfileDataDic["Contact Number"] = ContactNumber
 
             EmailAddress = driver.find_element_by_xpath("//div/label[text()='Email']/following-sibling::span").text
             print(EmailAddress)
+            TestResult.append("Client Email Address [ " + EmailAddress + " ] stored in List")
+            TestResultStatus.append("Pass")
             ProfileDataDic["Email Address"] = EmailAddress
 
             UserAddress = driver.find_element_by_xpath("//div/label[text()='Address']/following-sibling::span").text
             print(UserAddress)
+            TestResult.append("Client User Address [ " + UserAddress + " ] stored in List")
+            TestResultStatus.append("Pass")
             ProfileDataDic["User Address"] = UserAddress
 
             PlanTablePresence=driver.find_element_by_xpath("//table[@class='table datatable-sorting']/thead").is_displayed()
             print(PlanTablePresence)
             if PlanTablePresence==True:
                 print("Service Booking Plan Table is Present")
+                TestResult.append("Service Booking Plan Table is Present")
+                TestResultStatus.append("Pass")
                 PlanStatusCount = driver.find_elements_by_xpath("//table[@class='table datatable-sorting']/tbody/tr/td[@class='sub_tbl_icn']")
                 print(len(PlanStatusCount))
                 ProfileDataDic["Plan Status Count"] = len(PlanStatusCount)
+                TestResult.append("Plans Count is "+str(len(PlanStatusCount)))
+                TestResultStatus.append("Pass")
+
                 if len(PlanStatusCount)==0:
                     PlanStatusCount="NA"
                     ProfileDataDic["Plan Status"] = PlanStatusCount
+                    TestResult.append("Plan Status found "+PlanStatusCount)
+                    TestResultStatus.append("Pass")
                 elif len(PlanStatusCount)>0:
                     FirstPlanName=driver.find_element_by_xpath("//table[@class='table datatable-sorting']/tbody/tr[1]/td[@class='sub_tbl_icn']/preceding-sibling::td[6]").text
                     print(FirstPlanName)
+                    TestResult.append("Plan at first position " + FirstPlanName)
+                    TestResultStatus.append("Pass")
 
                     ActivePlan = driver.find_element_by_xpath(
                         "//table[@class='table datatable-sorting']/tbody/tr[1]/td[@class='sub_tbl_icn']/preceding-sibling::td[5]").text
@@ -306,10 +337,16 @@ def test_VerifyAllClickables(test_setup):
 
                     if ActivePlan=="Active":
                         ProfileDataDic["Plan Status"] = FirstPlanName
+                        TestResult.append("Plan status found " + ActivePlan)
+                        TestResultStatus.append("Pass")
                     else:
                         ProfileDataDic["Plan Status"] = "NA"
+                        TestResult.append("Plan status found Inactive")
+                        TestResultStatus.append("Pass")
             else:
                 print("Service Booking Plan Table is not Present")
+                TestResult.append("Service Booking Plan Table is not Present")
+                TestResultStatus.append("Fail")
 
 
             # ----------------------------Storing data in the excel-------------------------------
@@ -337,9 +374,13 @@ def test_VerifyAllClickables(test_setup):
             AddContCount=driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr")
             if len(AddContCount)==1:
                 print("No additional Contact present")
+                TestResult.append("No additional Contact present")
+                TestResultStatus.append("Pass")
             elif len(AddContCount)>1:
                 print("Additional Contact present")
                 print(len(AddContCount))
+                TestResult.append("Additional Contact present [ "+str(len(AddContCount))+" ]")
+                TestResultStatus.append("Pass")
                 for c in range(len(AddContCount)):
                     print()
                     print("c is "+str(c))
@@ -366,6 +407,8 @@ def test_VerifyAllClickables(test_setup):
                 sheetx2.cell(c1+5, 1).value = ACFirstNameList[c1]
                 sheetx2.cell(c1 + 5, 2).value = ACLastNameList[c1]
                 sheetx2.cell(c1 + 5, 3).value = ACRelationList[c1]
+                TestResult.append(ACFirstNameList[c1]+", "+ACLastNameList[c1]+", "+ACRelationList[c1])
+                TestResultStatus.append("Pass")
 
             if len(ACFirstNameList)==0:
                 sheetx2.cell(4, 2).value ="No Contact found"

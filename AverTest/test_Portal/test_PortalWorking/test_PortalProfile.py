@@ -211,8 +211,13 @@ def test_VerifyAllClickables(test_setup):
                 print(UsernameNameXL)
                 PasswordXL = sheetx2.cell(1,5).value
                 print(PasswordXL)
+                TestResult.append("Reading data from ref sheet")
+                TestResultStatus.append("Pass")
+
                 if UsernameNameXL == None or PasswordXL == None:
                     print("Username and / or Password not found in ref sheet")
+                    TestResult.append("Username and / or Password not found in ref sheet")
+                    TestResultStatus.append("Fail")
                     driver.close()
                 else:
                     # ------------Login to Client Portal----------------
@@ -225,27 +230,49 @@ def test_VerifyAllClickables(test_setup):
                     try:
                         LoginError=driver.find_element_by_xpath("//span[@class='invalid-feedback']/strong").text
                         print("User is not able to login. Below error found\n"+LoginError)
-
+                        TestResult.append("User is not able to login. Below error found\n"+LoginError)
+                        TestResultStatus.append("Fail")
                     except Exception:
                         pass
             except Exception:
                 print("Ref sheet is not able to read, please check the ref doc sheet")
+                TestResult.append("Ref sheet is not able to read, please check the ref doc sheet")
+                TestResultStatus.append("Fail")
                 driver.close()
 
             try:
                 FLNameXL = sheetx2.cell(3, 1).value
                 print(FLNameXL)
+                TestResult.append("Name to match- " + FLNameXL)
+                TestResultStatus.append("Pass")
+
                 NDISXL = sheetx2.cell(3,2).value
                 print(NDISXL)
+                TestResult.append("NDIS to match- " + NDISXL)
+                TestResultStatus.append("Pass")
+
                 PhoneXL = sheetx2.cell(3, 3).value
                 print(PhoneXL)
+                TestResult.append("Phone number to match- " + PhoneXL)
+                TestResultStatus.append("Pass")
+
                 EmailXL = sheetx2.cell(3, 4).value
                 print(EmailXL)
+                TestResult.append("Email to match- " + EmailXL)
+                TestResultStatus.append("Pass")
+
                 AddressXL = sheetx2.cell(3, 5).value
                 print(AddressXL)
+                TestResult.append("Address to match- " + AddressXL)
+                TestResultStatus.append("Pass")
+
                 PlanNameXL = sheetx2.cell(3, 6).value
                 print(PlanNameXL)
+                TestResult.append("Plan to match- " + PlanNameXL)
+                TestResultStatus.append("Pass")
 
+                TestResult.append("Additional contact data to match")
+                TestResultStatus.append("Pass")
                 AddContactCountXL = sheetx2.cell(4, 2).value
                 FirstNameListXL = []
                 LastNameListXL = []
@@ -266,18 +293,29 @@ def test_VerifyAllClickables(test_setup):
                             RelationXL = sheetx2.cell(ac + 5, 3).value
                             RelationListXL.append(RelationXL)
 
+                            TestResult.append(FirstNameXL + ", " + LastNameXL+ ", " + RelationXL)
+                            TestResultStatus.append("Pass")
+
                 except Exception:
                     AddContactCountXL=0
                     print("Ref sheet has invalid Additional contact count, please check the ref doc sheet")
+                    TestResult.append("Ref sheet has invalid Additional contact count, please check the ref doc sheet")
+                    TestResultStatus.append("Pass")
                     pass
 
                 if FLNameXL == None or NDISXL == None or PhoneXL == None or EmailXL == None or AddressXL == None or PlanNameXL == None:
                     print("Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
+                    TestResult.append("Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
+                    TestResultStatus.append("Pass")
                     driver.close()
             except Exception:
                 print("Ref sheet is not able to read, please check the ref doc sheet")
+                TestResult.append("Ref sheet is not able to read, please check the ref doc sheet")
+                TestResultStatus.append("Fail")
                 driver.close()
 
+            TestResult.append("------------------------------------------------------------------")
+            TestResultStatus.append("Pass")
             # ---------------------------Verify Client Portal Profile Data-----------------------------
             PageName = "Client Portal Profile page"
             TitleExpected="Profile"
@@ -309,54 +347,132 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
 
             # ------------------------Fetching Data present at Profile page --------------
-            FoundUserName=driver.find_element_by_xpath("//label[text()='User Name']/parent::div/p").text
-            print(FoundUserName)
+            try:
+                FoundUserName=driver.find_element_by_xpath("//label[text()='User Name']/parent::div/p").text
+                print(FoundUserName)
+                TestResult.append("Username found- "+FoundUserName)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Username")
+                TestResult.append("No data found for Username")
+                TestResultStatus.append("Fail")
+                FoundUserName="N/A"
 
-            FoundNDIS = driver.find_element_by_xpath("//label[text()='NDIS Number']/parent::div/p").text
-            print(FoundNDIS)
+            try:
+                FoundNDIS = driver.find_element_by_xpath("//label[text()='NDIS Number']/parent::div/p").text
+                print(FoundNDIS)
+                TestResult.append("NDIS found- " + FoundNDIS)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for NDIS")
+                TestResult.append("No data found for NDIS")
+                TestResultStatus.append("Fail")
+                FoundNDIS = "N/A"
 
-            FoundEmailAddress = driver.find_element_by_xpath("//label[text()='Email Address']/parent::div/p").text
-            print(FoundEmailAddress)
+            try:
+                FoundEmailAddress = driver.find_element_by_xpath("//label[text()='Email Address']/parent::div/p").text
+                print(FoundEmailAddress)
+                TestResult.append("Email Address found- " + FoundEmailAddress)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Email Address")
+                TestResult.append("No data found for Email Address")
+                TestResultStatus.append("Fail")
+                FoundEmailAddress = "N/A"
 
-            FoundPlanStatus = driver.find_element_by_xpath("//label[text()='Plan Status ']/parent::div/p/span/a").text
-            print(FoundPlanStatus)
+            try:
+                FoundPlanStatus = driver.find_element_by_xpath("//label[text()='Plan Status ']/parent::div/p/span/a").text
+                print(FoundPlanStatus)
+                TestResult.append("Plan found- " + FoundPlanStatus)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Plan")
+                TestResult.append("No data found for Plan")
+                TestResultStatus.append("Fail")
+                FoundPlanStatus = "N/A"
 
-            FoundContactNumber = driver.find_element_by_xpath("//label[text()='Contact Number']/parent::div/p").text
-            print(FoundContactNumber)
+            try:
+                FoundContactNumber = driver.find_element_by_xpath("//label[text()='Contact Number']/parent::div/p").text
+                print(FoundContactNumber)
+                TestResult.append("Contact Number found- " + FoundContactNumber)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Contact Number")
+                TestResult.append("No data found for Contact Number")
+                TestResultStatus.append("Fail")
+                FoundContactNumber = "N/A"
 
-            FoundUserAddress = driver.find_element_by_xpath("//label[text()='User Address']/parent::div/p").text
-            print(FoundUserAddress)
+            try:
+                FoundUserAddress = driver.find_element_by_xpath("//label[text()='User Address']/parent::div/p").text
+                print(FoundUserAddress)
+                TestResult.append("Address found- " + FoundUserAddress)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Address")
+                TestResult.append("No data found for Address")
+                TestResultStatus.append("Fail")
+                FoundUserAddress = "N/A"
 
             # ------------------------Verify Data present at Profile page --------------
             if FLNameXL!=FoundUserName:
                 print("Client name at client portal (Profile) does not match with client name at admin portal")
+                TestResult.append("Client name at client portal (Profile) does not match with client name at admin portal")
+                TestResultStatus.append("Fail")
             else:
                 print("Client name at client portal (Profile) matched with client name at admin portal")
+                TestResult.append(
+                    "Client name at client portal (Profile) matched with client name at admin portal")
+                TestResultStatus.append("Pass")
 
             if NDISXL!=FoundNDIS:
                 print("NDIS at client portal (Profile) does not match with NDIS at admin portal")
+                TestResult.append("NDIS at client portal (Profile) does not match with NDIS at admin portal")
+                TestResultStatus.append("Fail")
             else:
                 print("NDIS at client portal (Profile) matched with NDIS at admin portal")
+                TestResult.append(
+                    "NDIS at client portal (Profile) matched with NDIS at admin portal")
+                TestResultStatus.append("Pass")
 
             if PhoneXL!=FoundContactNumber:
                 print("Mobile Number at client portal (Profile) does not match with Mobile Number at admin portal")
+                TestResult.append("Mobile Number at client portal (Profile) does not match with Mobile Number at admin portal")
+                TestResultStatus.append("Fail")
             else:
                 print("Mobile Number at client portal (Profile) matched with Mobile Number at admin portal")
+                TestResult.append(
+                    "Mobile Number at client portal (Profile) matched with Mobile Number at admin portal")
+                TestResultStatus.append("Pass")
 
             if EmailXL!=FoundEmailAddress:
                 print("Email at client portal (Profile) does not match with Email at admin portal")
+                TestResult.append("Email at client portal (Profile) does not match with Email at admin portal")
+                TestResultStatus.append("Fail")
             else:
                 print("Email at client portal (Profile) matched with Email at admin portal")
+                TestResult.append(
+                    "Email at client portal (Profile) matched with Email at admin portal")
+                TestResultStatus.append("Pass")
 
             if AddressXL!=FoundUserAddress:
                 print("User Address at client portal (Profile) does not match with User Address at admin portal")
+                TestResult.append("User Address at client portal (Profile) does not match with User Address at admin portal")
+                TestResultStatus.append("Fail")
             else:
                 print("User Address at client portal (Profile) matched with User Address at admin portal")
+                TestResult.append(
+                    "User Address at client portal (Profile) matched with User Address at admin portal")
+                TestResultStatus.append("Pass")
 
             if PlanNameXL not in FoundPlanStatus:
                 print("Plan Status at client portal (Profile) does not match with Plan Status at admin portal")
+                TestResult.append("Plan Status at client portal (Profile) does not match with Plan Status at admin portal")
+                TestResultStatus.append("Fail")
             else:
                 print("Plan Status at client portal (Profile) matched with Plan Status at admin portal")
+                TestResult.append(
+                    "Plan Status at client portal (Profile) matched with Plan Status at admin portal")
+                TestResultStatus.append("Pass")
 
             # -----------Clearing Client data from the ref sheet-------------------
             sheetx2.cell(3, 1).value = None
@@ -407,18 +523,34 @@ def test_VerifyAllClickables(test_setup):
                 # ------------------------Verify Additional contact data at Profile page --------------
                 if FirstNameListXL != ACFirstNameList:
                     print("Additional contact first name at client portal (Profile) does not match with Additional contact first name at admin portal")
+                    TestResult.append(
+                        "Additional contact first name at client portal (Profile) does not match with Additional contact first name at admin portal")
+                    TestResultStatus.append("Fail")
                 else:
                     print("Additional contact first name at client portal (Profile) matched with Additional contact first name at admin portal")
+                    TestResult.append(
+                        "Additional contact first name at client portal (Profile) matched with Additional contact first name at admin portal")
+                    TestResultStatus.append("Pass")
 
                 if LastNameListXL != ACLastNameList:
                     print("Additional contact last name at client portal (Profile) does not match with Additional contact last name at admin portal")
+                    TestResult.append(
+                        "Additional contact last name at client portal (Profile) does not match with Additional contact last name at admin portal")
+                    TestResultStatus.append("Fail")
                 else:
                     print("Additional contact last name at client portal (Profile) matched with Additional contact last name at admin portal")
+                    TestResult.append(
+                        "Additional contact last name at client portal (Profile) matched with Additional contact last name at admin portal")
+                    TestResultStatus.append("Pass")
 
                 if RelationListXL != ACRelationList:
                     print("Additional contact relation at client portal (Profile) does not match with Additional contact relation at admin portal")
+                    TestResult.append("Additional contact relation at client portal (Profile) does not match with Additional contact relation at admin portal")
+                    TestResultStatus.append("Fail")
                 else:
                     print("Additional contact relation at client portal (Profile) matched with Additional contact relation at admin portal")
+                    TestResult.append("Additional contact relation at client portal (Profile) matched with Additional contact relation at admin portal")
+                    TestResultStatus.append("Pass")
 
                 #-----------Clearing additional contact data from the ref sheet-------------------
                 for ac1 in range(AddContactCountXL):
@@ -432,7 +564,9 @@ def test_VerifyAllClickables(test_setup):
 
 
             else:
-                print("No additional contact present in client profile page")
+                print("No additional contact present in ref doc sheet")
+                TestResult.append("No additional contact present in ref doc sheet")
+                TestResultStatus.append("Fail")
 
 
         except Exception as err:

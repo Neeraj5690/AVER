@@ -310,30 +310,60 @@ def test_VerifyAllClickables(test_setup):
                 TestResultStatus.append("Fail")
 
             # ------------------------Fetching Data present at Dashboard page --------------
-            FoundFirstName=driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[2]/a").text
-            print(FoundFirstName)
-            TestResult.append("First Name found- "+FoundFirstName)
-            TestResultStatus.append("Pass")
+            try:
+                FoundFirstName=driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[2]/a").text
+                print(FoundFirstName)
+                TestResult.append("First Name found- "+FoundFirstName)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for First Name")
+                TestResult.append("No data found for First Name")
+                TestResultStatus.append("Fail")
+                FoundFirstName="N/A"
 
-            FoundLastName = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[3]").text
-            print(FoundLastName)
-            TestResult.append("Last Name found- " + FoundLastName)
-            TestResultStatus.append("Pass")
+            try:
+                FoundLastName = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[3]").text
+                print(FoundLastName)
+                TestResult.append("Last Name found- " + FoundLastName)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Last Name")
+                TestResult.append("No data found for Last Name")
+                TestResultStatus.append("Fail")
+                FoundLastName="N/A"
 
-            FoundNDIS = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[4]").text
-            print(FoundNDIS)
-            TestResult.append("NDIS found- " + FoundNDIS)
-            TestResultStatus.append("Pass")
+            try:
+                FoundNDIS = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[4]").text
+                print(FoundNDIS)
+                TestResult.append("NDIS found- " + FoundNDIS)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for NDIS")
+                TestResult.append("No data found for NDIS")
+                TestResultStatus.append("Fail")
+                FoundNDIS="N/A"
 
-            FoundMobileNumber = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[5]").text
-            print(FoundMobileNumber)
-            TestResult.append("Mobile Number found- " + FoundMobileNumber)
-            TestResultStatus.append("Pass")
+            try:
+                FoundMobileNumber = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[5]").text
+                print(FoundMobileNumber)
+                TestResult.append("Mobile Number found- " + FoundMobileNumber)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Mobile Number")
+                TestResult.append("No data found for Mobile Number")
+                TestResultStatus.append("Fail")
+                FoundMobileNumber="N/A"
 
-            FoundEmail = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[6]").text
-            print(FoundEmail)
-            TestResult.append("Email found- " + FoundEmail)
-            TestResultStatus.append("Pass")
+            try:
+                FoundEmail = driver.find_element_by_xpath("//table[@id='clients-list']/tbody/tr[1]/td[6]").text
+                print(FoundEmail)
+                TestResult.append("Email found- " + FoundEmail)
+                TestResultStatus.append("Pass")
+            except Exception:
+                print("No data found for Email")
+                TestResult.append("No data found for Email")
+                TestResultStatus.append("Fail")
+                FoundEmail="N/A"
 
             # ------------------------Verify Data present at Dashboard page --------------
             if FLNameXL!=FoundFirstName+" "+FoundLastName:

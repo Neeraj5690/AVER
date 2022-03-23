@@ -286,7 +286,7 @@ def test_VerifyAllClickables(test_setup):
 
                 #------------------------------------------------------------------
 
-                NameToOpen = "BitsInGlass"
+                NameToOpen = "BitsInGlass1"
                 driver.find_element_by_xpath("//input[@id='searchFilter']").send_keys(NameToOpen)
 
                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()

@@ -276,9 +276,8 @@ def test_VerifyAllClickables(test_setup):
                     TestResultStatus.append("Fail")
                     driver.close()
             except Exception:
-                print("Ref sheet is not able to read, please check the ref doc sheet")
-                TestResult.append(
-                    "Ref sheet is not able to read, please check the ref doc sheet")
+                print("Terminating execution as Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
+                TestResult.append("Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
                 TestResultStatus.append("Fail")
                 driver.close()
 

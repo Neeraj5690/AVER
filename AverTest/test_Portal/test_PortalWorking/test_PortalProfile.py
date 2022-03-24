@@ -235,7 +235,7 @@ def test_VerifyAllClickables(test_setup):
                     except Exception:
                         pass
             except Exception:
-                print("Ref sheet is not able to read, please check the ref doc sheet")
+                print("1-Ref sheet is not able to read, please check the ref doc sheet")
                 TestResult.append("Ref sheet is not able to read, please check the ref doc sheet")
                 TestResultStatus.append("Fail")
                 driver.close()
@@ -253,6 +253,8 @@ def test_VerifyAllClickables(test_setup):
 
                 PhoneXL = sheetx2.cell(3, 3).value
                 print(PhoneXL)
+                if PhoneXL==None:
+                    PhoneXL="NA"
                 TestResult.append("Phone number to match- " + PhoneXL)
                 TestResultStatus.append("Pass")
 
@@ -308,10 +310,11 @@ def test_VerifyAllClickables(test_setup):
                     TestResult.append("Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
                     TestResultStatus.append("Pass")
                     driver.close()
-            except Exception:
-                print("Ref sheet is not able to read, please check the ref doc sheet")
-                TestResult.append("Ref sheet is not able to read, please check the ref doc sheet")
-                TestResultStatus.append("Fail")
+            except Exception as rr:
+                print(rr)
+                print("Terminating execution as Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
+                TestResult.append("Client details - First name, Last name, NDIS, Email, or Phone number does not found in ref sheet")
+                TestResultStatus.append("Pass")
                 driver.close()
 
             TestResult.append("------------------------------------------------------------------")
@@ -522,30 +525,30 @@ def test_VerifyAllClickables(test_setup):
 
                 # ------------------------Verify Additional contact data at Profile page --------------
                 if FirstNameListXL != ACFirstNameList:
-                    print("Additional contact first name at client portal (Profile) does not match with Additional contact first name at admin portal")
+                    print("Additional contacts first name "+FirstNameListXL+" at client portal (Profile) does not match with Additional contact first name at admin portal")
                     TestResult.append(
-                        "Additional contact first name at client portal (Profile) does not match with Additional contact first name at admin portal")
+                        "Additional contacts first name "+FirstNameListXL+" at client portal (Profile) does not match with Additional contact first name at admin portal")
                     TestResultStatus.append("Fail")
                 else:
-                    print("Additional contact first name at client portal (Profile) matched with Additional contact first name at admin portal")
+                    print("Additional contacts first name "+FirstNameListXL+" at client portal (Profile) matched with Additional contact first name at admin portal")
                     TestResult.append(
-                        "Additional contact first name at client portal (Profile) matched with Additional contact first name at admin portal")
+                        "Additional contacts first name "+FirstNameListXL+" at client portal (Profile) matched with Additional contact first name at admin portal")
                     TestResultStatus.append("Pass")
 
                 if LastNameListXL != ACLastNameList:
-                    print("Additional contact last name at client portal (Profile) does not match with Additional contact last name at admin portal")
+                    print("Additional contacts last name at client portal (Profile) does not match with Additional contact last name at admin portal")
                     TestResult.append(
-                        "Additional contact last name at client portal (Profile) does not match with Additional contact last name at admin portal")
+                        "Additional contacts last name at client portal (Profile) does not match with Additional contact last name at admin portal")
                     TestResultStatus.append("Fail")
                 else:
-                    print("Additional contact last name at client portal (Profile) matched with Additional contact last name at admin portal")
+                    print("Additional contacts last name at client portal (Profile) matched with Additional contact last name at admin portal")
                     TestResult.append(
-                        "Additional contact last name at client portal (Profile) matched with Additional contact last name at admin portal")
+                        "Additional contacts last name at client portal (Profile) matched with Additional contact last name at admin portal")
                     TestResultStatus.append("Pass")
 
                 if RelationListXL != ACRelationList:
-                    print("Additional contact relation at client portal (Profile) does not match with Additional contact relation at admin portal")
-                    TestResult.append("Additional contact relation at client portal (Profile) does not match with Additional contact relation at admin portal")
+                    print("Additional contacts relation at client portal (Profile) does not match with Additional contact relation at admin portal")
+                    TestResult.append("Additional contacts relation at client portal (Profile) does not match with Additional contact relation at admin portal")
                     TestResultStatus.append("Fail")
                 else:
                     print("Additional contact relation at client portal (Profile) matched with Additional contact relation at admin portal")

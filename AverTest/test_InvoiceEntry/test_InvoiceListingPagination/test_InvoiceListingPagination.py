@@ -361,6 +361,7 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append("Total Amount does not match\nDifference is " + str(round(sum(TotalAmountFloatList) - Amount,2)))
                 TestResultStatus.append("Fail")
 
+
         except Exception as err:
             print(err)
             pass

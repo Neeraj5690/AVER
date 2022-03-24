@@ -1,8 +1,7 @@
 import datetime
 import math
-import re
+import os
 import time
-from telnetlib import EC
 
 import openpyxl
 from fpdf import FPDF
@@ -50,6 +49,10 @@ def test_setup():
   elif platform == "win32" or platform == "win64":
       path = 'D:/AVER/AverTest/' + Directory
 
+  MachineName = os.getenv('COMPUTERNAME')
+  if MachineName == "DESKTOP-JLLTS65":
+      path = path.replace('D:', 'C:')
+
   ExcelFileName = "Execution"
   locx = (path+'Executiondir/' + ExcelFileName + '.xlsx')
   wbx = openpyxl.load_workbook(locx)
@@ -69,7 +72,11 @@ def test_setup():
       if platform == "linux" or platform == "linux2":
           driver=webdriver.Chrome(executable_path="/home/legion/office 1wayit/AVER/AverTest/chrome/chromedriverLinux")
       elif platform == "win32" or platform == "win64":
-          driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+          if MachineName == "DESKTOP-JLLTS65":
+              driver = webdriver.Chrome(executable_path="C:/AVER/AverTest/chrome/chromedriver.exe")
+          else:
+              driver = webdriver.Chrome(executable_path="D:/AVER/AverTest/chrome/chromedriver.exe")
+
       driver.implicitly_wait(10)
       driver.maximize_window()
       driver.get("https://averreplica.1wayit.com/login")
@@ -280,7 +287,7 @@ def test_VerifyAllClickables(test_setup):
             # ---------------------------Verify Presence of elements in Notifications listing table-----------------------------
             inside = "Notifications listing"
             # ---------------loop for Columns in table for Notifications listing table----------
-            ItemList = ["Client Name", "Notification Type", "Information", "Plan End Date",
+            ItemList = ["Checkbox","Client Name", "Notification Type", "Information", "Plan End Date",
                         "Last Contact Date", "Number of Contact Attempts", "Date Created", "Status"]
             print(len(ItemList))
             ItemPresent = []
@@ -291,15 +298,18 @@ def test_VerifyAllClickables(test_setup):
                 try:
                     if ii == 0:
                         try:
-                            driver.find_element_by_xpath(
+                            CheckboxBool=driver.find_element_by_xpath(
                                 "//table[@id='notification_table_data']/thead/tr/th[" + str(ii + 1) + "]/input").is_displayed()
+                            print(CheckboxBool)
                             print("Checkbox present")
                             TestResult.append("Checkbox is present under [ " + inside + " ] table")
                             TestResultStatus.append("Pass")
+                            Element1="Checkbox"
                         except Exception:
                             print("Checkbox not present")
                             TestResult.append("Checkbox is not present under [ " + inside + " ] table")
                             TestResultStatus.append("Fail")
+                            Element1 = "NA"
                     else:
                         Element1 = driver.find_element_by_xpath(
                             "//table[@id='notification_table_data']/thead/tr/th[" + str(ii + 1) + "]").text

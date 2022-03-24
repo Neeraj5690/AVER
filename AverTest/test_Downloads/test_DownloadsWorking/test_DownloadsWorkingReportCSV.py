@@ -197,7 +197,7 @@ def test_setup():
                     checkcount1 = 1
       #-----------------------------------------------------------------------------
 
-      #driver.quit()
+      driver.quit()
 
 @pytest.mark.smoke
 def test_VerifyAllClickables(test_setup):
@@ -379,7 +379,25 @@ def test_VerifyAllClickables(test_setup):
                         TestResult.append(
                             "Downloaded file is found in downloads section of application and verified successfully")
                         TestResultStatus.append("Pass")
+                        driver.find_element_by_xpath(
+                            "//table[@id='table_data']/tbody/tr[" + str(ii + 1) + "]/td[9]/a").click()
+                        time.sleep(2)
+                        driver.find_element_by_xpath("//button[text()='Yes']").click()
+                        for load in range(LONG_TIMEOUT):
+                            try:
+                                if driver.find_element_by_xpath(LOADING_ELEMENT_XPATH).is_displayed() == True:
+                                    time.sleep(0.5)
+                            except Exception:
+                                break
+                        TestResult.append(
+                            "File removed from the downloads section of application")
+                        TestResultStatus.append("Pass")
+
+                        # ------------Removing downloaded file from the system--------------------------
                         os.remove(max_file)
+                        TestResult.append(
+                            "Downloaded file removed from the system")
+                        TestResultStatus.append("Pass")
                         break
                     else:
                         print("Downloaded file is not found in downloads section of application")

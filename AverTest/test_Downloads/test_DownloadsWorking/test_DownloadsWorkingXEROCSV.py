@@ -243,19 +243,26 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append("Clicking on Invoice entry icon")
                 TestResultStatus.append("Pass")
                 driver.find_element_by_xpath("//button[text()='XERO CSV']").click()
-                time.sleep(1)
                 TestResult.append("Clicking on XERO CSV button present on invoice entry page")
                 TestResultStatus.append("Pass")
-                time.sleep(1)
-                driver.find_element_by_xpath("//input[@name='start_date']").send_keys(StartDate)
-                time.sleep(1)
+                time.sleep(3)
+                driver.find_element_by_xpath("//input[@name='start_date']").click()
+                TEXT = StartDate
+                pyperclip.copy(TEXT)
+                ActionChains(driver).key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+                time.sleep(2)
                 TestResult.append("Start date is entered successfully during generate invoice report")
                 TestResultStatus.append("Pass")
-                driver.find_element_by_xpath("//input[@name='end_date']").send_keys(EndDate)
-                time.sleep(1)
+
+                driver.find_element_by_xpath("//input[@name='end_date']").click()
+                TEXT = EndDate
+                pyperclip.copy(TEXT)
+                ActionChains(driver).key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
                 TestResult.append("End date is entered successfully during generate invoice report")
                 TestResultStatus.append("Pass")
                 time.sleep(1)
+
+                ActionChains(driver).key_down(Keys.TAB).key_up(Keys.TAB).perform()
                 driver.find_element_by_xpath("//input[@value='Generate Csv']").click()
                 TestResult.append(
                     "XERO CSV is generated successfully")
@@ -282,7 +289,6 @@ def test_VerifyAllClickables(test_setup):
 
             #-------------------------------------------------------------------------------------
 
-
             # --------------Finding latest downloaded file in downloads folder-------------------------------------
             TestResult.append("Searching downloaded file in downloads folder")
             TestResultStatus.append("Pass")
@@ -295,9 +301,8 @@ def test_VerifyAllClickables(test_setup):
             print(max_file)
             filename = ntpath.basename("'r'" + str(max_file))
             print(filename)
-            TestResult.append("Downloaded CSV file is found in downloads folder. The file name is : \n"+str(filename))
+            TestResult.append("Downloaded CSV file is found in downloads folder in system. The file name is : \n"+str(filename))
             TestResultStatus.append("Pass")
-
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
                 for load in range(LONG_TIMEOUT):
@@ -310,65 +315,6 @@ def test_VerifyAllClickables(test_setup):
                 print(ee)
 
             # -------------------------------------------------------------------------------------
-
-            # --------------Verifying pagination clicks for downloads listing table-------------------------------------
-            RecordsPerPage = 50
-            TotalItem = driver.find_element_by_xpath("//div[@id='table_data_info']").text
-            print(TotalItem)
-
-            substr = "of"
-            x = TotalItem.split(substr)
-            string_name = x[0]
-            TotalItemAfterOf = x[1]
-            abc = ""
-            countspace = 0
-            for element in range(0, len(string_name)):
-                if string_name[(len(string_name) - 1) - element] == " ":
-                    countspace = countspace + 1
-                    if countspace == 2:
-                        break
-                else:
-                    abc = abc + string_name[(len(string_name) - 1) - element]
-            abc = abc[::-1]
-            TotalItemBeforeOf = abc
-            TotalItemAfterOf = TotalItemAfterOf.split(" ")
-            TotalItemAfterOf = TotalItemAfterOf[1]
-            TotalItemAfterOf = re.sub('[^A-Za-z0-9]+', '', TotalItemAfterOf)
-
-            TotalItemAfterOf = int(TotalItemAfterOf)
-            TotalPages = TotalItemAfterOf / RecordsPerPage
-            NumberOfPages = math.ceil(float(TotalPages))
-            print(TotalItemAfterOf)
-            print(NumberOfPages)
-            print("RecordsPerPage is " + str(RecordsPerPage))
-
-            for i in range(NumberOfPages):
-                if i == NumberOfPages - 1:
-                    TestResult.append(
-                        "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is successfully verified")
-                    TestResultStatus.append("Pass")
-                    break
-                ItemLength = driver.find_elements_by_xpath("//table[@id='table_data']/tbody/tr")
-                ItemLength = len(ItemLength)
-                print(ItemLength)
-                for ii in range(ItemLength):
-                    Text1 = driver.find_element_by_xpath("//table[@id='table_data']/tbody/tr["+str(ii+1)+"]/td[6]").text
-                    if Text1 == filename:
-                        print("Downloaded file is found in downloads section of application and verified successfully")
-                        os.remove(max_file)
-                        break
-                    else:
-                        print("Downloaded file is not found in downloads section of application")
-                    time.sleep(0.5)
-
-                driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
-                time.sleep(2)
-            if i != NumberOfPages - 1:
-                TestResult.append(
-                    "Pagination for [ " + str(TotalItemAfterOf) + " ] no. of records is not working correctly")
-                TestResultStatus.append("Fail")
-
-            # ---------------------------------------------------------------------------------
 
         except Exception as err:
             print(err)

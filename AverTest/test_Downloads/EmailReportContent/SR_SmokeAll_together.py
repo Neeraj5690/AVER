@@ -26,6 +26,10 @@ def test_ReportSendSmokeAll():
     elif platform == "win32" or platform == "win64":
         PDFpath = 'D:/AVER/AverTest/' + Directory
 
+    MachineName = os.getenv('COMPUTERNAME')
+    if MachineName == "DESKTOP-JLLTS65":
+        PDFpath = PDFpath.replace('D:', 'C:')
+
     #-------------------To read content to send in e-Mail--------------------
     ExcelFileName = "FileName"
     loc = (PDFpath+'PDFFileNameData/' + ExcelFileName + '.xlsx')
@@ -79,8 +83,8 @@ def test_ReportSendSmokeAll():
         msg.attach(file_attachment)
 
     email_from = 'Rae CRM Test Automation Team'
-    email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
-    #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
+    #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
+    email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
     new_time = datetime.datetime.now()
     ctDate = new_time.strftime("%d %B %Y")

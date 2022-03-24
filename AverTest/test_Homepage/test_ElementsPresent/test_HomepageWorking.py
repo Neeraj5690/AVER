@@ -200,167 +200,133 @@ def test_VerifyAllClickables(test_setup):
         LONG_TIMEOUT = 60
         LOADING_ELEMENT_XPATH = "//div[@class='main-loader LoaderImageLogo']"
         try:
-            # #---------------------------Verify Login page elements-----------------------------
-            # PageName="Logo at left panel"
-            # Ptitle1="rounded-circle"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath("//img[@class='rounded-circle ']").get_attribute('class')
-            #     assert Ptitle1 in PageTitle1, PageName + " not able to open"
-            #     TestResult.append(PageName + "  is present")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName +" is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # #---------------------------------------------------------------------------------
-            #
-            # #---------------------------Verify Hamburger icon-----------------------------
-            # PageName = "Hamburger menu icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
-            #     TestResult.append(PageName + "  is present and able to click")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # #---------------------------------------------------------------------------------
-            #
-            # #---------------------------Verify Top Search box-----------------------------
-            # PageName = "Top Search box"
-            # Ptitle1 = "Search here"
-            # try:
-            #     PageTitle1 = driver.find_element_by_xpath("//li[@class='globallisrch']/div/form/input").get_attribute('placeholder')
-            #     print(PageTitle1)
-            #     assert PageTitle1 in Ptitle1, PageName + " not able to open"
-            #     driver.find_element_by_xpath("//li[@class='globallisrch']/div/form/input").send_keys("test")
-            #     TestResult.append(PageName + "  is present and user is able to send inputs")
-            #     TestResultStatus.append("Pass")
-            # except Exception:
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # print()
-            # time.sleep(TimeSpeed)
-            # #---------------------------------------------------------------------------------
-            #
-            # #---------------------------Verify Calendar icon-----------------------------
-            # time.sleep(2)
-            # PageName = "Calendar icon"
-            # Ptitle1 = ""
-            # try:
-            #     driver.find_element_by_xpath("//a[@title='Calendar']").click()
-            #     try:
-            #         WebDriverWait(driver, SHORT_TIMEOUT
-            #                       ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #
-            #         WebDriverWait(driver, LONG_TIMEOUT
-            #                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #     except TimeoutException:
-            #         pass
-            #     TestResult.append(PageName + "  is present and user is able to click")
-            #     TestResultStatus.append("Pass")
-            # except Exception as qq:
-            #     print(qq)
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
-            # time.sleep(TimeSpeed)
-            # #---------------------------------------------------------------------------------
-            #
-            # #---------------------------Verify My profile drop down-----------------------------
-            # time.sleep(2)
-            # PageName = "My profile drop down"
-            # try:
-            #     driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
-            #     time.sleep(2)
-            #     driver.find_element_by_xpath("//a[@href='https://averreplica.1wayit.com/admin-profile']").click()
-            #     try:
-            #         WebDriverWait(driver, SHORT_TIMEOUT
-            #                       ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #
-            #         WebDriverWait(driver, LONG_TIMEOUT
-            #                       ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
-            #     except TimeoutException:
-            #         pass
-            #     TestResult.append(PageName + "  is present and user is able to click")
-            #     TestResultStatus.append("Pass")
-            # except Exception as aaq:
-            #     print(aaq)
-            #     TestResult.append(PageName + " is not present")
-            #     TestResultStatus.append("Fail")
-            # time.sleep(2)
-            # time.sleep(TimeSpeed)
-            # driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
-            # time.sleep(TimeSpeed)
-            # # ---------------------------------------------------------------------------------
+            #---------------------------Verify Login page elements-----------------------------
+            PageName="Logo at left panel"
+            Ptitle1="rounded-circle"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//img[@class='rounded-circle ']").get_attribute('class')
+                assert Ptitle1 in PageTitle1, PageName + " not able to open"
+                TestResult.append(PageName + "  is present")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName +" is not present")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            #---------------------------------------------------------------------------------
+
+            #---------------------------Verify Hamburger icon-----------------------------
+            PageName = "Hamburger menu icon"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//i[@class='icon-paragraph-justify3']/parent::a").click()
+                TestResult.append(PageName + "  is present and able to click")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            #---------------------------------------------------------------------------------
+
+            #---------------------------Verify Top Search box-----------------------------
+            PageName = "Top Search box"
+            Ptitle1 = "Search here"
+            try:
+                PageTitle1 = driver.find_element_by_xpath("//li[@class='globallisrch']/div/form/input").get_attribute('placeholder')
+                print(PageTitle1)
+                assert PageTitle1 in Ptitle1, PageName + " not able to open"
+                driver.find_element_by_xpath("//li[@class='globallisrch']/div/form/input").send_keys("test")
+                TestResult.append(PageName + "  is present and user is able to send inputs")
+                TestResultStatus.append("Pass")
+            except Exception:
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            print()
+            time.sleep(TimeSpeed)
+            #---------------------------------------------------------------------------------
+
+            #---------------------------Verify Calendar icon-----------------------------
+            time.sleep(2)
+            PageName = "Calendar icon"
+            Ptitle1 = ""
+            try:
+                driver.find_element_by_xpath("//a[@title='Calendar']").click()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+                TestResult.append(PageName + "  is present and user is able to click")
+                TestResultStatus.append("Pass")
+            except Exception as qq:
+                print(qq)
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
+            time.sleep(TimeSpeed)
+            #---------------------------------------------------------------------------------
+
+            #---------------------------Verify My profile drop down-----------------------------
+            time.sleep(2)
+            PageName = "My profile drop down"
+            try:
+                driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//a[@data-toggle='dropdown']").click()
+                time.sleep(2)
+                driver.find_element_by_xpath("//a[@href='https://averreplica.1wayit.com/admin-profile']").click()
+                try:
+                    WebDriverWait(driver, SHORT_TIMEOUT
+                                  ).until(EC.presence_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+
+                    WebDriverWait(driver, LONG_TIMEOUT
+                                  ).until(EC.invisibility_of_element_located((By.XPATH, LOADING_ELEMENT_XPATH)))
+                except TimeoutException:
+                    pass
+                TestResult.append(PageName + "  is present and user is able to click")
+                TestResultStatus.append("Pass")
+            except Exception as aaq:
+                print(aaq)
+                TestResult.append(PageName + " is not present")
+                TestResultStatus.append("Fail")
+            time.sleep(2)
+            time.sleep(TimeSpeed)
+            driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[1]/a/i").click()
+            time.sleep(TimeSpeed)
+
             # ---------------------------Verify Pagination clicks-----------------------------
             RecordsPerPage=10
             try:
-                for i1 in range(3):
+                for i1 in range(4):
+                    print()
                     try:
-                        print(i1)
-                        AlertFound = 0
                         if i1==0:
                             TestResult.append(
                                 "By default [ 10 ] no. of records per page is selected")
                             TestResultStatus.append("Pass")
                         if i1>0:
-                            print(RecordsPerPage)
-                            if RecordsPerPage==10:
-                                for clicks in range(3):
-                                    ActionChains(driver).key_down(Keys.PAGE_UP).perform()
-                                    time.sleep(3)
-
-                            elif RecordsPerPage==25:
-                                for clicks in range(4):
-                                    ActionChains(driver).key_down(Keys.PAGE_UP).key_up(Keys.PAGE_UP).perform()
-                                    time.sleep(3)
-                                driver.close()
-
                             select = Select(driver.find_element_by_xpath("//div[@class='table_data']/div/div[1]/label/select"))
                             select.select_by_index(i1)
                             time.sleep(3)
-                            try:
-                                AlertText = driver.switch_to_alert().text
-                                print(AlertText)
-                            except Exception as al:
-                                 print(al)
-                                 ActionChains(driver).key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
-                                 pass
-                            time.sleep(2)
-                            AlertFound=1
-                            print("Inside Alert Found")
 
-                            RecordsPerPage = driver.find_element_by_xpath(
-                                "//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
-                            RecordsPerPage = int(RecordsPerPage)
-                            print(RecordsPerPage)
-                            if AlertFound==1:
-                                TestResult.append(
-                                    "Unexpected alert appeared while changing pagination to [ " + str(
-                                        RecordsPerPage) + " ] per page. Below error found\n"+AlertText)
-                                TestResultStatus.append("Fail")
-
-                            else:
-                                TestResult.append(
-                                    "Selected [ " + str(RecordsPerPage) + " ] no. of records per page")
-                                TestResultStatus.append("Pass")
-
+                        RecordsPerPage = driver.find_element_by_xpath(
+                            "//div[@class='table_data']/div/div[1]/label/span/span[1]/span/span[1]").text
+                        RecordsPerPage = int(RecordsPerPage)
+                        print(RecordsPerPage)
                     except Exception as ww:
                         print(ww)
                         TestResult.append(
                             "For table [ Tracking ] Pagination something went wrong. Below error found\n"+str(ww))
                         TestResultStatus.append("Fail")
 
-
-                    TotalItem = driver.find_element_by_xpath("//div[@class='table_data']/div/div[4]").text
+                    time.sleep(2)
+                    TotalItem = driver.find_element_by_xpath("//div[@id='tracking_listing_info']").text
                     print(TotalItem)
 
                     if TotalItem!="":
@@ -394,12 +360,10 @@ def test_VerifyAllClickables(test_setup):
                         TotalItemAfterOf = int(TotalItemAfterOf)
                         TotalPages = TotalItemAfterOf/RecordsPerPage
                         NumberOfPages = math.ceil(float(TotalPages))
-                        print(TotalItemAfterOf)
                         print(NumberOfPages)
-                        print("RecordsPerPage is " + str(RecordsPerPage))
                         try:
                             ItemLenght=driver.find_elements_by_xpath("//table[@id='tracking_listing']/tbody/tr")
-                            print("ItemLenght is "+str(len(ItemLenght)))
+                            #print("ItemLenght is "+str(len(ItemLenght)))
                             if len(ItemLenght)!=RecordsPerPage:
                                 TestResult.append("No of records for [ " + str(RecordsPerPage) + " ] is not correct. "+str(len(ItemLenght))+" records were found per page")
                                 TestResultStatus.append("Fail")
@@ -413,6 +377,7 @@ def test_VerifyAllClickables(test_setup):
                                 break
                             driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
                             time.sleep(0.5)
+
                         if i != NumberOfPages - 1:
                             TestResult.append(
                                 "Pagination for [ " + str(RecordsPerPage) + " ] no. of records is not working correctly")

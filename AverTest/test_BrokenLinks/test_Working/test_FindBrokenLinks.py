@@ -7,6 +7,9 @@ from selenium import webdriver
 import allure
 from sys import platform
 import os
+from setuptools import glob
+from pathlib import Path
+import ntpath
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -254,6 +257,26 @@ def test_VerifyAllClickables(test_setup):
                                         Listb.append(elema.get_attribute("href"))
                         print("Total "+str(len(Listb))+" links collected")
                         TestResult.append("Total "+str(len(Listb))+" links collected and verified")
+                        TestResultStatus.append("Pass")
+
+                        #-------Removing all files from Downloads folder------------
+                        folder_path = str(Path.home() / "Downloads")
+                        file_type = r'\*'
+                        files = glob.glob(folder_path + file_type)
+
+                        print(files)
+                        print(files[0])
+
+                        for rem in range(len(files)):
+                            print(rem)
+                            filename = ntpath.basename("'r'" + str(files[rem]))
+                            print(filename)
+                            if filename == "New folder":
+                                print("File found")
+                            else:
+                                os.remove(files[rem])
+
+                        TestResult.append("All files in downloads removed successfully")
                         TestResultStatus.append("Pass")
 
                 except Exception as dd:

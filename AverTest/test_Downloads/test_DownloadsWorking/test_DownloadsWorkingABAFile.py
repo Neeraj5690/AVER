@@ -344,7 +344,6 @@ def test_VerifyAllClickables(test_setup):
             file_type = r'\*'
             files = glob.glob(folder_path + file_type)
             max_file = max(files, key=os.path.getctime)
-
             print(max_file)
             filename = ntpath.basename("'r'" + str(max_file))
             print(filename)

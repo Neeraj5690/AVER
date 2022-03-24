@@ -282,7 +282,6 @@ def test_VerifyAllClickables(test_setup):
                 Amount = re.sub('[^A-Za-z0-9.]+', '', Amount)
                 Amount=float(Amount)
                 print(Amount)
-
             except Exception:
                 TestResult.append(PageName + " is not present")
                 TestResultStatus.append("Fail")
@@ -301,8 +300,7 @@ def test_VerifyAllClickables(test_setup):
             TotalAmountFloatList=[]
             totalClicks=driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr[last()]/td/nav/ul/li[last()]/preceding-sibling::li[1]/a").text
             totalClicks=int(totalClicks)
-            print(totalClicks)
-            totalClicks = 1
+
             TotalPageAmount=0
             for l0 in range(totalClicks):
                 print()
@@ -310,26 +308,25 @@ def test_VerifyAllClickables(test_setup):
                 print(l0)
                 TotalRecords = driver.find_elements_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr")
                 TotalRecords = len(TotalRecords) - 2
-                print(TotalRecords)
 
                 for l1 in range(TotalRecords+1):
+                    TotalAmountFound = "0$"
                     if (l1 % 2) != 0:
-                        InvoiceStatus = driver.find_element_by_xpath(
-                            "//tbody[@id='invoiceEntryListingAjaxView']/tr[" + str(l1) + "]/td[11]").text
-                        print(InvoiceStatus)
-                        if InvoiceStatus != "Cancelled" or InvoiceStatus != "Declined":
+                        try:
+                            TotalAmountFound=driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr["+str(l1)+"]/td[11][not(contains(., 'Declined')) and not(contains(., 'Cancelled'))]/preceding-sibling::td[1]").text
+                        except Exception:
                             try:
-                                TotalAmountFound=driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr["+str(l1)+"]/td[10]").text
+                                TotalAmountFound=driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr["+str(l1+1)+"]/td[11][not(contains(., 'Declined')) and not(contains(., 'Cancelled'))]/preceding-sibling::td[1]").text
                             except Exception:
-                                TotalAmountFound = driver.find_element_by_xpath(
-                                    "//tbody[@id='invoiceEntryListingAjaxView']/tr["+str(l1+1)+"]/td[10]").text
-                            #print(TotalAmountFound)
-                            TotalAmountFound = re.sub('[^A-Za-z0-9.]+', '', TotalAmountFound)
-                            TotalAmountFoundFloat=float(TotalAmountFound)
-                            #print(TotalAmountFoundFloat)
-                            TotalAmountFloatList.append(TotalAmountFoundFloat)
-                            TotalPageAmount=TotalPageAmount+TotalAmountFoundFloat
+                                pass
+                        print(TotalAmountFound)
+                        TotalAmountFound = re.sub('[^A-Za-z0-9.]+', '', TotalAmountFound)
+                        TotalAmountFoundFloat=float(TotalAmountFound)
+                        #print(TotalAmountFoundFloat)
+                        TotalAmountFloatList.append(TotalAmountFoundFloat)
+                        TotalPageAmount=TotalPageAmount+TotalAmountFoundFloat
 
+                print("On page no.["+str(l0+1)+"] total amount found is $"+str(round(TotalPageAmount,2)))
                 TestResult.append("On page no.["+str(l0+1)+"] total amount found is $"+str(round(TotalPageAmount,2)))
                 TestResultStatus.append("Pass")
                 TotalPageAmount=0
@@ -338,7 +335,8 @@ def test_VerifyAllClickables(test_setup):
                 try:
                     driver.find_element_by_xpath(
                         "//tbody[@id='invoiceEntryListingAjaxView']/tr[last()]/td/nav/ul/li[last()]/a").click()
-                except Exception:
+                except Exception as cl:
+                    print(cl)
                     pass
                 for load in range(LONG_TIMEOUT):
                     try:
@@ -356,16 +354,12 @@ def test_VerifyAllClickables(test_setup):
                 TestResult.append("Total Count does not match\nDifference is "+str(len(TotalAmountFloatList)-Count))
                 TestResultStatus.append("Fail")
 
-            if Amount!=sum(TotalAmountFloatList):
+            if Amount!=round(sum(TotalAmountFloatList),2):
                 print("Total Amount does not match")
                 Diff=sum(TotalAmountFloatList)-Amount
                 print("Difference is " + str(round(sum(TotalAmountFloatList) - Amount,2)))
-                print("Difference is " + str(round(Diff, 2)))
                 TestResult.append("Total Amount does not match\nDifference is " + str(round(sum(TotalAmountFloatList) - Amount,2)))
                 TestResultStatus.append("Fail")
-
-
-
 
         except Exception as err:
             print(err)

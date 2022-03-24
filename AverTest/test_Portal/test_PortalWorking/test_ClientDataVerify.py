@@ -265,6 +265,14 @@ def test_VerifyAllClickables(test_setup):
             driver.find_element_by_xpath("//table/tbody/tr[1]/td[text()='"+FNameXL+"']/following-sibling::td[text()='"+LNameXL+"']/following-sibling::td[text()='"+str(NDISXL)+"']").click()
             TestResult.append("Client is able to search")
             TestResultStatus.append("Pass")
+
+            time.sleep(2)
+            try:
+                button = driver.find_element_by_xpath("//div[@id='alert_modal']/div/div/div/button")
+                driver.execute_script("arguments[0].click();", button)
+            except Exception as dd:
+                print(dd)
+                pass
             # ---------------------------------------------------------------------------------
 
             ProfileDataDic={}
@@ -309,6 +317,7 @@ def test_VerifyAllClickables(test_setup):
             TestResultStatus.append("Pass")
             ProfileDataDic["User Address"] = UserAddress
 
+            time.sleep(2)
             PlanTablePresence=driver.find_element_by_xpath("//table[@class='table datatable-sorting']/thead").is_displayed()
             print(PlanTablePresence)
             if PlanTablePresence==True:

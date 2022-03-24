@@ -302,7 +302,7 @@ def test_VerifyAllClickables(test_setup):
             totalClicks=driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr[last()]/td/nav/ul/li[last()]/preceding-sibling::li[1]/a").text
             totalClicks=int(totalClicks)
             print(totalClicks)
-            totalClicks = 1
+
             TotalPageAmount=0
             for l0 in range(totalClicks):
                 print()
@@ -316,8 +316,14 @@ def test_VerifyAllClickables(test_setup):
                     if (l1 % 2) != 0:
                         InvoiceStatus = driver.find_element_by_xpath(
                             "//tbody[@id='invoiceEntryListingAjaxView']/tr[" + str(l1) + "]/td[11]").text
-                        print(InvoiceStatus)
-                        if InvoiceStatus != "Cancelled" or InvoiceStatus != "Declined":
+                        if InvoiceStatus == "Cancelled":
+                            print("Inside If "+InvoiceStatus)
+                            pass
+                        elif InvoiceStatus == "Declined":
+                            print("Inside elif "+InvoiceStatus)
+                            pass
+                        else:
+                            print("Inside else "+InvoiceStatus)
                             try:
                                 TotalAmountFound=driver.find_element_by_xpath("//tbody[@id='invoiceEntryListingAjaxView']/tr["+str(l1)+"]/td[10]").text
                             except Exception:

@@ -8,6 +8,7 @@ import openpyxl
 import pandas as pd
 import pytest
 from sys import platform
+import datetime
 
 @pytest.mark.smoke
 def test_ReportSendSmokeAll():
@@ -82,10 +83,13 @@ def test_ReportSendSmokeAll():
     #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com']
     #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
+    new_time = datetime.datetime.now()
+    ctDate = new_time.strftime("%d %B %Y")
+
     SenderEmail = "Raeautomationbig@gmail.com"
     RandmStr = "Raeautomationbig@786"
     msg = MIMEMultipart()
-    msg['Subject']='[Test Suite 4 (Client Listing)]-Test Automation Report-Env [Test] '
+    msg['Subject']=ctDate+'-[Test Suite 4 (Client Listing)]-Test Automation Report-Env [Test] '
     msg['From'] = email_from
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))

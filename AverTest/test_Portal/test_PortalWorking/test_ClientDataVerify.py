@@ -223,7 +223,8 @@ def test_VerifyAllClickables(test_setup):
                     TestResult.append("Either First name, Last name or NDIS number not found in ref sheet")
                     TestResultStatus.append("Fail")
                     driver.close()
-            except Exception:
+            except Exception as sd:
+                print(sd)
                 print("Ref sheet is not able to read, please check the ref doc sheet")
                 TestResult.append("Ref sheet is not able to read, please check the ref doc sheet")
                 TestResultStatus.append("Fail")

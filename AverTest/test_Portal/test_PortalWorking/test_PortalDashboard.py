@@ -229,7 +229,7 @@ def test_VerifyAllClickables(test_setup):
                         TestResult.append("User is not able to login. Below error found\n"+LoginError)
                         TestResultStatus.append("Fail")
                     except Exception:
-                        TestResult.append("User login successfully")
+                        TestResult.append("User login successfully by below ID\n"+UsernameNameXL)
                         TestResultStatus.append("Pass")
                         pass
 
@@ -252,6 +252,8 @@ def test_VerifyAllClickables(test_setup):
 
                 PhoneXL = sheetx2.cell(3, 3).value
                 print(PhoneXL)
+                if PhoneXL==None:
+                    PhoneXL="NA"
                 TestResult.append("Phone number to match- " + PhoneXL)
                 TestResultStatus.append("Pass")
 

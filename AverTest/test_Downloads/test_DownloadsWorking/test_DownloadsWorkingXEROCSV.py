@@ -303,6 +303,7 @@ def test_VerifyAllClickables(test_setup):
             print(filename)
             TestResult.append("Downloaded CSV file is found in downloads folder in system. The file name is : \n"+str(filename))
             TestResultStatus.append("Pass")
+
             try:
                 driver.find_element_by_xpath("//div[@class='card card-sidebar-mobile']/ul/li[13]/a").click()
                 for load in range(LONG_TIMEOUT):

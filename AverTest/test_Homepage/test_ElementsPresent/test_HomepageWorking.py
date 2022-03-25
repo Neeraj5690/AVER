@@ -375,6 +375,9 @@ def test_VerifyAllClickables(test_setup):
                                 TestResult.append("Pagination for [ "+str(RecordsPerPage)+" ] no. of records is successfully verified")
                                 TestResultStatus.append("Pass")
                                 break
+
+                            ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
+                            time.sleep(0.5)
                             driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
                             time.sleep(0.5)
 

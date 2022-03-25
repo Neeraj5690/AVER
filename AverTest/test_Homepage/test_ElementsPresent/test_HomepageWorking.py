@@ -376,9 +376,13 @@ def test_VerifyAllClickables(test_setup):
                                 TestResultStatus.append("Pass")
                                 break
 
-                            ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
-                            time.sleep(0.5)
-                            driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+                            # ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
+                            # time.sleep(0.5)
+                            # driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]").click()
+
+                            button = driver.find_element_by_xpath("//div[@class='dataTables_paginate paging_simple_numbers']/a[2]")
+                            driver.execute_script("arguments[0].click();", button)
+
                             time.sleep(0.5)
 
                         if i != NumberOfPages - 1:

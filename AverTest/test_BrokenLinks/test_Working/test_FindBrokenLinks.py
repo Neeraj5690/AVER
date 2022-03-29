@@ -10,6 +10,7 @@ import os
 from setuptools import glob
 from pathlib import Path
 import ntpath
+import requests as requests
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -259,36 +260,47 @@ def test_VerifyAllClickables(test_setup):
                         TestResult.append("Total "+str(len(Listb))+" links collected and verified")
                         TestResultStatus.append("Pass")
 
-                        #-------Removing all files from Downloads folder------------
-                        folder_path = str(Path.home() / "Downloads")
-                        file_type = r'\*'
-                        files = glob.glob(folder_path + file_type)
-
-                        print(files)
-                        print(files[0])
-
-                        for rem in range(len(files)):
-                            print(rem)
-                            filename = ntpath.basename("'r'" + str(files[rem]))
-                            print(filename)
-                            if filename == "New folder":
-                                print("File found")
-                            else:
-                                os.remove(files[rem])
-
-                        TestResult.append("All files in downloads removed successfully")
-                        TestResultStatus.append("Pass")
-
                 except Exception as dd:
                     pass
 
+            #------------To verify all links are opening correctly with 202 status
             for ad in range (len(Listb)):
                 try:
                     print(Listb[ad])
                     driver.get(Listb[ad])
+
+                    try:
+                        r = requests.head(Listb[ad])
+                        status = r.status_code
+                    except Exception as er:
+                        status = str(er)
+                    if status != 200:
+                        print(status)
+                        TestResult.append("For link [ "+Listb[ad]+" ] below error found\n" + status)
+                        TestResultStatus.append("Fail")
+
                 except Exception as cl:
                     print(cl)
                     pass
+
+            # -------Removing all files from Downloads folder------------
+            folder_path = str(Path.home() / "Downloads")
+            file_type = r'\*'
+            files = glob.glob(folder_path + file_type)
+
+            print(files)
+            print(files[0])
+
+            for rem in range(len(files)):
+                print(rem)
+                filename = ntpath.basename("'r'" + str(files[rem]))
+                print(filename)
+                if filename == "New folder":
+                    print("File found")
+                else:
+                    os.remove(files[rem])
+            TestResult.append("All files in downloads removed successfully")
+            TestResultStatus.append("Pass")
 
         except Exception:
             pass

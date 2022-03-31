@@ -82,13 +82,19 @@ def test_ReportSendSmokeAll():
     #email_to = ['neeraj1wayitsol@gmail.com', 'avneet.kumar@bitsinglass.com', 'sumreet.kaur@bitsinglass.com', 'gagandeep.singh@bitsinglass.com']
     #email_to =['gagandeep.singh@bitsinglass.com','neeraj1wayitsol@gmail.com']
 
-    new_time = datetime.datetime.now()
+    time_change = datetime.timedelta(hours=5)
+    new_time = datetime.datetime.now() + time_change
     ctDate = new_time.strftime("%d %B %Y")
+    ct = new_time.strftime("%p")
+    if ct == "PM":
+        ct = "E"
+    elif ct == "AM":
+        ct = "M"
 
     SenderEmail = "Raeautomationbig@gmail.com"
     RandmStr = "Raeautomationbig@786"
     msg = MIMEMultipart()
-    msg['Subject']=ctDate+'-[Test Suite 2 (Homepage)]-Rae CRM Test Automation Report'
+    msg['Subject']=ctDate+" ["+ct+"]"+'-[Test Suite 2 (Homepage)]-Rae CRM Test Automation Report'
     msg['From'] = email_from
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))

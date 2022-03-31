@@ -99,7 +99,7 @@ def test_ReportSendSmokeAll():
     msg['To'] = ','.join(email_to)
     msg.attach(MIMEText(html, "html"))
 
-    #-----------------------------------------------------------------------
+    #------------------------------------------------------------------------
     try:
         attach_file_to_email(msg, PDFpath+'TestPieResult.png',
                          {'Content-ID': '<myimageid>'})

@@ -80,7 +80,9 @@ def test_ReportSendSmokeAll():
         msg.attach(file_attachment)
 
     email_from = 'Rae CRM Test Automation Team'
-    email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
+    email_to = ['avneet.kumar@bitsinglass.com', 'sumreet.kaur@bitsinglass.com', 'reilly@averplanmanagers.com.au',
+                'scott@scnsa.com.au']
+    #email_to =['neeraj1wayitsol@gmail.com','avneet.kumar@bitsinglass.com','sumreet.kaur@bitsinglass.com','gagandeep.singh@bitsinglass.com','reilly@averplanmanagers.com.au','scott@scnsa.com.au']
     #email_to =['gagandeep.singh@bitsinglass.com']
 
     time_change = datetime.timedelta(hours=5)
